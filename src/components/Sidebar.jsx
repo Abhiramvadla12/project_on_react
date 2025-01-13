@@ -1,6 +1,6 @@
 
 import styled from 'styled-components'
-import {CloseRounded,UploadRounded,LightModeRounded,LogoutRounded, DarkModeRounded, CloudUploadRounded} from '@mui/icons-material';
+import {CloseRounded,LightModeRounded,LogoutRounded, DarkModeRounded, CloudUploadRounded} from '@mui/icons-material';
 import LogoImage from '../images/logo_project.png'
 import {Link} from 'react-router-dom'
 import { menuItems} from './Menu';
