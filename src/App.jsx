@@ -54,7 +54,7 @@ function App() {
                     <Route path="/podcast/:id" exact element={<PodcastDetails/>} />
                     <Route path="/displaypodcast/:type" exact element={<DisplayPodcast/>} />
               </Routes>
-              just started
+              
            </Frame>
         </Container>
     </ThemeProvider>

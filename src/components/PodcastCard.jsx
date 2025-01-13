@@ -3,8 +3,28 @@ import styled from "styled-components";
 import { IconButton, Avatar } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import podcastImage from "../images/podcast-icon.jpeg";
+import HeadphonesIcon from "@mui/icons-material/Headphones";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
+const PlayIcon = styled.div`
 
+        padding: 10px;
+        border-radius: 50%;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        background: #9000ff !important;
+        color: white !important;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        position: absolute !important;
+        top: 45%;
+        right: 10%;
+        display: none;
+        transition: all 0.45s ease-in-out;
+        box-shadow: 0 0 16px 4px #9000ff50 !important;
+        
+`;
 const Card = styled.div`
     position: relative;
     text-decoration: none;
@@ -24,6 +44,10 @@ const Card = styled.div`
         box-shadow: 0 0 18px 0 rgba(0,0,0,0.3);
         filter: brightness(1.3); 
     }
+        &:hover ${PlayIcon}{
+            display: flex;
+        }
+
 `;
 const Favorite = styled(IconButton)`
         color: white;
@@ -121,6 +145,7 @@ const Views = styled.div`
     color :  ${({theme})=> theme.text_secondary};
     width: max-content;
 `;
+
 const PodcastCard = () => {
   return (
     <Card>
@@ -150,11 +175,17 @@ const PodcastCard = () => {
                 </MainInfo>
             </CardInformation>
         </div>
-        {/* <PlayIcon>
+         <PlayIcon>
             {
-                
+                "video" == "video" ? (
+                    <PlayArrowIcon style={{width: "28px",height:"28px"}} />
+                    
+                ):
+                (
+                    <HeadphonesIcon style={{width: "28px",height:"28px"}}/>
+                )
             }
-        </PlayIcon> */}
+        </PlayIcon> 
     </Card>
   )
 };

@@ -12,7 +12,7 @@ export const menuItems = [
         icon:SearchRounded
     },
     {
-        link:"/favorites",
+        link:"/favorite",
         name:"Favorites",
         icon:FavoriteRounded
     }
