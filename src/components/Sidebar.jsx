@@ -36,6 +36,7 @@ const Logo = styled.div`
     font-weight: bold;
     font-size: 20px;
     margin: 16px 0px;
+   
     
 `;
 const Flex = styled.div`
@@ -103,7 +104,7 @@ const Sidebar = ({menuOpen,setMenuOpen,setDarkMode,darkMode}) => {
     <MenuContainer $menuOpen={menuOpen}>
       <Flex>
           <Logo>
-              <Image src={LogoImage} alt="image not found" />
+              <Image src={LogoImage} alt="image not found" style={{width:"60px"}}/>
               MELOMANIAC
           </Logo>
           <Close onClick={()=> setMenuOpen((prev) => !prev)}>

@@ -1,0 +1,33 @@
+/* body{
+    background-image: url('../images/krishna.webp');
+    background-size: cover;
+} */
+form{
+    border: 2px solid blue;
+    background-color: black;
+    border-radius: 10px;
+    padding: 50px;
+    position: absolute;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+label{
+    color: aqua;
+    font-size: x-large;
+}
+label,input{
+    margin: 10px;
+    padding: 10px;
+}
+h1{
+    text-align: center;
+    color: aqua;
+
+}
+#submit{
+    background-color: blue;
+    color: aqua;
+    border-radius: 10px;
+}

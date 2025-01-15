@@ -1,0 +1,47 @@
+form{
+    border: 2px solid blue;
+    border-radius: 10px;
+    padding: 50px;
+    position: absolute;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: linear-gradient(to bottom, blue,aqua);
+}
+label{
+    color: aqua;
+    font-size: x-large;
+}
+label,input{
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+}
+h1{
+    text-align: center;
+    color: aqua;
+
+}
+#submit{
+    background-color: blue;
+    color: aqua;
+    border-radius: 10px;
+}
+/* body{
+    background-image:url("../images/16619825-purple-clouds-space-moon-desktop.jpg");
+  } */
+  body {
+    background-color:black;
+}
+img{
+    height: 20xp;
+    width: 20px;
+}
+.google_button{
+    display: flex;
+    border: 2px solid black;
+    background-color: black;
+    border-radius: 10px;
+    width: 15em;
+}
