@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom"; // Import the useNavigate hook
 import './login.css';
+import styled from "styled-components";
+import { CircularProgress } from "@mui/material";
 import Image from '../images/google.webp';
 import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
@@ -26,14 +28,27 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
+
+
+const Loader = styled.div`
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+
+  `;
+
+
 function Login({ onLogin }) {
   const navigate = useNavigate(); // Initialize useNavigate
+  
   const [state, setState] = useState({
     username: "",
     password: "",
     email: "",
   });
-
+  const [loading,setLoading] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
     const { username, password, email } = state;
@@ -76,14 +91,18 @@ function Login({ onLogin }) {
     if (userFound) {
       alert("Login successful. Redirecting to the home page in 3 seconds...");
       onLogin(true); // Notify parent component of login success
+      setLoading((prev => !prev))
       localStorage.setItem("display", JSON.stringify(obj));
       setTimeout(() => {
+        setLoading((prev => !prev))
         navigate("/"); // Redirect to the home page
       }, 3000);
 
     } else {
       if (confirm("User not found. Do you want to register?")) {
+        setLoading((prev => !prev))
         setTimeout(() => {
+          setLoading((prev => !prev))
           navigate("/register"); // Redirect to the Register page
         }, 3000);
       }
@@ -124,7 +143,9 @@ function Login({ onLogin }) {
         navigate('/');
       } else {
         alert("Google account not found in the system. Please register first.");
+        setLoading((prev => !prev))
         setTimeout(() => {
+          setLoading((prev => !prev))
           navigate("/register"); // Redirect to the Register page if the Google account is not found
         }, 3000);
       }
@@ -138,47 +159,60 @@ function Login({ onLogin }) {
 
   return (
     <>
-      <h1 style={{ color: "white" }}>Login Page</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          name="username"
-          id="username"
-          placeholder="Enter your username..."
-          value={username}
-          onChange={handleChange}
-        />
-        <br />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Enter your password..."
-          value={password}
-          onChange={handleChange}
-        />
-        <br />
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Enter your email..."
-          value={email}
-          onChange={handleChange}
-        />
-        <br />
-        <input type="submit" value="Login" id="submit" /> <br />
+      {loading ? (
+        (
+          <Loader>
+              <CircularProgress />
+          </Loader>)
+      ) : (
+             <div  >
+                
+                <form onSubmit={handleSubmit}  >
+                  <h1 style={{ color: "white" }}>Login Page</h1>
+                  <label htmlFor="username" >Username:</label><br />
+                  <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    placeholder="Enter your username..."
+                    value={username}
+                    onChange={handleChange}
+                  />
+                  <br />
+                  <label htmlFor="password">Password:</label><br />
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Enter your password..."
+                    value={password}
+                    onChange={handleChange}
+                  />
+                  <br />
+                  <label htmlFor="email">Email: </label><br />
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Enter your email..."
+                    value={email}
+                    onChange={handleChange}
+                  />
+                  <br />
+                  <input type="submit" value="Login" id="submit" /> <br />
 
-        <div className="google_button">
-          <img src={Image} alt="image not Found" style={{ height: "40px", width: "40px" }} />
-          <button onClick={signInWithGoogle} id="signIn" style={{ border: "none", outline: "none", backgroundColor: "black", color: "white" }} type="button">
-            Sign In With Google
-          </button>
-        </div>
-      </form>
+                  <div className="google_button">
+                    <img src={Image} alt="image not Found" style={{ height: "40px", width: "40px" }} />
+                    <button onClick={signInWithGoogle} id="signIn" style={{ border: "none", outline: "none", backgroundColor: "black", color: "white" }} type="button">
+                      Sign In With Google
+                    </button>
+                  </div>
+                </form>
+             </div> 
+      
+        )
+      }
+    
     </>
   );
 }

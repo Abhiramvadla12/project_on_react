@@ -80,7 +80,7 @@ const HR = styled.div`
 `;
 
 
-const Sidebar = ({menuOpen,setMenuOpen,setDarkMode,darkMode}) => {
+const Sidebar = ({menuOpen,setMenuOpen,setDarkMode,darkMode,isLogined,onLogout}) => {
   const buttons = [
  
     {
@@ -95,9 +95,10 @@ const Sidebar = ({menuOpen,setMenuOpen,setDarkMode,darkMode}) => {
     }
     ,
     {
-        func: ()=> console.log("logout"),
-        name:"Logout",
-        icon:LogoutRounded
+        func: ()=> onLogout() ,
+        name:isLogined ? "Logout" : "Login",
+        icon:LogoutRounded,
+        path:"/login"
     }
 ]
   return (
@@ -107,13 +108,13 @@ const Sidebar = ({menuOpen,setMenuOpen,setDarkMode,darkMode}) => {
               <Image src={LogoImage} alt="image not found" style={{width:"60px"}}/>
               MELOMANIAC
           </Logo>
-          <Close onClick={()=> setMenuOpen((prev) => !prev)}>
+          {/*<Close onClick={()=> setMenuOpen((prev) => !prev)}>
                 <CloseRounded></CloseRounded>
-          </Close>
+          </Close>*/}
         </Flex>
         {
           menuItems.map((item,index) => (
-        
+              
                 <Link to={item.link}  key={index} style={{ textDecoration: 'none' }}>
                   <Elements >
                         {<item.icon/>}
@@ -128,17 +129,22 @@ const Sidebar = ({menuOpen,setMenuOpen,setDarkMode,darkMode}) => {
         <HR/>
         
         {
-          buttons.map((item,index) => (
-        
-              
-                  <Elements key={index} onClick={item.func}>
-                        {<item.icon/>}
-                        <NavText>{item.name}</NavText>
-                  </Elements>
-            
-            
-          
+          buttons.map((item, index) => (
+            index === 2 && !isLogined ? (
+              <Link to={item.path} key={index} style={{ textDecoration: 'none' }}>
+                <Elements>
+                  <item.icon />
+                  <NavText>{item.name}</NavText>
+                </Elements>
+              </Link>
+            ) : (
+              <Elements key={index} onClick={item.func}>
+                <item.icon />
+                <NavText>{item.name}</NavText>
+              </Elements>
+            )
           ))
+          
         }
       
     </MenuContainer>

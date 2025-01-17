@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './register.css';
 import Image from '../images/google.webp';
@@ -27,45 +27,90 @@ const provider = new GoogleAuthProvider();
 
 function Register() {
   const [state, setState] = useState({ username: "", password: "", email: "" });
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  // Handle registration form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // Validate inputs with regex
+  const validateInputs = () => {
     const { username, password, email } = state;
+    let newErrors = {};
 
-    if (!username || !password || !email) {
-      alert("Please fill in all fields.");
+    // Username validation (3-15 characters, letters, numbers, or underscores)
+    const usernameRegex = /^[a-zA-Z0-9_ ]{3,15}$/;
+    if (!username || !usernameRegex.test(username)) {
+      newErrors.username = "Invalid Username: Use 3-15 characters (letters, numbers, or underscores).";
+    }
+
+    // Email validation (valid email format)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+      newErrors.email = "Invalid Email: Enter a valid email address.";
+    }
+
+    // Password validation (min 8 characters, 1 letter, 1 number, and 1 special character)
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!password || !passwordRegex.test(password)) {
+      newErrors.password = "Invalid Password: Must be at least 8 characters, with at least 1 letter, 1 number, and 1 special character (@, $, !, %, *, ?, &).";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // OTP generation function
+  const generateOtp = () => {
+    let otp = '';
+    for (let i = 0; i < 4; i++) {
+      otp += Math.floor(Math.random() * 10);
+    }
+    return otp;
+  };
+
+  // Handle regular registration
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateInputs()) {
       return;
     }
 
+    const { username, password, email } = state;
+
     const localData = JSON.parse(localStorage.getItem("login_credential")) || [];
     const userFound = localData.some(
-      (user) => user.username === username && user.email === email
+      (user) => user.username === username || user.email === email
     );
 
     if (userFound) {
       alert("User already exists. Please log in.");
       navigate("/login");
     } else {
-      const newUser = { username, password, email };
-      localData.push(newUser);
-      localStorage.setItem("login_credential", JSON.stringify(localData));
-
-      function generateOtp() {
-        let otp = '';
-        for (let i = 0; i < 4; i++) {
-          otp += Math.floor(Math.random() * 10);
-        }
-        return otp;
-      }
-
       const otp = generateOtp();
       localStorage.setItem("otp", JSON.stringify(otp));
-      alert("Registration successful. Redirecting to OTP verification in 3 seconds...");
-      setTimeout(() => {
-        navigate("/otp", { state: { user: newUser } });
-      }, 3000);
+
+      try {
+        const response = await fetch("http://localhost:3001/send-otp", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, otp }),
+        });
+
+        if (response.ok) {
+          const newUser = { username, password, email };
+          localData.push(newUser);
+          localStorage.setItem("login_credential", JSON.stringify(localData));
+
+          alert("Registration successful. Redirecting to OTP verification...");
+          navigate("/otp", { state: { user: newUser } });
+        } else {
+          alert("Failed to send OTP. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error sending OTP:", error);
+        alert("An error occurred. Please try again.");
+      }
     }
   };
 
@@ -91,7 +136,6 @@ function Register() {
         googleData.push(newGoogleUser);
         localStorage.setItem("google_signups", JSON.stringify(googleData));
         navigate("/login");
-        
       }
     } catch (error) {
       console.error("Error signing up with Google:", error);
@@ -123,6 +167,7 @@ function Register() {
           value={username}
           onChange={handleChange}
         />
+        {errors.username && <p style={{ color: "red" }}>{errors.username}</p>}
         <br />
         <label htmlFor="password">Password:</label>
         <input
@@ -133,6 +178,7 @@ function Register() {
           value={password}
           onChange={handleChange}
         />
+        {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
         <br />
         <label htmlFor="email">Email:</label>
         <input
@@ -143,14 +189,21 @@ function Register() {
           value={email}
           onChange={handleChange}
         />
+        {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
         <br />
         <input type="submit" value="Register" id="submit" />
         <div className="google_button">
-          <img src={Image} alt="image not Found" style={{height: "40px", width:"40px"}} />
-          <button onClick={handleGoogleSignUp} id="signUp"  style={{border: "none", outline:"none",backgroundColor: "black",color:"white"}} type="button">Sign Up With Google</button>
+          <img src={Image} alt="Google" style={{ height: "40px", width: "40px" }} />
+          <button
+            onClick={handleGoogleSignUp}
+            id="signUp"
+            style={{ border: "none", outline: "none", backgroundColor: "black", color: "white" }}
+            type="button"
+          >
+            Sign Up With Google
+          </button>
         </div>
       </form>
-      
     </>
   );
 }

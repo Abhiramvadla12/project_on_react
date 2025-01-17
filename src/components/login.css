@@ -8,6 +8,7 @@ form{
     left: 50%;
     transform: translate(-50%,-50%);
     background: linear-gradient(to bottom, blue,aqua);
+    width:350px;
 }
 label{
     color: aqua;
@@ -44,4 +45,7 @@ img{
     background-color: black;
     border-radius: 10px;
     width: 15em;
+}
+input{
+    width: 100%;
 }
