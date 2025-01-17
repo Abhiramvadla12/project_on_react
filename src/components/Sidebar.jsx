@@ -22,6 +22,8 @@ const MenuContainer = styled.div`
             left: ${({$menuOpen})=> ($menuOpen ? "0" : "-100%")};
             transition : 0.3s ease-in-out;
         }
+        
+      
 `;
 const Image = styled.img`
     height:60px;
@@ -45,9 +47,6 @@ const Flex = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 0px 5px;
-
-`;
-const Close = styled.div`
 
 `;
 const Elements = styled.div`
@@ -79,6 +78,14 @@ const HR = styled.div`
 
 `;
 
+const Close = styled.div`
+    display: none; /* Initially hidden */
+    
+    @media (max-width: 440px) {
+        display: block; /* Show the close icon in smaller screens */
+        cursor: pointer;
+    }
+`;
 
 const Sidebar = ({menuOpen,setMenuOpen,setDarkMode,darkMode,isLogined,onLogout}) => {
   const buttons = [
@@ -108,9 +115,9 @@ const Sidebar = ({menuOpen,setMenuOpen,setDarkMode,darkMode,isLogined,onLogout})
               <Image src={LogoImage} alt="image not found" style={{width:"60px"}}/>
               MELOMANIAC
           </Logo>
-          {/*<Close onClick={()=> setMenuOpen((prev) => !prev)}>
+          <Close onClick={()=> setMenuOpen((prev) => !prev)}>
                 <CloseRounded></CloseRounded>
-          </Close>*/}
+          </Close>
         </Flex>
         {
           menuItems.map((item,index) => (
