@@ -42,6 +42,7 @@ function App() {
   const handleLoginStatus = (status) => {
     setIsLogined(status); // Update login state
   };
+  
   const handleLogout = () => {
     setIsLogined(false); // Reset login state
     localStorage.removeItem("display"); // Optional: Clear user data
@@ -57,7 +58,7 @@ function App() {
         }
       
            <Frame>
-              <NavBar setMenuOpen={setMenuOpen} menuOpen={menuOpen} isLogined={isLogined} onLogout={handleLogout}/>
+              <NavBar setMenuOpen={setMenuOpen} menuOpen={menuOpen} isLogined={isLogined} onLogout={handleLogout} darkMode={darkMode} />
               <Routes>
                     <Route path="/" exact element={<Dashboard/>} />
                     <Route path="/search" exact element={<Search/>} />
@@ -65,7 +66,7 @@ function App() {
                     <Route path="/profile" exact element={<Profile/>} />
                     <Route path="/podcast/:id" exact element={<PodcastDetails/>} />
                     <Route path="/displaypodcast/:type" exact element={<DisplayPodcast/>} />
-                    <Route path="/login"  element={<Login onLogin={handleLoginStatus}/>} />
+                    <Route path="/login"  element={<Login onLogin={handleLoginStatus} />} />
                     <Route path="/register"  element={<Register />} />
                     <Route path="/otp"  element={<Otp />} />
               </Routes>

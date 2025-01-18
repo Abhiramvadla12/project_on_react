@@ -3,8 +3,9 @@ import styled from 'styled-components'
 import MenuIcon from '@mui/icons-material/Menu';
 import { PersonRounded } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import {Link} from 'react-router-dom';
-import {useState} from "react"
+// import {Link} from 'react-router-dom';
+// import {useState} from "react";
+import { useNavigate } from "react-router-dom";
 const NavBardiv = styled.div`
 
     display: flex;
@@ -38,7 +39,8 @@ const ButtonDIv = styled.div`
     border-radius: 10px;
     gap: 8px;
 `; 
-const NavBar = ({setMenuOpen,menuOpen, isLogined,onLogout }) => {
+const NavBar = ({setMenuOpen,menuOpen, isLogined,onLogout,darkMode }) => {
+    const navigate = useNavigate();
   return (
     <NavBardiv>
         <IcoButton onClick={()=> setMenuOpen((prev)=> !prev)} >
@@ -47,7 +49,29 @@ const NavBar = ({setMenuOpen,menuOpen, isLogined,onLogout }) => {
         
         <ButtonDIv>
             <PersonRounded />
-            <button style={{border:"none",outline:"none",backgroundColor:"#1C1E27"}} onClick={isLogined ? onLogout : null} ><Link  to={isLogined ? "/" : "/login"} style={{textDecoration:"none",fontSize:"15px",fontWeight:'bolder',color:"blue"}}>{isLogined ? "Logout" : "Login"}</Link></button>
+            <button
+            style={{ border: "none", outline: "none", backgroundColor: darkMode ? "#1C1E27" : '#f0f0f0' }}
+            onClick={() => {
+                setMenuOpen(); // Call setMenuOpen
+                if (isLogined) {
+                // onLogout(); // Call onLogout if logged in
+                navigate("/profile"); // Navigate to home
+                } else {
+                navigate("/login"); // Navigate to login
+                }
+            }}
+            >
+            <span
+                style={{
+                textDecoration: "none",
+                fontSize: "15px",
+                fontWeight: "bolder",
+                color: "blue",
+                }}
+            >
+                {isLogined ? "profile" : "Login"}
+            </span>
+            </button>
         </ButtonDIv>
     </NavBardiv>
   )

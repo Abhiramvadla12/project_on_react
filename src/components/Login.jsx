@@ -2,9 +2,11 @@ import { useNavigate } from "react-router-dom"; // Import the useNavigate hook
 import './login.css';
 import styled from "styled-components";
 import { CircularProgress } from "@mui/material";
+import { Link } from "react-router-dom";
 import Image from '../images/google.webp';
 import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
+import LogoImg from "../images/login_logo.jpeg";
 import {
   getAuth,
   onAuthStateChanged,
@@ -40,9 +42,9 @@ const Loader = styled.div`
   `;
 
 
-function Login({ onLogin }) {
+function Login({ onLogin}) {
   const navigate = useNavigate(); // Initialize useNavigate
-  
+
   const [state, setState] = useState({
     username: "",
     password: "",
@@ -52,7 +54,6 @@ function Login({ onLogin }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const { username, password, email } = state;
-
     if (!username || !password || !email) {
       alert("Please fill in all fields.");
       return;
@@ -136,6 +137,11 @@ function Login({ onLogin }) {
       // Check if the Google email exists in localStorage under google_signups
       const googleData = JSON.parse(localStorage.getItem("google_signups")) || [];
       const googleUserFound = googleData.some(user => user.email === googleUser.email);
+      const obj = {
+        username: user.displayName || "Google User", // Use Google display name or fallback
+        email: user.email,
+      };
+      localStorage.setItem("display",JSON.stringify(obj))
 
       if (googleUserFound) {
         alert("Login successful with Google. Redirecting to the home page...");
@@ -156,10 +162,10 @@ function Login({ onLogin }) {
   };
   
   const { username, password, email } = state;
-
+  
   return (
     <>
-      {loading ? (
+      {loading  ? (
         (
           <Loader>
               <CircularProgress />
@@ -168,7 +174,8 @@ function Login({ onLogin }) {
              <div  >
                 
                 <form onSubmit={handleSubmit}  >
-                  <h1 style={{ color: "white" }}>Login Page</h1>
+                  <img src={LogoImg} alt="image not found" style={{height:"60px",width:"60px"}} />
+                  <span style={{ color: "white",fontSize:"1.75em",fontWeight:"bolder",marginLeft:"8px" }}>Login Page</span><br />
                   <label htmlFor="username" >Username:</label><br />
                   <input
                     type="text"
@@ -206,7 +213,8 @@ function Login({ onLogin }) {
                     <button onClick={signInWithGoogle} id="signIn" style={{ border: "none", outline: "none", backgroundColor: "black", color: "white" }} type="button">
                       Sign In With Google
                     </button>
-                  </div>
+                  </div><br />
+                  <button style={{backgroundColor: "blue",borderRadius: "10px"}}><Link to={"/register"} style={{color: "aqua",textDecoration:"none",fontSize:"16px"}}>Create an account ?</Link></button>
                 </form>
              </div> 
       

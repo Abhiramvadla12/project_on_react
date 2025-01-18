@@ -2,7 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './register.css';
 import Image from '../images/google.webp';
+import { CircularProgress } from "@mui/material";
+import styled from "styled-components";
 import { initializeApp } from "firebase/app";
+import LogoImg from "../images/login_logo.jpeg";
 import {
   getAuth,
   signInWithPopup,
@@ -25,9 +28,19 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
+const Loader = styled.div`
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+
+  `;
+
 function Register() {
   const [state, setState] = useState({ username: "", password: "", email: "" });
   const [errors, setErrors] = useState({});
+  const [loading,setLoading] = useState(false);
   const navigate = useNavigate();
 
   // Validate inputs with regex
@@ -103,7 +116,12 @@ function Register() {
           localStorage.setItem("login_credential", JSON.stringify(localData));
 
           alert("Registration successful. Redirecting to OTP verification...");
-          navigate("/otp", { state: { user: newUser } });
+          setLoading((prev => !prev))
+          setTimeout(()=>{
+            setLoading((prev => !prev))
+            navigate("/otp", { state: { user: newUser } });
+          },2000)
+         
         } else {
           alert("Failed to send OTP. Please try again.");
         }
@@ -156,54 +174,69 @@ function Register() {
 
   return (
     <>
-      <h1 style={{ color: "white" }}>Register</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          name="username"
-          id="username"
-          placeholder="Enter your username..."
-          value={username}
-          onChange={handleChange}
-        />
-        {errors.username && <p style={{ color: "red" }}>{errors.username}</p>}
-        <br />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Enter your password..."
-          value={password}
-          onChange={handleChange}
-        />
-        {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
-        <br />
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Enter your email..."
-          value={email}
-          onChange={handleChange}
-        />
-        {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
-        <br />
-        <input type="submit" value="Register" id="submit" />
-        <div className="google_button">
-          <img src={Image} alt="Google" style={{ height: "40px", width: "40px" }} />
-          <button
-            onClick={handleGoogleSignUp}
-            id="signUp"
-            style={{ border: "none", outline: "none", backgroundColor: "black", color: "white" }}
-            type="button"
-          >
-            Sign Up With Google
-          </button>
-        </div>
-      </form>
+      {loading  ? (
+              (
+                <Loader>
+                    <CircularProgress />
+                </Loader>)
+            ) : (
+              <>
+                  
+                  <form onSubmit={handleSubmit}>
+                    <img src={LogoImg} alt="image not found" style={{height:"60px",width:"60px"}} />
+                    <span style={{ color: "white",fontSize:"1.75em",fontWeight:"bolder",marginLeft:"8px" }}>Register Page</span><br />
+                    <label htmlFor="username">Username:</label>
+                    <input
+                      type="text"
+                      name="username"
+                      id="username"
+                      placeholder="Enter your username..."
+                      value={username}
+                      onChange={handleChange}
+                    />
+                    {errors.username && <p style={{ color: "red" }}>{errors.username}</p>}
+                    <br />
+                    <label htmlFor="password">Password:</label>
+                    <input
+                      type="password"
+                      name="password"
+                      id="password"
+                      placeholder="Enter your password..."
+                      value={password}
+                      onChange={handleChange}
+                    />
+                    {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
+                    <br />
+                    <label htmlFor="email">Email:</label>
+                    <input
+                      type="email"
+                      name="email"
+                      id="email"
+                      placeholder="Enter your email..."
+                      value={email}
+                      onChange={handleChange}
+                    />
+                    {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
+                    <br />
+                    <input type="submit" value="Register" id="submit" />
+                    <div className="google_button">
+                      <img src={Image} alt="Google" style={{ height: "40px", width: "40px" }} />
+                      <button
+                        onClick={handleGoogleSignUp}
+                        id="signUp"
+                        style={{ border: "none", outline: "none", backgroundColor: "black", color: "white" }}
+                        type="button"
+                      >
+                        Sign Up With Google
+                      </button>
+                    </div>
+                  </form>
+                  </>
+                  
+
+            ) 
+      }
+      
     </>
   );
 }

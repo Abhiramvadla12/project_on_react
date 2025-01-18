@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import ProfileImg from "../images/profile_dummy.jpeg";
+import ProfileImg from "../images/profile_dummy.webp";
 
 
 const ProfileLogo= styled.div`

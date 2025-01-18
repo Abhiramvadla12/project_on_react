@@ -122,7 +122,7 @@ const Sidebar = ({menuOpen,setMenuOpen,setDarkMode,darkMode,isLogined,onLogout})
         {
           menuItems.map((item,index) => (
               
-                <Link to={item.link}  key={index} style={{ textDecoration: 'none' }}>
+                <Link to={item.link}  key={index} style={{ textDecoration: 'none' }} >
                   <Elements >
                         {<item.icon/>}
                         <NavText>{item.name}</NavText>
@@ -138,7 +138,7 @@ const Sidebar = ({menuOpen,setMenuOpen,setDarkMode,darkMode,isLogined,onLogout})
         {
           buttons.map((item, index) => (
             index === 2 && !isLogined ? (
-              <Link to={item.path} key={index} style={{ textDecoration: 'none' }}>
+              <Link to={item.path} key={index} style={{ textDecoration: 'none' }} onClick={()=>{ setMenuOpen()}}>
                 <Elements>
                   <item.icon />
                   <NavText>{item.name}</NavText>
