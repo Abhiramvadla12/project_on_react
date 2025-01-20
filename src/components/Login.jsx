@@ -51,35 +51,39 @@ function Login({ onLogin}) {
     email: "",
   });
   const [loading,setLoading] = useState(false);
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const [errors, setErrors] = useState({}); // State to store validation errors
+  const validateFields = () => {
     const { username, password, email } = state;
-    if (!username || !password || !email) {
-      alert("Please fill in all fields.");
-      return;
-    }
+    const newErrors = {};
 
     const usernameRegex = /^[a-zA-Z0-9_ ]{3,15}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-    if (!usernameRegex.test(username)) {
-      alert("Invalid Username: Use 3-15 characters (letters, numbers, or underscores).");
-      return;
+    if (!username || !usernameRegex.test(username)) {
+      newErrors.username = "Invalid Username: Use 3-15 characters (letters, numbers, or underscores).";
     }
 
-    if (!emailRegex.test(email)) {
-      alert("Invalid Email: Enter a valid email address.");
-      return;
+    if (!email || !emailRegex.test(email)) {
+      newErrors.email = "Invalid Email: Enter a valid email address.";
     }
 
-    if (!passwordRegex.test(password)) {
-      alert(
-        "Invalid Password: Must be at least 8 characters, with at least 1 letter, 1 number, and 1 special character (@, $, !, %, *, ?, &)."
-      );
-      return;
+    if (!password || !passwordRegex.test(password)) {
+      newErrors.password =
+        "Invalid Password: Must be at least 8 characters, with at least 1 letter, 1 number, and 1 special character (@, $, !, %, *, ?, &).";
     }
 
+    return newErrors;
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newErrors = validateFields();
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors); // Set errors in state
+      return;
+    }
+    setErrors({}); // Clear errors if validation passes
     const obj = { username, password, email };
     const localData = JSON.parse(localStorage.getItem("login_credential")) || [];
     const userFound = localData.some(
@@ -161,6 +165,7 @@ function Login({ onLogin}) {
     }
   };
   
+ 
   const { username, password, email } = state;
   
   return (
@@ -185,6 +190,7 @@ function Login({ onLogin}) {
                     value={username}
                     onChange={handleChange}
                   />
+                   {errors.username && <p style={{ color: "aqua" }}>{errors.username}</p>}
                   <br />
                   <label htmlFor="password">Password:</label><br />
                   <input
@@ -195,6 +201,7 @@ function Login({ onLogin}) {
                     value={password}
                     onChange={handleChange}
                   />
+                  {errors.password && <p style={{ color: "aqua" }}>{errors.password}</p>}
                   <br />
                   <label htmlFor="email">Email: </label><br />
                   <input
@@ -205,12 +212,13 @@ function Login({ onLogin}) {
                     value={email}
                     onChange={handleChange}
                   />
+                   {errors.email && <p style={{ color: "aqua" }}>{errors.email}</p>}
                   <br />
                   <input type="submit" value="Login" id="submit" /> <br />
 
-                  <div className="google_button">
+                  <div className="google_button" style={{textAlign: "center"}}>
                     <img src={Image} alt="image not Found" style={{ height: "40px", width: "40px" }} />
-                    <button onClick={signInWithGoogle} id="signIn" style={{ border: "none", outline: "none", backgroundColor: "black", color: "white" }} type="button">
+                    <button onClick={signInWithGoogle} id="signIn" style={{ border: "none", outline: "none", backgroundColor: "black", color: "white" ,textAlign: "center"}} type="button">
                       Sign In With Google
                     </button>
                   </div><br />

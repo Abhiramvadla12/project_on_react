@@ -3,6 +3,9 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 import PodcastCard from '../components/PodcastCard';
+import { useState ,useEffect} from 'react';
+import getData from '../components/api';
+import { CircularProgress } from "@mui/material";
 const DashboardMain = styled.div`
     padding: 20px 30px;
     padding-bottom: 200px;
@@ -46,64 +49,78 @@ const Span = styled.div`
 `;
 const Podcasts = styled.div`
     width: 100%;
-    display: flex;
-    felxwrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    margin: 10px;
     gap: 14px;
     padding: 18px 6px;
     @media (max-width: 550px) {
         justify-content: center;
     }
 `;
+const Loader = styled.div`
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+
+  `;
 const Dashboard = () => {
+    const [data, setData] = useState(null); // State to store fetched data
+    const [error, setError] = useState(null); // State to handle errors
+    const [loading, setLoading] = useState(true); // State for loading status
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const result = await getData(); // Call your getData function
+                setData(result); // Update state with the fetched data
+            } catch (err) {
+                setError(err.message); // Handle and display errors
+            } finally {
+                setLoading(false); // Set loading to false after fetching
+            }
+        };
+
+        fetchData();
+    }, []); // Empty dependency array to fetch data only once on mount
   return (
-    <DashboardMain>
-        <FilterContainer>
-        <Topic>
-            Most Popular
-            <Link to={"/displaypodcast/mostpopular"} style={{textDecoration: "none"}}>
-                <Span>Show All</Span>
-            </Link>
-        </Topic>
-            <Podcasts>
-                <PodcastCard />
-                <PodcastCard />
-                <PodcastCard />
-            </Podcasts>
-        </FilterContainer>
+   
+    <>
+        {loading ? (
+            <Loader>
+                <CircularProgress />
+            </Loader>
+        )
+        :
+        (
+            <DashboardMain>
+                <FilterContainer>
+                <Topic>
+                    Most Popular
+                    <Link to={"/displaypodcast/mostpopular"} style={{textDecoration: "none"}} >
+                        <Span>Show All</Span>
+                    </Link>
+                </Topic>
+                    <Podcasts >
+                        {
+                            data && <PodcastCard apiData={data} />
+                        }
+                        
+                    
+                    </Podcasts>
+                </FilterContainer>
 
 
-        <FilterContainer>
-        <Topic>
-            Comedy
-            <Link to={"/displaypodcast/comedy"} style={{textDecoration: "none"}}>
-                <Span>Show All</Span>
-            </Link>
-        </Topic>
-            <Podcasts>
-                <PodcastCard />
-                <PodcastCard />
-                <PodcastCard />
                 
-            </Podcasts>
-        </FilterContainer>
-
-        <FilterContainer>
-        <Topic>
-            Most Popular
-            <Link to={"/displaypodcast/mostpopular"} style={{textDecoration: "none"}}>
-                <Span>Show All</Span>
-            </Link>
-        </Topic>
-            <Podcasts>
-                <PodcastCard />
-                <PodcastCard />
-                <PodcastCard />
-            </Podcasts>
-        </FilterContainer>
 
 
-    </DashboardMain>
-  )
+            </DashboardMain>
+
+        )
+    }
+    </>
+      )
 }
 
 export default Dashboard

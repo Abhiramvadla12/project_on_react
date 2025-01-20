@@ -90,7 +90,7 @@ const CardInformation = styled.div`
     align-items: flex-grid;
     font-weight: 450;
     padding: 14px 0px 0px 0px;
-    width:100%;
+    width:220px;
 `;
 const MainInfo = styled.div`
     display: flex;
@@ -146,47 +146,64 @@ const Views = styled.div`
     width: max-content;
 `;
 
-const PodcastCard = () => {
+const PodcastCard = ({apiData}) => {
+    console.log("received",apiData);
+    if (!apiData || !Array.isArray(apiData)) {
+        return <div>No Data Available</div>;
+      }
   return (
-    <Card>
-        <div>
-            <Top>
-                <Favorite >
-                    <FavoriteIcon style={{width:"16px",height:"16px"}} />
-                </Favorite>
-                
-                <CardImage src={podcastImage}  alt="image not found"/>
-            </Top>
-            <CardInformation>
-                <MainInfo>
-                    <Title>The Ferriss Show</Title>
+    <>
+        {apiData.map((element, index) => {
+        if (
+          ["business", "crime", "education", "history", "comedy"].includes(
+            element ?.Category
+          )
+        ) {
+          return (
+            <Card key={index}>
+              <div>
+                <Top>
+                  <Favorite>
+                    <FavoriteIcon style={{ width: "16px", height: "16px" }} />
+                  </Favorite>
+                  <CardImage src={podcastImage} alt="Podcast" />
+                </Top>
+                <CardInformation>
+                  <MainInfo>
+                    <Title>{element .files[0].title || "Podcast Title"}</Title>
                     <Description>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque, impedit possimus quis molestiae, ratione
-                        cumque ut adipisci rerum ducimus nobis quaerat recusandae expedita consectetur aspernatur pariatur ipsam vel ulla
-                        m quasi.
+                      {element.files[0].description ||
+                        "No description available for this podcast."}
                     </Description>
                     <CreatorInfo>
-                        <Creator>
-                        <Avatar style={{width:"26px",height:"26px"}}>A</Avatar>
-                        <CreatorName>Abhiram</CreatorName>
-                        </Creator>
-                        <Views>. 12 Views</Views>
+                      <Creator>
+                        <Avatar style={{ width: "26px", height: "26px" }}>
+                          A
+                        </Avatar>
+                        <CreatorName>
+                          {element.files[0].creatorName || "Unknown Creator"}
+                        </CreatorName>
+                      </Creator>
+                      <Views>{element.files[0].views || 0}</Views>
                     </CreatorInfo>
-                </MainInfo>
-            </CardInformation>
-        </div>
-         <PlayIcon>
-            {
-                "video" == "video" ? (
-                    <PlayArrowIcon style={{width: "28px",height:"28px"}} />
-                    
-                ):
-                (
-                    <HeadphonesIcon style={{width: "28px",height:"28px"}}/>
-                )
-            }
-        </PlayIcon> 
-    </Card>
+                  </MainInfo>
+                </CardInformation>
+              </div>
+              <PlayIcon>
+                {element.type === "video" ? (
+                  <PlayArrowIcon style={{ width: "28px", height: "28px" }} />
+                ) : (
+                  <HeadphonesIcon style={{ width: "28px", height: "28px" }} />
+                )}
+              </PlayIcon>
+            </Card>
+          );
+        }
+        return null;
+      })}
+    </>
+    
+    
   )
 };
 

@@ -194,7 +194,7 @@ function Register() {
                       value={username}
                       onChange={handleChange}
                     />
-                    {errors.username && <p style={{ color: "red" }}>{errors.username}</p>}
+                    {errors.username && <p style={{ color: "aqua" }}>{errors.username}</p>}
                     <br />
                     <label htmlFor="password">Password:</label>
                     <input
@@ -205,7 +205,7 @@ function Register() {
                       value={password}
                       onChange={handleChange}
                     />
-                    {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
+                    {errors.password && <p style={{ color: "aqua" }}>{errors.password}</p>}
                     <br />
                     <label htmlFor="email">Email:</label>
                     <input
@@ -216,7 +216,7 @@ function Register() {
                       value={email}
                       onChange={handleChange}
                     />
-                    {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
+                    {errors.email && <p style={{ color: "aqua" }}>{errors.email}</p>}
                     <br />
                     <input type="submit" value="Register" id="submit" />
                     <div className="google_button">
