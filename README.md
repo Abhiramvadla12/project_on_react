@@ -14,3 +14,4 @@ commands for startin this project are for front end npm run dev
 for backend cd src, cd backend, node server.cjs
 cd src , cd backend , cd api_backend , node index.cjs
 
+after pushing to github commands npm run build
