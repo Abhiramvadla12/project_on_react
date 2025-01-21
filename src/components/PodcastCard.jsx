@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom"; // Import Link for navigation
 import styled from "styled-components";
 import { IconButton, Avatar } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -38,7 +38,7 @@ const Card = styled.div`
     border-radius: 6px;
     box-shadow: 0 0 16px 0 rgba(0,0,0,0.1);
     &:hover {
-        cursor: ponter;
+        cursor: pointer;
         transform: translateY(-8px);
         transition: all 0.4s ease-in-out;
         box-shadow: 0 0 18px 0 rgba(0,0,0,0.3);
@@ -147,61 +147,53 @@ const Views = styled.div`
 `;
 
 const PodcastCard = ({apiData}) => {
-    console.log("received",apiData);
+    // console.log("received",apiData);
     if (!apiData || !Array.isArray(apiData)) {
         return <div>No Data Available</div>;
       }
   return (
     <>
         {apiData.map((element, index) => {
-          
-        if (
-          ["business", "crime", "education", "history", "comedy"].includes(
-            element ?.Category
-          )
-        ) {
-          return (
-            <Card key={index} >
-              <div>
-                <Top>
-                  <Favorite>
-                    <FavoriteIcon style={{ width: "16px", height: "16px" }} />
-                  </Favorite>
-                  <CardImage src={element.image}  alt="Podcast" />
-                </Top>
-                <CardInformation>
-                  <MainInfo>
-                    <Title>{element .files[0].title || "Podcast Title"}</Title>
-                    <Description>
-                      {element.files[0].description ||
-                        "No description available for this podcast."}
-                    </Description>
-                    <CreatorInfo>
-                      <Creator>
-                        <Avatar style={{ width: "26px", height: "26px" }}>
-                          A
-                        </Avatar>
-                        <CreatorName>
-                          {element.files[0].creatorName || "Unknown Creator"}
-                        </CreatorName>
-                      </Creator>
-                      <Views>{element.files[0].views || 0}</Views>
-                    </CreatorInfo>
-                  </MainInfo>
-                </CardInformation>
-              </div>
-              <PlayIcon>
-                {element.type === "video" ? (
-                  <PlayArrowIcon style={{ width: "28px", height: "28px" }} />
-                ) : (
-                  <HeadphonesIcon style={{ width: "28px", height: "28px" }} />
-                )}
-              </PlayIcon>
-            </Card>
-          );
-        }
-        return null;
-      })}
+                if (["business", "crime", "education", "history", "comedy"].includes(element?.Category)) {
+                    return (
+                        <Link to={`/podcast/${element.id}`} key={index} style={{ textDecoration: "none" }}>
+                            <Card>
+                                <div>
+                                    <Top>
+                                        <Favorite>
+                                            <FavoriteIcon style={{ width: "16px", height: "16px" }} />
+                                        </Favorite>
+                                        <CardImage src={element.image} alt="Podcast" />
+                                    </Top>
+                                    <CardInformation>
+                                        <MainInfo>
+                                            <Title>{element.files[0].title || "Podcast Title"}</Title>
+                                            <Description>
+                                                {element.files[0].description || "No description available for this podcast."}
+                                            </Description>
+                                            <CreatorInfo>
+                                                <Creator>
+                                                    <Avatar style={{ width: "26px", height: "26px" }}>A</Avatar>
+                                                    <CreatorName>{element.files[0].creatorName || "Unknown Creator"}</CreatorName>
+                                                </Creator>
+                                                <Views>{element.files[0].views || 0}</Views>
+                                            </CreatorInfo>
+                                        </MainInfo>
+                                    </CardInformation>
+                                </div>
+                                <PlayIcon>
+                                    {element.type === "video" ? (
+                                        <PlayArrowIcon style={{ width: "28px", height: "28px" }} />
+                                    ) : (
+                                        <HeadphonesIcon style={{ width: "28px", height: "28px" }} />
+                                    )}
+                                </PlayIcon>
+                            </Card>
+                        </Link>
+                    );
+                }
+                return null;
+            })}
     </>
     
     
