@@ -1,4 +1,4 @@
-const url = "https://api-backend-3-7wnp.onrender.com/data";
+const url = "https://api-backend-4.onrender.com/data";
 
 async function getData() {
     let res = await fetch(url);

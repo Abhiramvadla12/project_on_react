@@ -1,10 +1,11 @@
 
 
- [
+[
     {
         "id":"1",
         "Category":"bussiness",
         "type":"video",
+        "image": "../../src/backend/api_backend/multimedia/tim_ferris.jpeg",
         "files":[
             {
                 "title":"The Ferris show",
@@ -27,6 +28,7 @@
         "id":"2",
         "Category":"bussiness",
         "type": "audio",
+        "image": "../../src/backend/api_backend/multimedia/5min.jpg",
         "files":[
             {
                 "title":"5 Minutes for the Next 50 Years",
@@ -49,6 +51,7 @@
         "id":"3",
         "Category":"bussiness",
         "type":"video",
+        "image":"../../src/backend/api_backend/multimedia/business_motiversity.jpg",
         "files":[
             {
                 "title":"How To Go From Hustle To Empire - Dwayne the rock Johnson's Motivation",
@@ -71,6 +74,7 @@
         "id":"4",
         "Category":"comedy",
         "type":"audio",
+        "image":"..//src/backend/api_backend/multimedia/funny-1.jpeg",
         "files":[
             {
                 "title":"Being 5’6 has its downfalls for sure 🤣 🤣 ",
@@ -92,6 +96,7 @@
         "id":"5",
         "Category":"comedy",
         "type":"video",
+        "image":"../../src/backend/api_backend/multimedia/funny-2.jpeg",
         "files":[
             {
                 "title":"Comedy podcast 😂😂 | Zakir khan ❤️‍🩹",
@@ -114,6 +119,7 @@
         "id":"6",
         "Category":"comedy",
         "type":"audio",
+        "image":"../../src/backend/api_backend/multimedia/funny-3.jpeg",
         "files":[
             {
                 "title":"WORLD IS NOT READY FOR SAMAY'S HUMERA ",
@@ -135,6 +141,7 @@
         "id":"7",
         "Category":"crime",
         "type":"video",
+        "image":"../../src/backend/api_backend/multimedia/10min_murder.jpeg",
         "files":[
             {
                 "title":"Case of the Killer Clown",
@@ -157,6 +164,7 @@
         "id":"8",
         "Category":"crime",
         "type":"audio",
+        "image":"../../src/backend/api_backend/multimedia/crime-1.jpeg",
         "files":[
             {
                 "title":"She deluded herself into believing she's innocent ",
@@ -179,6 +187,7 @@
         "id":"9",
         "Category":"crime",
         "type":"audio",
+        "image":"../../src/backend/api_backend/multimedia/chilling.jpeg",
         "files":[
             {
                 "title":"The Anniversary Creepypasta 💀 Scary Story / Horror Audiobook",
@@ -201,6 +210,7 @@
         "id":"10",
         "Category":"culture",
         "type":"audio",
+        "image":"../../src/backend/api_backend/multimedia/culture-1.jpeg",
         "files":[
             {
                 "title":"Joe Rogan w/ Bill Burr - Ugly vs pretty people🤣🤣",
@@ -216,6 +226,7 @@
         "id":"11",
         "Category":"culture",
         "type":"video",
+        "image":"../../src/backend/api_backend/multimedia/culture-2.jpeg",
         "files":[
             {
                 "title":"The danger of silence",
@@ -238,6 +249,7 @@
         "id":"12",
         "Category":"education",
         "type":"video",
+        "image":"../../src/backend/api_backend/multimedia/education-1.jpeg",
         "files":[
             {
                 "title":"Learn English With Podcast Conversation Episode 1",
@@ -261,6 +273,7 @@
         "id":"13",
         "Category":"education",
         "type":"video",
+        "image":"../../src/backend/api_backend/multimedia/education-2.jpeg",
         "files":[
             {
                 "title":"Improve Your English Listening Skill With Podcasts!",
@@ -276,11 +289,12 @@
         "id":"14",
         "Category":"history",
         "type":"video",
+        "image":"../../src/backend/api_backend/multimedia/history-1.jpeg",
         "files":[
             {
                 "title":"Who Were the IRA (Irish Republican Army)? | 5 Minute History: Episode 1",
                 "description":"What was the Irish Republican Army (IRA) and why did it become so infamous in Northern Ireland and the Republic alike? In this 5 minute history, an introduction to the Troubles and the IRA. ",
-                "creatorName":"Abhiram",
+                "creatorName":"History With Hilbert",
                 "views":".503,482  views",
                 "source":"./multimedia/history-2.mp4"
             },
@@ -298,6 +312,7 @@
         "id":"15",
         "Category":"history",
         "type":"audio",
+        "image":"../../src/backend/api_backend/multimedia/history-1.jpeg",
         "files":[
             {
                 "title":"Why Study History? | 5 Minute Video",
@@ -314,6 +329,7 @@
         "id":"16",
         "Category":"science",
         "type":"audio",
+        "image":"../../src/backend/api_backend/multimedia/science.jpeg",
         "files":[
             {
                 "title":"How to STUDY EFFECTIVELY | Andrew Huberman",

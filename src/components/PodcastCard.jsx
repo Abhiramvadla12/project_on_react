@@ -2,7 +2,7 @@
 import styled from "styled-components";
 import { IconButton, Avatar } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import podcastImage from "../images/podcast-icon.jpeg";
+// import podcastImage from "../images/podcast-icon.jpeg";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
@@ -154,19 +154,20 @@ const PodcastCard = ({apiData}) => {
   return (
     <>
         {apiData.map((element, index) => {
+          
         if (
           ["business", "crime", "education", "history", "comedy"].includes(
             element ?.Category
           )
         ) {
           return (
-            <Card key={index}>
+            <Card key={index} >
               <div>
                 <Top>
                   <Favorite>
                     <FavoriteIcon style={{ width: "16px", height: "16px" }} />
                   </Favorite>
-                  <CardImage src={podcastImage} alt="Podcast" />
+                  <CardImage src={element.image}  alt="Podcast" />
                 </Top>
                 <CardInformation>
                   <MainInfo>
