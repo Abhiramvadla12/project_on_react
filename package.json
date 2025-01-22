@@ -2,11 +2,10 @@
   "name": "project_on_react",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://Abhiramvadla12.github.io/project_on_react/",
+  
   "type": "module",
   "scripts": {
-    "predeploy" : "npm run build",
-    "deploy" : "gh-pages -d dist",
+    
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
