@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styled, { ThemeProvider } from 'styled-components'; //Styled-components is a popular library in the React ecosystem that allows you to write CSS directly within JavaScript files, using tagged template literals. It enables you to style components in a modular and maintainable way, keeping your styles scoped to specific components.
 import { lightTheme, darkTheme } from './utils/Themes'; //these themes imported from another file
-import './App.css'
+
 import Sidebar from './components/Sidebar';
 import NavBar from './components/NavBar';
 import { Routes,Route } from 'react-router-dom';
