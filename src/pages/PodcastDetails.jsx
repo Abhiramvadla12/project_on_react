@@ -54,32 +54,30 @@ const Views = styled.div`
 `;
 
 const PodcastDetails = () => {
-  const [data, setData] = useState(null); // State to store fetched data
-  const [error, setError] = useState(null); // State to handle errors
-  const [loading, setLoading] = useState(true); // State for loading status
-  const [openModal, setOpenModal] = useState(false); // State to handle modal visibility
-  const [currentEpisode, setCurrentEpisode] = useState(null); // State to store the selected episode
-  const { id } = useParams(); // Get the podcast ID from the URL
-  console.log("Podcast ID:", id);
+  const [data, setData] = useState(null); // Store fetched data
+  const [error, setError] = useState(null); // Handle errors
+  const [loading, setLoading] = useState(true); // Loading state
+  const [openModal, setOpenModal] = useState(false); // Modal visibility
+  const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(null); // Track current episode index
+  const { id } = useParams(); // Get podcast ID from URL
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await getData(); // Call your getData function
-        setData(result); // Update state with the fetched data
+        const result = await getData(); // Fetch data
+        setData(result); // Set data
       } catch (err) {
-        setError(err.message); // Handle and display errors
+        setError(err.message); // Set error
       } finally {
-        setLoading(false); // Set loading to false after fetching
+        setLoading(false); // Stop loading
       }
     };
 
     fetchData();
-  }, []); // Empty dependency array to fetch data only once on mount
+  }, []);
 
-  // Filter the data to find the podcast with the matching ID
+  // Filter podcasts by ID
   const filteredData = data ? data.filter((item) => item.id === id) : [];
-  console.log(filteredData);
 
   if (loading) {
     return (
@@ -97,21 +95,31 @@ const PodcastDetails = () => {
     return <div>No podcast found with the provided ID.</div>;
   }
 
-  // Assuming filteredData contains one item, as IDs are unique
   const podcast = filteredData[0];
+  const currentEpisode = currentEpisodeIndex !== null ? podcast.files[currentEpisodeIndex] : null;
 
-  // Handle opening modal with the selected episode
-  const handleOpenModal = (episode) => {
-    setCurrentEpisode(episode);
+  const handleOpenModal = (index) => {
+    setCurrentEpisodeIndex(index);
     setOpenModal(true);
   };
 
-  // Handle closing modal
   const handleCloseModal = () => {
     setOpenModal(false);
-    setCurrentEpisode(null);
+    setCurrentEpisodeIndex(null);
   };
-  
+
+  const handleNext = () => {
+    if (currentEpisodeIndex < podcast.files.length - 1) {
+      setCurrentEpisodeIndex((prevIndex) => prevIndex + 1);
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentEpisodeIndex > 0) {
+      setCurrentEpisodeIndex((prevIndex) => prevIndex - 1);
+    }
+  };
+
   return (
     <div style={{ overflowY: "scroll" }}>
       <EpisodeTop>
@@ -127,8 +135,8 @@ const PodcastDetails = () => {
         </Information>
       </EpisodeTop>
 
-      {podcast.files.map((item) => (
-        <Episodes key={item.id} onClick={() => handleOpenModal(item)}>
+      {podcast.files.map((item, index) => (
+        <Episodes key={item.id} onClick={() => handleOpenModal(index)}>
           <img src={podcast.image} alt="image not found" style={{ height: "150px", width: "150px" }} />
           <Information>
             <h4>{item.title}</h4>
@@ -144,22 +152,29 @@ const PodcastDetails = () => {
           {currentEpisode && (
             <>
               {podcast.type === "audio" ? (
-                <audio controls>
+                <audio key={currentEpisode.source} controls>
                   <source src={currentEpisode.source} type="audio/mp3" />
                   Your browser does not support the audio element.
                 </audio>
               ) : podcast.type === "video" ? (
-                <video controls width="100%">
+                <video key={currentEpisode.source} controls width="100%">
                   <source src={currentEpisode.source} type="video/mp4" />
                   Your browser does not support the video element.
                 </video>
               ) : (
                 <div>Invalid media type</div>
               )}
+              <p>{currentEpisode.description}</p>
             </>
           )}
         </DialogContent>
         <DialogActions>
+          <Button onClick={handlePrev} disabled={currentEpisodeIndex === 0}>
+            Previous
+          </Button>
+          <Button onClick={handleNext} disabled={currentEpisodeIndex === podcast.files.length - 1}>
+            Next
+          </Button>
           <Button onClick={handleCloseModal} color="primary">
             Close
           </Button>

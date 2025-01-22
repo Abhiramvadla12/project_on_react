@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import PodcastCard from '../components/PodcastCard';
 import { useState ,useEffect} from 'react';
 import getData from '../components/api';
+
 import { CircularProgress } from "@mui/material";
 const DashboardMain = styled.div`
     padding: 20px 30px;
@@ -71,6 +72,8 @@ const Dashboard = () => {
     const [data, setData] = useState(null); // State to store fetched data
     const [error, setError] = useState(null); // State to handle errors
     const [loading, setLoading] = useState(true); // State for loading status
+    
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -100,20 +103,50 @@ const Dashboard = () => {
                 <FilterContainer>
                 <Topic>
                     Most Popular
-                    <Link to={"/displaypodcast/mostpopular"} style={{textDecoration: "none"}} >
+                    <Link to={"/displaypodcast/MostPopular"} style={{textDecoration: "none"}} >
                         <Span>Show All</Span>
                     </Link>
                 </Topic>
                     <Podcasts >
                         {
-                            data && <PodcastCard apiData={data} />
+                            data && <PodcastCard apiData={data} type={"MostPopular"}/>
                         }
                         
                     
                     </Podcasts>
                 </FilterContainer>
 
+                <FilterContainer>
+                <Topic>
+                    Comedy
+                    <Link to={"/displaypodcast/comedy"} style={{textDecoration: "none"}} >
+                        <Span>Show All</Span>
+                    </Link>
+                </Topic>
+                    <Podcasts >
+                        {
+                            data && <PodcastCard apiData={data} type={"comedy"}/>
+                        }
+                        
+                    
+                    </Podcasts>
+                </FilterContainer>
 
+                <FilterContainer>
+                <Topic>
+                    Culture
+                    <Link to={"/displaypodcast/culture"} style={{textDecoration: "none"}} >
+                        <Span>Show All</Span>
+                    </Link>
+                </Topic>
+                    <Podcasts >
+                        {
+                            data && <PodcastCard apiData={data} type={"culture"} />
+                        }
+                        
+                    
+                    </Podcasts>
+                </FilterContainer>
                 
 
 

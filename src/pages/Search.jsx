@@ -120,7 +120,7 @@ const Search = () => {
               {
                 Category.map((element)=>(
                   <>
-                    <Link to={`/displaypodcast/${element.name.toLocaleLowerCase}`} style={{textDecoration:"none"}}>
+                    <Link to={`/displaypodcast/${element.name.toLocaleLowerCase()}`} style={{textDecoration:"none"}}>
                         <DefaultCard category={element}/>
                     </Link>
                   </>

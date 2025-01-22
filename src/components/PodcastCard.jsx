@@ -5,6 +5,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 // import podcastImage from "../images/podcast-icon.jpeg";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import { Science } from "@mui/icons-material";
 
 const PlayIcon = styled.div`
 
@@ -146,17 +147,27 @@ const Views = styled.div`
     width: max-content;
 `;
 
-const PodcastCard = ({apiData}) => {
+const PodcastCard = ({apiData,type}) => {
     // console.log("received",apiData);
     if (!apiData || !Array.isArray(apiData)) {
         return <div>No Data Available</div>;
       }
-    
+    // console.log("recieved data from dashboard",type);
+    let catArr = []
+    if(type == "MostPopular"){
+        catArr = ["bussiness", "crime", "education" ];
+    }
+    else if(type == "all"){
+        catArr = ["bussiness", "crime", "education", "history", "comedy","culture","Science"]
+    }
+    else{
+        catArr = [type]
+    }
   return (
     <>
         {apiData.map((element, index) => {
-                if (["business", "crime", "education", "history", "comedy"].includes(element?.Category)) {
-                    console.log(element.image)
+                if (catArr.includes(element?.Category)) {
+                    // console.log(element.image)
                     return (
                         <Link to={`/podcast/${element.id}`} key={index} style={{ textDecoration: "none" }}>
                             <Card>
