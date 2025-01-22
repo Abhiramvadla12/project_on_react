@@ -111,7 +111,7 @@ const PodcastDetails = () => {
     setOpenModal(false);
     setCurrentEpisode(null);
   };
-
+  
   return (
     <div style={{ overflowY: "scroll" }}>
       <EpisodeTop>

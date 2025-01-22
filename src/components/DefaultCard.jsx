@@ -1,6 +1,6 @@
 
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+
 const Card = styled.div`
 width:150px;
 height:150px;
@@ -52,6 +52,3 @@ export const DefaultCard = ({category}) => {
     </Card>
   )
 }
-DefaultCard.propTypes = {
-  category: PropTypes.element.isRequired,
-};

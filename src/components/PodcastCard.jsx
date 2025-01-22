@@ -5,7 +5,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 // import podcastImage from "../images/podcast-icon.jpeg";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import PropTypes from "prop-types";
+
 const PlayIcon = styled.div`
 
         padding: 10px;
@@ -151,10 +151,12 @@ const PodcastCard = ({apiData}) => {
     if (!apiData || !Array.isArray(apiData)) {
         return <div>No Data Available</div>;
       }
+    
   return (
     <>
         {apiData.map((element, index) => {
                 if (["business", "crime", "education", "history", "comedy"].includes(element?.Category)) {
+                    console.log(element.image)
                     return (
                         <Link to={`/podcast/${element.id}`} key={index} style={{ textDecoration: "none" }}>
                             <Card>
@@ -201,21 +203,4 @@ const PodcastCard = ({apiData}) => {
 };
 
 export default PodcastCard;
-PodcastCard.propTypes = {
-    apiData: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-        Category: PropTypes.string,
-        image: PropTypes.string,
-        type: PropTypes.string,
-        files: PropTypes.arrayOf(
-          PropTypes.shape({
-            title: PropTypes.string,
-            description: PropTypes.string,
-            creatorName: PropTypes.string,
-            views: PropTypes.number,
-          })
-        ),
-      })
-    ),
-  };
+

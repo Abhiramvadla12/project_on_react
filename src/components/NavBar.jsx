@@ -6,7 +6,7 @@ import { IconButton } from '@mui/material';
 // import {Link} from 'react-router-dom';
 // import {useState} from "react";
 import { useNavigate } from "react-router-dom";
-import PropTypes from 'prop-types';
+
 const NavBardiv = styled.div`
 
     display: flex;
@@ -79,10 +79,4 @@ const NavBar = ({setMenuOpen, isLogined,darkMode }) => {
 }
 
 export default NavBar
-NavBar.propTypes = {
-    setMenuOpen: PropTypes.func.isRequired, // Function to toggle the menu
-    menuOpen: PropTypes.bool.isRequired, // Boolean indicating menu state
-    isLogined: PropTypes.bool.isRequired, // Boolean indicating if the user is logged in
-    onLogout: PropTypes.func.isRequired, // Function for logout
-    darkMode: PropTypes.bool.isRequired, // Boolean indicating if dark mode is enabled
-  };
+

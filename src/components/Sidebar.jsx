@@ -4,7 +4,7 @@ import {CloseRounded,LightModeRounded,LogoutRounded, DarkModeRounded, CloudUploa
 import LogoImage from '../images/logo_project.png'
 import {Link} from 'react-router-dom'
 import { menuItems} from './Menu';
-import PropTypes from "prop-types";
+
 const MenuContainer = styled.div`
         //the part the sidebar occupy in the webpage
         flex:0.5;
@@ -160,18 +160,5 @@ const Sidebar = ({menuOpen,setMenuOpen,setDarkMode,darkMode,isLogined,onLogout})
 }
 
 export default Sidebar;
-Sidebar.propTypes = {
-  menuOpen: PropTypes.bool.isRequired,
-  setMenuOpen: PropTypes.func.isRequired,
-  setDarkMode: PropTypes.func.isRequired,
-  darkMode: PropTypes.bool.isRequired,
-  isLogined: PropTypes.bool.isRequired,
-  onLogout: PropTypes.func.isRequired,
-};
 
-Sidebar.defaultProps = {
-  menuOpen: false,
-  darkMode: false,
-  isLogined: false,
-};
 
