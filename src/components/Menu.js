@@ -1,4 +1,4 @@
-import { FavoriteRounded, HomeRounded, LightModeRounded, LogoutRounded, SearchRounded, UploadRounded } from "@mui/icons-material";
+import { FavoriteRounded, HomeRounded, SearchRounded } from "@mui/icons-material";
 
 export const menuItems = [
     {

@@ -5,7 +5,7 @@ import { Category } from "../utils/Data";
 import { Link } from "react-router-dom";
 import { DefaultCard } from "../components/DefaultCard";
 
-import { CircularProgress } from "@mui/material";
+// import { CircularProgress } from "@mui/material";
 import styled from "styled-components";
 
 const SearchMain = styled.div`
@@ -58,27 +58,27 @@ const SearchBar = styled.div`
       padding: 14px;
 
   `;
-  const Loader = styled.div`
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      width: 100%;
+  // const Loader = styled.div`
+  //     display: flex;
+  //     justify-content: center;
+  //     align-items: center;
+  //     height: 100%;
+  //     width: 100%;
 
-  `;
-  const SearchContainer = styled.div`
-        display: flex;
-        gap: 20px;
-        @media (max-width: 768px) {
-              flex-direction: column;
-        }
-  `;
+  // `;
+  // const SearchContainer = styled.div`
+  //       display: flex;
+  //       gap: 20px;
+  //       @media (max-width: 768px) {
+  //             flex-direction: column;
+  //       }
+  // `;
 
 
 const Search = () => {
   const [searched,setSearched] = useState("");
-  const [searchedPodcasts,setSearchedPodcasts] = useState([1,2,3,4,5,6]);
-  const [loading,setLoading] = useState(false);
+  
+  // const [loading,setLoading] = useState(false);
   const handleChange = async(e)=>{
     setSearched(e.target.value);
     // setLoading(true)
@@ -118,7 +118,7 @@ const Search = () => {
           <Heading>Browse all</Heading>
           <BrowseAll>
               {
-                Category.map((element,index)=>(
+                Category.map((element)=>(
                   <>
                     <Link to={`/displaypodcast/${element.name.toLocaleLowerCase}`} style={{textDecoration:"none"}}>
                         <DefaultCard category={element}/>
@@ -130,33 +130,7 @@ const Search = () => {
         </Catagories> :
         (
           <>
-            {
-              loading ? (
-              <Loader>
-                  <CircularProgress />
-              </Loader>)
-              :
-              (
-                <>
-                {
-                  searchedPodcasts.length != 0 ?(
-                    <>
-                      <SearchContainer>
-
-                      </SearchContainer>
-                    </>
-
-                      
-                  ) 
-                  :(
-                    <>
-                      No podcast Found
-                    </>
-                    )
-                }
-                </>
-              )
-            }
+           ()
           </>
         )
       }

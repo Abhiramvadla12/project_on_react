@@ -85,6 +85,7 @@ const Dashboard = () => {
 
         fetchData();
     }, []); // Empty dependency array to fetch data only once on mount
+    console.log(error)
   return (
    
     <>

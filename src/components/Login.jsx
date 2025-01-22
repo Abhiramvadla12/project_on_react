@@ -7,6 +7,8 @@ import Image from '../images/google.webp';
 import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import LogoImg from "../images/login_logo.jpeg";
+import PropTypes from 'prop-types';
+
 import {
   getAuth,
   onAuthStateChanged,
@@ -235,5 +237,7 @@ function Login({ onLogin}) {
 
 export default Login;
 
-
+Login.propTypes = {
+  onLogin: PropTypes.func.isRequired, // Validate that onLogin is a function and required
+};
 
