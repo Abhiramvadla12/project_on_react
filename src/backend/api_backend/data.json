@@ -5,21 +5,21 @@
         "id":"1",
         "Category":"bussiness",
         "type":"video",
-        "image": "../../src/backend/api_backend/multimedia/tim_ferris.jpeg",
+        "image": "/tim_ferris.jpeg",
         "files":[
             {
                 "title":"The Ferris show",
                 "description":"The Tim Ferriss Show is a podcast hosted by Tim Ferriss, an author, entrepreneur, and public speaker. The podcast features interviews with world-class performers from a variety of fields, including business, sports, entertainment, and more. Each episode explores the guest's strategies, tactics, and habits for achieving success and overcoming challenges.",
                 "creatorName":"Abhiram",
                 "views":".12 views",
-                "source":"../../src/backend/api_backend/multimedia/He Tried Ketamine Treatment For Depression To Show You What It’s Like - Tim Ferriss (720p, h264).mp4"
+                "source":"/He Tried Ketamine Treatment For Depression To Show You What It’s Like - Tim Ferriss (720p, h264).mp4"
             },
             {
                 "title":"The Ferris show",
                 "description":"The Tim Ferriss Show is a podcast hosted by Tim Ferriss, an author, entrepreneur, and public speaker. The podcast features interviews with world-class performers from a variety of fields, including business, sports, entertainment, and more. Each episode explores the guest's strategies, tactics, and habits for achieving success and overcoming challenges.",
                 "creatorName":"Abhiram",
                 "views":".12 views",
-                "source":"../../src/backend/api_backend/multimedia/How to Use Writing to Sharpen Your Thinking  Tim Ferriss - Tim Ferriss (720p, h264).mp4"
+                "source":"/How to Use Writing to Sharpen Your Thinking  Tim Ferriss - Tim Ferriss (720p, h264).mp4"
             }
         ]
 
@@ -28,21 +28,21 @@
         "id":"2",
         "Category":"bussiness",
         "type": "audio",
-        "image": "../../src/backend/api_backend/multimedia/5min.jpg",
+        "image": "/5min.jpg",
         "files":[
             {
                 "title":"5 Minutes for the Next 50 Years",
                 "description":"Welcome back to Life Advice for a profound exploration of life's lessons as shared by the remarkable Matthew McConaughey. In this insightful speech, McConaughey imparts wisdom drawn from his journey, blending personal experience with timeless truths. Let's unravel the key takeaways that can shape our perspectives and lead to a more fulfilling existence.",
                 "creatorName":" Mathhew McConaughey Motivational Speech",
                 "views":".5,969,652 views",
-                "source":"../../src/backend/api_backend/multimedia/5 Minutes for the Next 50 Years - Mathhew McConaughey Motivational Speech - Life Advice.mp3"
+                "source":"/5 Minutes for the Next 50 Years - Mathhew McConaughey Motivational Speech - Life Advice.mp3"
             },
             {
                 "title":"Learn How To Think Correctly - The Mindset of a Billionaire",
                 "description":"Welcome to Life Advice, where we dive into the power of thought and intentional living. In this transformative video, I'm excited to share insights on the thinking gap – the key distinction between success and failure in life. It's not about intelligence; it's about how you think, and I'm here to guide you on cultivating the mindset for success.",
                 "creatorName":"John Maxwell",
                 "views":".3,594 views",
-                "source":"../../src/backend/api_backend/multimedia/Learn How To Think Correctly - The Mindset of a Billionaire - Life Advice.mp3"
+                "source":"/Learn How To Think Correctly - The Mindset of a Billionaire - Life Advice.mp3"
             }
         ]
 
@@ -51,21 +51,21 @@
         "id":"3",
         "Category":"bussiness",
         "type":"video",
-        "image":"../../src/backend/api_backend/multimedia/business_motiversity.jpg",
+        "image":"/business_motiversity.jpg",
         "files":[
             {
                 "title":"How To Go From Hustle To Empire - Dwayne the rock Johnson's Motivation",
                 "description":"In this powerful motivational speech featuring Dwayne The Rock Johnson, he dives into how he was a kid with $7 to becoming the world wide mega star he is today. He dives into his secrets on how we can make it to the top and stay there. ",
                 "creatorName":"Business Motiversity",
                 "views":".3,453 views",
-                "source":"../../src/backend/api_backend/multimedia/rock.mp4"
+                "source":"/rock.mp4"
             },
             {
                 "title":"nobody cares, work harder - best hopecore speeches",
                 "description":"No one cares, work harder. It's time to get to work and stop complaining. Your dreams won't chase themselves.",
                 "creatorName":"Business Motiversity",
                 "views":"3,972 viewss",
-                "source":"../../src/backend/api_backend/multimedia/work_hard.mp4"
+                "source":"/work_hard.mp4"
             }
         ]
 
@@ -74,21 +74,21 @@
         "id":"4",
         "Category":"comedy",
         "type":"audio",
-        "image":"..//src/backend/api_backend/multimedia/funny-1.jpeg",
+        "image":"..//public/funny-1.jpeg",
         "files":[
             {
                 "title":"Being 5’6 has its downfalls for sure 🤣 🤣 ",
                 "description":"Welcome to the DM Monday Podcast with Trey Lewis! Join Trey along with his buddies Mitch Wallis and Trey Bonner as they share stories of the road, tackle hot topics, and of course share some wild DM’s! Get to know the real TL as more than just ‘Mr. Dicked Down in Dallas’! You never know what you’re gonna hear or who's gonna be coming on as a guest! Slide into these DM’s and enjoy the DM Monday Podcast!",
                 "creatorName":"DM Monday with Trey Lewis",
                 "views":".5,244 views",
-                "source":"../../src/backend/api_backend/multimedia/random_joke-1.mp3"
+                "source":"/random_joke-1.mp3"
             },
             {
                 "title":"Taking a ride on the ugly bus 🤣🤣",
                 "description":"Welcome to the DM Monday Podcast with Trey Lewis! Join Trey along with his buddies Mitch Wallis and Trey Bonner as they share stories of the road, tackle hot topics, and of course share some wild DM’s! Get to know the real TL as more than just ‘Mr. Dicked Down in Dallas’! You never know what you’re gonna hear or who's gonna be coming on as a guest! Slide into these DM’s and enjoy the DM Monday Podcast!",
                 "creatorName":"DM Monday with Trey Lewis",
                 "views":".67 views",
-                "source":"../../src/backend/api_backend/multimedia/random_joke-2.mp3"
+                "source":"/random_joke-2.mp3"
             }
         ]
 
@@ -96,21 +96,21 @@
         "id":"5",
         "Category":"comedy",
         "type":"video",
-        "image":"../../src/backend/api_backend/multimedia/funny-2.jpeg",
+        "image":"/funny-2.jpeg",
         "files":[
             {
                 "title":"Comedy podcast 😂😂 | Zakir khan ❤️‍🩹",
                 "description":"Namit Chawla is a StoryTeller and a Content Creator.Talkswithnamit is a place where Namit Chawla talks about every aspect of life. Through stories, podcasts and much more we will discuss about everything going around us in our daily life such as relationships, work, health, mythology, faith, struggles and so much more.",
                 "creatorName":"Story fans",
                 "views":".12 views",
-                "source":"../../src/backend/api_backend/multimedia/zahir_khan-1.mp4"
+                "source":"/zahir_khan-1.mp4"
             },
             {
                 "title":"Zakir khan comedy video 😂😂",
                 "description":"Namit Chawla is a StoryTeller and a Content Creator.Talkswithnamit is a place where Namit Chawla talks about every aspect of life. Through stories, podcasts and much more we will discuss about everything going around us in our daily life such as relationships, work, health, mythology, faith, struggles and so much more.",
                 "creatorName":"Story fans",
                 "views":".3,824 views",
-                "source":"../../src/backend/api_backend/multimedia/zahir_khan-2.mp4"
+                "source":"/zahir_khan-2.mp4"
             }
         ]
 
@@ -119,21 +119,21 @@
         "id":"6",
         "Category":"comedy",
         "type":"audio",
-        "image":"../../src/backend/api_backend/multimedia/funny-3.jpeg",
+        "image":"/funny-3.jpeg",
         "files":[
             {
                 "title":"WORLD IS NOT READY FOR SAMAY'S HUMERA ",
                 "description":"Welcome to Haso Divesh Ke Saath!.Laugh your heart out with hilarious sketches, relatable comedy, and everyday fun! Whether you're having a bad day or just want to enjoy some light-hearted fun, this is the place for non-stop entertainment.",
                 "creatorName":"Haso Divesh Ke Saath",
                 "views":".13,441 views",
-                "source":"../../src/backend/api_backend/multimedia/samay-1.mp3"
+                "source":"/samay-1.mp3"
             },
             {
                 "title":"The Ferris show",
                 "description":"Welcome to Haso Divesh Ke Saath!.Laugh your heart out with hilarious sketches, relatable comedy, and everyday fun! Whether you're having a bad day or just want to enjoy some light-hearted fun, this is the place for non-stop entertainment.",
                 "creatorName":"Haso Divesh Ke Saath",
                 "views":".11,747 views",
-                "source":"../../src/backend/api_backend/multimedia/samay-2.mp3"
+                "source":"/samay-2.mp3"
             }
         ]
 
@@ -141,21 +141,21 @@
         "id":"7",
         "Category":"crime",
         "type":"video",
-        "image":"../../src/backend/api_backend/multimedia/10min_murder.jpeg",
+        "image":"/10min_murder.jpeg",
         "files":[
             {
                 "title":"Case of the Killer Clown",
                 "description":"A story that even by Florida standards, is strange….A clown holding flowers and balloons knocked on Marlene Warren’s front door - and when she opened the door, the clown fatally shot her.",
                 "creatorName":"10 Minute Murder",
                 "views":".960 views",
-                "source":"../../src/backend/api_backend/multimedia/crime-1.mp4"
+                "source":"/crime-1.mp4"
             },
             {
                 "title":"The Ferris show",
                 "description":"A modern-day Romeo and Juliet story in Oregon came to a tragic end. After Ellie Friar’s father forbade her from seeing her boyfriend, Ellie decided that she was willing to do anything to continue the relationship…no matter the consequences.",
                 "creatorName":"10 Minute Murder",
                 "views":".1,033 views",
-                "source":"../../src/backend/api_backend/multimedia/crime-2.mp4"
+                "source":"/crime-2.mp4"
             }
         ]
 
@@ -164,21 +164,21 @@
         "id":"8",
         "Category":"crime",
         "type":"audio",
-        "image":"../../src/backend/api_backend/multimedia/crime-1.jpeg",
+        "image":"/crime-1.jpeg",
         "files":[
             {
                 "title":"She deluded herself into believing she's innocent ",
                 "description":"True Crime Central uncovers the dark and twisted world of crime. From chilling murder cases, infamous serial killers to fascinating examinations of the criminal mind, we have something for every true crime enthusiast.",
                 "creatorName":"True Crime Central",
                 "views":".239 views",
-                "source":"../../src/backend/api_backend/multimedia/crime-3.mp3"
+                "source":"/crime-3.mp3"
             },
             {
                 "title":"Sheila Davalloo Murdered her Romantic Rival | Killer Women with Piers Morgan S2",
                 "description":"True Crime Central uncovers the dark and twisted world of crime. From chilling murder cases, infamous serial killers to fascinating examinations of the criminal mind, we have something for every true crime enthusiast.",
                 "creatorName":"True Crime Central",
                 "views":".5,524 views",
-                "source":"../../src/backend/api_backend/multimedia/crime-4.mp3"
+                "source":"/crime-4.mp3"
             }
         ]
 
@@ -187,21 +187,21 @@
         "id":"9",
         "Category":"crime",
         "type":"audio",
-        "image":"../../src/backend/api_backend/multimedia/chilling.jpeg",
+        "image":"/chilling.jpeg",
         "files":[
             {
                 "title":"The Anniversary Creepypasta 💀 Scary Story / Horror Audiobook",
                 "description":"In The Anniversary, June has planned the perfect surprise for her husband on their second wedding anniversary—a secret trip to join him in Fort Lauderdale. But when her romantic surprise goes horribly wrong, she finds herself alone, stranded in a city that feels as cold as her husband’s betrayal. Haunted by heartbreak and on the edge of despair, June wanders the rainy streets, wrestling with the pain of lost love and the unsettling memories it awakens. As she seeks comfort in unexpected places, she’s forced to confront how far she’ll go to mend the wounds of her shattered trust. The Anniversary is a gripping exploration of heartbreak, resilience, and the lengths we’ll go to reclaim ourselves from ruin.",
                 "creatorName":"Chilling Tales for Dark Nights",
                 "views":".2,238 views",
-                "source":"../../src/backend/api_backend/multimedia/crime-5.mp3"
+                "source":"/crime-5.mp3"
             },
             {
                 "title":"For the Good of the People Creepypasta 💀 Scary Story / Horror Audiobook",
                 "description":"In the dead of night, a mob of townspeople marches toward the isolated farmhouse of the enigmatic Laveau family. Armed with shovels, shotguns, and righteous fury, they call themselves the Society for Peace and Justice — determined to rid their community of a perceived evil. But Joe, a simple man reluctantly caught up in the frenzy, senses that something isn't right. As the mob descends into violence, dark secrets begin to unravel, and Joe is confronted with a chilling truth that shakes his understanding of good and evil. Who are the true monsters of this town? And what horrors will be unleashed when judgment falls on the wrong hands?",
                 "creatorName":"Chilling Tales for Dark Nights",
                 "views":".2,328 views",
-                "source":"../../src/backend/api_backend/multimedia/crime-6.mp3"
+                "source":"/crime-6.mp3"
             }
         ]
 
@@ -210,14 +210,14 @@
         "id":"10",
         "Category":"culture",
         "type":"audio",
-        "image":"../../src/backend/api_backend/multimedia/culture-1.jpeg",
+        "image":"/culture-1.jpeg",
         "files":[
             {
                 "title":"Joe Rogan w/ Bill Burr - Ugly vs pretty people🤣🤣",
                 "description":"In this episode of the Joe Rogan Experience, Joe rogan and Bill Burr talk about ugly and pretty people. Pretty people have it easier according to Bill and he gives his insights on how and why. Lots of laughs and maybe a little bit of truth?",
                 "creatorName":"Mogo",
                 "views":".4,591 views",
-                "source":"../../src/backend/api_backend/multimedia/culture-1.mp3"
+                "source":"/culture-1.mp3"
             }
         ]
 
@@ -226,21 +226,21 @@
         "id":"11",
         "Category":"culture",
         "type":"video",
-        "image":"../../src/backend/api_backend/multimedia/culture-2.jpeg",
+        "image":"/culture-2.jpeg",
         "files":[
             {
                 "title":"The danger of silence",
                 "description":"We spend so much time listening to the things people are saying that we rarely pay attention to the things they don't, says slam poet and teacher Clint Smith. A short, powerful piece from the heart, about finding the courage to speak up against ignorance and injustice.",
                 "creatorName":"TED",
                 "views":".2,397,325 views",
-                "source":"../../src/backend/api_backend/multimedia/culture-2.mp4"
+                "source":"/culture-2.mp4"
             },
             {
                 "title":"YOUR VALUE - Powerful Motivational Speech",
                 "description":"We spend so much time listening to the things people are saying that we rarely pay attention to the things they don't, says slam poet and teacher Clint Smith. A short, powerful piece from the heart, about finding the courage to speak up against ignorance and injustice.",
                 "creatorName":"TED",
                 "views":".2,705,177 views",
-                "source":"../../src/backend/api_backend/multimedia/culture-3.mp4"
+                "source":"/culture-3.mp4"
             }
         ]
 
@@ -249,21 +249,21 @@
         "id":"12",
         "Category":"education",
         "type":"video",
-        "image":"../../src/backend/api_backend/multimedia/education-1.jpeg",
+        "image":"/education-1.jpeg",
         "files":[
             {
                 "title":"Learn English With Podcast Conversation Episode 1",
                 "description":"Learn English With Podcast Conversation  Episode 1 | English Conversation  For Learning English",
                 "creatorName":"Speak English Smartly",
                 "views":".4,395,388 views",
-                "source":"../../src/backend/api_backend/multimedia/education-1.mp4"
+                "source":"/education-1.mp4"
             },
             {
                 "title":"Learn English With Podcast Conversation Episode 2 ",
                 "description":"Learn English With Podcast Conversation  Episode 2 | English Podcast For Beginners ",
                 "creatorName":"Speak English Smartly",
                 "views":".1.3M views",
-                "source":"../../src/backend/api_backend/multimedia/education-2.mp4"
+                "source":"/education-2.mp4"
             }
         ]
 
@@ -273,14 +273,14 @@
         "id":"13",
         "Category":"education",
         "type":"video",
-        "image":"../../src/backend/api_backend/multimedia/education-2.jpeg",
+        "image":"/education-2.jpeg",
         "files":[
             {
                 "title":"Improve Your English Listening Skill With Podcasts!",
                 "description":"Want to improve you English listening skill? In fact, English listening skill is the basis of an effective communication in English. To improve your English listening skill, there are many things you can do. The best way, however, is to listen to English podcasts. But which podcasts are good, and how can you use podcasts to improve your English listening skill? ",
                 "creatorName":"POC English",
                 "views":".1,110,041 views",
-                "source":"../../src/backend/api_backend/multimedia/education-3.mp4"
+                "source":"/education-3.mp4"
             }
         ]
 
@@ -289,21 +289,21 @@
         "id":"14",
         "Category":"history",
         "type":"video",
-        "image":"../../src/backend/api_backend/multimedia/history-1.jpeg",
+        "image":"/history-1.jpeg",
         "files":[
             {
                 "title":"Who Were the IRA (Irish Republican Army)? | 5 Minute History: Episode 1",
                 "description":"What was the Irish Republican Army (IRA) and why did it become so infamous in Northern Ireland and the Republic alike? In this 5 minute history, an introduction to the Troubles and the IRA. ",
                 "creatorName":"History With Hilbert",
                 "views":".503,482  views",
-                "source":"../../src/backend/api_backend/multimedia/history-2.mp4"
+                "source":"/history-2.mp4"
             },
             {
                 "title":"How Did the Viking Age Start in Frisia? | History of the Netherlands c. 700 - 810 AD",
                 "description":"The Vikings are famous for their raids in Britain and Ireland, making places like Lindisfarne and York, Dublin and Wexford famous names for people into shows like Vikings on HBO and The Last Kingdom on the BBC/Netflix. But somewhere that doesn't get a lot of attention in the Viking Age is the Netherlands, known as Frisia during this time, even though they have a fascinating Viking Age History of their own from Holland to Friesland. In this video I'll be looking at how the Viking Age started in Frisia, what the situation was in the Low Countries in the Migration Era and the Frankish Conquest over King Redbad's pagan kingdom and how this spilled over into the Viking Age with Danish King Godfred's first raid on Dorestad in 810. ",
                 "creatorName":"History With Hilbert",
                 "views":".182,782 views",
-                "source":"../../src/backend/api_backend/multimedia/history-3.mp4"
+                "source":"/history-3.mp4"
             }
         ]
 
@@ -312,14 +312,14 @@
         "id":"15",
         "Category":"history",
         "type":"audio",
-        "image":"../../src/backend/api_backend/multimedia/history-1.jpeg",
+        "image":"/history-1.jpeg",
         "files":[
             {
                 "title":"Why Study History? | 5 Minute Video",
                 "description":"Is it important to study history? Why do we need to know what’s come before us? Isn’t it enough to just “live in the moment?” Renowned historian Victor Davis Hanson explores these important questions.",
                 "creatorName":"PragerU",
                 "views":".614,558 views",
-                "source":"../../src/backend/api_backend/multimedia/history-1.mp3"
+                "source":"/history-1.mp3"
             }
         ]
 
@@ -329,14 +329,14 @@
         "id":"16",
         "Category":"science",
         "type":"audio",
-        "image":"../../src/backend/api_backend/multimedia/science.jpeg",
+        "image":"/science.jpeg",
         "files":[
             {
                 "title":"How to STUDY EFFECTIVELY | Andrew Huberman",
                 "description":"Dive into the world of accelerated learning with renowned neuroscientist Andrew Huberman. In this video, Dr. Huberman shares practical and evidence-based techniques to enhance your learning process. Whether you're a student seeking academic success or a lifelong learner aiming for continual improvement, discover valuable insights on efficient study methods, memory enhancement, and cultivating a mindset that fosters ongoing learning. ",
                 "creatorName":"Forma Mentis",
                 "views":".394,146 views",
-                "source":"../../src/backend/api_backend/multimedia/science-1.mp3"
+                "source":"/science-1.mp3"
             }
         ]
 
