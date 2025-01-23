@@ -1,12 +1,13 @@
 
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import { Category } from "../utils/Data";
 import { Link } from "react-router-dom";
 import { DefaultCard } from "../components/DefaultCard";
-
+import getData from "../components/api";
 // import { CircularProgress } from "@mui/material";
 import styled from "styled-components";
+import PodcastCard from "../components/PodcastCard";
 
 const SearchMain = styled.div`
     padding: 20px 30px;
@@ -58,32 +59,84 @@ const SearchBar = styled.div`
       padding: 14px;
 
   `;
-  // const Loader = styled.div`
-  //     display: flex;
-  //     justify-content: center;
-  //     align-items: center;
-  //     height: 100%;
-  //     width: 100%;
+  const Loader = styled.div`
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
 
-  // `;
-  // const SearchContainer = styled.div`
-  //       display: flex;
-  //       gap: 20px;
-  //       @media (max-width: 768px) {
-  //             flex-direction: column;
-  //       }
-  // `;
+  `;
+  const Spinner = styled.div`
+
+    --d:22px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  color: #25b09b;
+  box-shadow: 
+    calc(1*var(--d))      calc(0*var(--d))     0 0,
+    calc(0.707*var(--d))  calc(0.707*var(--d)) 0 1px,
+    calc(0*var(--d))      calc(1*var(--d))     0 2px,
+    calc(-0.707*var(--d)) calc(0.707*var(--d)) 0 3px,
+    calc(-1*var(--d))     calc(0*var(--d))     0 4px,
+    calc(-0.707*var(--d)) calc(-0.707*var(--d))0 5px,
+    calc(0*var(--d))      calc(-1*var(--d))    0 6px;
+  animation: l27 1s infinite steps(8);
+
+@keyframes l27 {
+  100% {transform: rotate(1turn)}
+}
+`;
 
 
 const Search = () => {
   const [searched,setSearched] = useState("");
-  
-  // const [loading,setLoading] = useState(false);
+  const [loading,setLoading] = useState(true);
+  const [data, setData] = useState(null); // State to store fetched data
+    const [error, setError] = useState(null); // State to handle errors
   const handleChange = async(e)=>{
     setSearched(e.target.value);
-    // setLoading(true)
     console.log(searched);
   }
+  
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const result = await getData(); // Call your getData function
+            setData(result); // Update state with the fetched data
+        } catch (err) {
+            setError(err.message); // Handle and display errors
+        } finally {
+            setLoading(false); // Set loading to false after fetching
+        }
+    };
+
+    fetchData();
+}, []); // Empty dependency array to fetch data only once on mount
+console.log(error)
+  if (loading) {
+    return (
+      <Loader>
+        {/* <CircularProgress /> */}
+        <Spinner>
+
+        </Spinner>
+      </Loader>
+    );
+  }
+if(data){
+  const filteredData = data.filter((element) => {
+    // Check if any file in the element has a matching title, description, or creatorName
+    return element.files.some((item) => (
+      item.title.toLocaleLowerCase().includes(searched.toLocaleLowerCase()) ||
+      item.description.toLocaleLowerCase().includes(searched.toLocaleLowerCase()) ||
+      item.creatorName.toLocaleLowerCase().includes(searched.toLocaleLowerCase())
+    ));
+  });
+ console.log(filteredData);
+}
+ 
   return (
     <SearchMain>
       <div
@@ -118,9 +171,9 @@ const Search = () => {
           <Heading>Browse all</Heading>
           <BrowseAll>
               {
-                Category.map((element)=>(
+                Category.map((element,index)=>(
                   <>
-                    <Link to={`/displaypodcast/${element.name.toLocaleLowerCase()}`} style={{textDecoration:"none"}}>
+                    <Link to={`/displaypodcast/${element.name.toLocaleLowerCase()}`} style={{textDecoration:"none"}} key={index}>
                         <DefaultCard category={element}/>
                     </Link>
                   </>
@@ -130,7 +183,9 @@ const Search = () => {
         </Catagories> :
         (
           <>
-           ()
+           
+             
+          
           </>
         )
       }

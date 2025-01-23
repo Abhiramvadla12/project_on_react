@@ -5,7 +5,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 // import podcastImage from "../images/podcast-icon.jpeg";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import { Science } from "@mui/icons-material";
+
 
 const PlayIcon = styled.div`
 
@@ -30,7 +30,7 @@ const Card = styled.div`
     position: relative;
     text-decoration: none;
     background-color: ${({theme})=> theme.card};
-    max-width: 220px;
+    max-width: 230px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -125,6 +125,7 @@ const CreatorInfo = styled.div`
      justify-content: space-between;
      gap: 8px;
      margin-top: 6px;
+    
 `;
 const Creator = styled.div`
         display: flex;
@@ -133,13 +134,12 @@ const Creator = styled.div`
 
 `;
 
-const CreatorName =styled.div`
-        font-size: 12px;
-         overflow: hidden;
-         white-space: nowrap;
-         text-overflow: ellipsis;
-         color :  ${({theme})=> theme.text_secondary};
-
+const CreatorName = styled.div`
+  font-size: 12px;
+  color: ${({ theme }) => theme.text_secondary};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; 
 `;
 const Views = styled.div`
     font-size: 10px;
