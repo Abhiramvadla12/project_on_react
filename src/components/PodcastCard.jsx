@@ -154,7 +154,7 @@ const PodcastCard = ({apiData,type}) => {
       }
     // console.log("recieved data from dashboard",type);
     let catArr = []
-    if(type == "MostPopular"){
+    if(type == "mostpopular"){
         catArr = ["bussiness", "crime", "education" ];
     }
     else if(type == "all"){
@@ -173,8 +173,8 @@ const PodcastCard = ({apiData,type}) => {
                             <Card>
                                 <div>
                                     <Top>
-                                        <Favorite>
-                                            <FavoriteIcon style={{ width: "16px", height: "16px" }} />
+                                        <Favorite >
+                                            <FavoriteIcon style={{ width: "16px", height: "16px" }}  />
                                         </Favorite>
                                         <CardImage src={element.image} alt="Podcast" />
                                     </Top>

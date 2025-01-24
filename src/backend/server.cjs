@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const PORT = process.env.PORT || 3000;
 
-app.post("/send-otp", async (req, res) => {
+app.post("/api/send-otp", async (req, res) => {
   const { email, otp } = req.body;
 
   if (!email || !otp) {
@@ -51,3 +51,6 @@ app.post("/send-otp", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+// Export the app (required for Render deployment)
+// export default app;

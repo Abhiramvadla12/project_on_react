@@ -126,13 +126,13 @@ const Dashboard = () => {
                 <FilterContainer>
                 <Topic>
                     Most Popular
-                    <Link to={"/displaypodcast/MostPopular"} style={{textDecoration: "none"}} >
+                    <Link to={"/displaypodcast/mostpopular"} style={{textDecoration: "none"}} >
                         <Span>Show All</Span>
                     </Link>
                 </Topic>
                     <Podcasts >
                         {
-                            data && <PodcastCard apiData={data} type={"MostPopular"}/>
+                            data && <PodcastCard apiData={data} type={"mostpopular"}/>
                         }
                         
                     

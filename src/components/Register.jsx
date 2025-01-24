@@ -122,7 +122,7 @@ function Register() {
       localStorage.setItem("otp", JSON.stringify(otp));
 
       try {
-        const response = await fetch("http://localhost:3001/send-otp", {
+        const response = await fetch("https://node-post-deploy.onrender.com/api/send-otp", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

@@ -39,6 +39,8 @@ function App() {
   
   const [isLogined, setIsLogined] = useState(false); // Track login state
 
+  const [favorite,setFavorite] = useState([]);
+
   const handleLoginStatus = (status) => {
     setIsLogined(status); // Update login state
   };
@@ -47,6 +49,18 @@ function App() {
     setIsLogined(false); // Reset login state
     localStorage.removeItem("display"); // Optional: Clear user data
   };
+
+  const handleFavorites = (podcastId)=>{
+    setFavorite((prevFavorites) => {
+      if (prevFavorites.includes(podcastId)) {
+        // Remove from favorites if already there
+        return prevFavorites.filter(id => id !== podcastId);
+      } else {
+        // Add to favorites if not there
+        return [...prevFavorites, podcastId];
+      }
+    });
+  }
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme} >
       {/* theme provider is present in styled components */}
