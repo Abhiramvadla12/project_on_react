@@ -5,7 +5,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 // import podcastImage from "../images/podcast-icon.jpeg";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const PlayIcon = styled.div`
 
@@ -31,6 +32,7 @@ const Card = styled.div`
     text-decoration: none;
     background-color: ${({theme})=> theme.card};
     max-width: 230px;
+    height: 325px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -147,24 +149,36 @@ const Views = styled.div`
     width: max-content;
 `;
 
-const PodcastCard = ({apiData,type}) => {
+const PodcastCard = ({apiData,type,isFavorite,onFavorite,isLogined}) => {
     // console.log("received",apiData);
     if (!apiData || !Array.isArray(apiData)) {
         return <div>No Data Available</div>;
       }
-    // console.log("recieved data from dashboard",type);
-    let catArr = []
-    if(type == "mostpopular"){
-        catArr = ["bussiness", "crime", "education" ];
-    }
-    else if(type == "all"){
-        catArr = ["bussiness", "crime", "education", "history", "comedy","culture","Science"]
-    }
-    else{
-        catArr = [type]
-    }
+      const categories = {
+        mostpopular: ["business", "crime", "education"],
+        all: ["business", "crime", "education", "history", "comedy", "culture", "science"],
+    };
+    const catArr = categories[type] || [type];
+    // console.log("checking if it array or not",isFavorite)
+    const handleFavoriteClick = (event, elementId) => {
+        event.preventDefault(); // Prevent the default navigation behavior
+    
+        if (!isLogined) {
+          // Show toast if the user isn't logged in
+          toast.warning("Please log in to set or view favorites!", {
+            position: "top-center",
+            autoClose: 3000,
+          });
+          return;
+        }
+    
+        // If logged in, call the favorite handler
+        onFavorite(elementId);
+      };
   return (
+    
     <>
+        
         {apiData.map((element, index) => {
                 if (catArr.includes(element?.Category)) {
                     // console.log(element.image)
@@ -173,8 +187,8 @@ const PodcastCard = ({apiData,type}) => {
                             <Card>
                                 <div>
                                     <Top>
-                                        <Favorite >
-                                            <FavoriteIcon style={{ width: "16px", height: "16px" }}  />
+                                        <Favorite onClick={(event) => handleFavoriteClick(event, element.id)}>
+                                            <FavoriteIcon style={{ width: "16px", height: "16px",color:isFavorite.includes(element.id) ? "red":"white" }} />
                                         </Favorite>
                                         <CardImage src={element.image} alt="Podcast" />
                                     </Top>
@@ -207,6 +221,7 @@ const PodcastCard = ({apiData,type}) => {
                 }
                 return null;
             })}
+        <ToastContainer />
     </>
     
     

@@ -2,10 +2,8 @@
   "name": "project_on_react",
   "private": true,
   "version": "0.0.0",
-  
   "type": "module",
   "scripts": {
-    
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
@@ -30,6 +28,7 @@
     "react-dom": "^18.3.1",
     "react-player": "^2.16.0",
     "react-router-dom": "^7.1.1",
+    "react-toastify": "^11.0.3",
     "styled-components": "^6.1.14"
   },
   "devDependencies": {

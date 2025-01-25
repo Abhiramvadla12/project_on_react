@@ -43,7 +43,7 @@ const EpisodeTop = styled.div`
 
 const Episodes = styled.div`
   border-radius: 6px;
-  margin: 10px;
+  margin: 1em;
   padding: 10px;
   color: ${({ theme }) => theme.text_secondary};
   background-color: ${({ theme }) => theme.bg};
@@ -147,7 +147,7 @@ const PodcastDetails = () => {
   return (
     <div style={{ overflowY: "scroll" }}>
       <EpisodeTop>
-        <img src={podcast.image} alt="image not found" style={{ height: "250px", width: "250px" }} />
+        <img src={podcast.image} alt="image not found" style={{ height: "250px", width: "250px",borderRadius:"10px" }} />
         <Information>
           <h4>{podcast.files[0].title}</h4>
           <h6>{podcast.files[0].description}</h6>
@@ -161,7 +161,7 @@ const PodcastDetails = () => {
 
       {podcast.files.map((item, index) => (
         <Episodes key={item.id} onClick={() => handleOpenModal(index)}>
-          <img src={podcast.image} alt="image not found" style={{ height: "150px", width: "150px" }} />
+          <img src={podcast.image} alt="image not found" style={{ height: "150px", width: "150px",borderRadius:"10px" }} />
           <Information>
             <h4>{item.title}</h4>
             <h6>{item.description}</h6>

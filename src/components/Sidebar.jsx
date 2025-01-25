@@ -4,7 +4,8 @@ import {CloseRounded,LightModeRounded,LogoutRounded, DarkModeRounded, CloudUploa
 import LogoImage from '../images/logo_project.png'
 import {Link} from 'react-router-dom'
 import { menuItems} from './Menu';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const MenuContainer = styled.div`
         //the part the sidebar occupy in the webpage
         flex:0.5;
@@ -109,53 +110,86 @@ const Sidebar = ({menuOpen,setMenuOpen,setDarkMode,darkMode,isLogined,onLogout})
         path:"/login"
     }
 ]
+
+const handleFavoriteClick = (e) => {
+  
+
+  if (!isLogined) {
+    // Show toast if the user isn't logged in
+    e.preventDefault(); // Prevent the default navigation behavior
+    toast.warning("Please log in to set or view favorites!", {
+      position: "top-center",
+      autoClose: 3000,
+    });
+    return;
+  }
+
+};
   return (
-    <MenuContainer $menuOpen={menuOpen}>
-      <Flex>
-          <Logo>
-              <Image src={LogoImage} alt="image not found" style={{width:"60px"}}/>
-              MELOMANIAC
-          </Logo>
-          <Close onClick={()=> setMenuOpen((prev) => !prev)}>
-                <CloseRounded></CloseRounded>
-          </Close>
-        </Flex>
-        {
-          menuItems.map((item,index) => (
+    <>
+          <MenuContainer $menuOpen={menuOpen}>
+          <Flex>
+              <Logo>
+                  <Image src={LogoImage} alt="image not found" style={{width:"60px"}}/>
+                  MELOMANIAC
+              </Logo>
+              <Close onClick={()=> setMenuOpen((prev) => !prev)}>
+                    <CloseRounded></CloseRounded>
+              </Close>
+            </Flex>
+            {
+              menuItems.map((item,index) => (
+                   
+                    item.name == "Favorites" ?
+                    (
+                      <Link to={item.link}  key={index} style={{ textDecoration: 'none' }} onClick={handleFavoriteClick}  >
+                      <Elements >
+                            {<item.icon/>}
+                            <NavText>{item.name}</NavText>
+                      </Elements>
+                    </Link>
+                    ):
+                    (
+                      <Link to={item.link}  key={index} style={{ textDecoration: 'none' }}  >
+                      <Elements >
+                            {<item.icon/>}
+                            <NavText>{item.name}</NavText>
+                      </Elements>
+                    </Link>
+                    )
+                   
+                    
+                
               
-                <Link to={item.link}  key={index} style={{ textDecoration: 'none' }} >
-                  <Elements >
-                        {<item.icon/>}
-                        <NavText>{item.name}</NavText>
-                  </Elements>
-                </Link>
+              ))
+            }
             
+            <HR/>
+            
+            {
+              buttons.map((item, index) => (
+                !isLogined && index === 2 ? (
+                  <Link to={item.path} key={index} style={{ textDecoration: 'none' }} onClick={()=>{ setMenuOpen()}}>
+                    <Elements>
+                      <item.icon />
+                      <NavText>{item.name}</NavText>
+                    </Elements>
+                  </Link>
+                ) : (
+                  <Elements key={index} onClick={item.func}>
+                    <item.icon />
+                    <NavText>{item.name}</NavText>
+                  </Elements>
+                )
+              ))
+              
+            }
           
-          ))
-        }
+        </MenuContainer>
+        <ToastContainer />
         
-        <HR/>
-        
-        {
-          buttons.map((item, index) => (
-            index === 2 && !isLogined ? (
-              <Link to={item.path} key={index} style={{ textDecoration: 'none' }} onClick={()=>{ setMenuOpen()}}>
-                <Elements>
-                  <item.icon />
-                  <NavText>{item.name}</NavText>
-                </Elements>
-              </Link>
-            ) : (
-              <Elements key={index} onClick={item.func}>
-                <item.icon />
-                <NavText>{item.name}</NavText>
-              </Elements>
-            )
-          ))
-          
-        }
-      
-    </MenuContainer>
+    </>
+    
   )
 }
 

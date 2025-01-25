@@ -39,7 +39,10 @@ function App() {
   
   const [isLogined, setIsLogined] = useState(false); // Track login state
 
-  const [favorite,setFavorite] = useState([]);
+   // Initialize favorites from localStorage
+   const favData = JSON.parse(localStorage.getItem("favData")) || [];
+
+  const [favorite,setFavorite] = useState(favData);
 
   const handleLoginStatus = (status) => {
     setIsLogined(status); // Update login state
@@ -52,17 +55,20 @@ function App() {
 
   const handleFavorites = (podcastId)=>{
     setFavorite((prevFavorites) => {
-      if (prevFavorites.includes(podcastId)) {
-        // Remove from favorites if already there
-        return prevFavorites.filter(id => id !== podcastId);
-      } else {
-        // Add to favorites if not there
-        return [...prevFavorites, podcastId];
-      }
+      const updatedFavorites = prevFavorites.includes(podcastId)
+        ? prevFavorites.filter((id) => id !== podcastId) // Remove if already favorite
+        : [...prevFavorites, podcastId]; // Add if not favorite
+
+      // Update localStorage
+      localStorage.setItem("favData", JSON.stringify(updatedFavorites));
+      return updatedFavorites;
     });
   }
+  console.log(isLogined)
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme} >
+         
+     
       {/* theme provider is present in styled components */}
         < Container>
         {
@@ -74,12 +80,12 @@ function App() {
            <Frame>
               <NavBar setMenuOpen={setMenuOpen} menuOpen={menuOpen} isLogined={isLogined} onLogout={handleLogout} darkMode={darkMode} />
               <Routes>
-                    <Route path="/" exact element={<Dashboard/>} />
+                    <Route path="/" exact element={<Dashboard isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined}/>} />
                     <Route path="/search" exact element={<Search/>} />
-                    <Route path="/favorite" exact element={<Favorite/>} />
-                    <Route path="/profile" exact element={<Profile/>} />
+                    <Route path="/favorite" exact element={<Favorite  isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined}/>}  />
+                    <Route path="/profile" exact element={<Profile isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined}/>} />
                     <Route path="/podcast/:id" exact element={<PodcastDetails/>} />
-                    <Route path="/displaypodcast/:type" exact element={<DisplayPodcast/>} />
+                    <Route path="/displaypodcast/:type" exact element={<DisplayPodcast  isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined} />} />
                     <Route path="/login"  element={<Login onLogin={handleLoginStatus} />} />
                     <Route path="/register"  element={<Register />} />
                     <Route path="/otp"  element={<Otp />} />

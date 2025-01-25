@@ -79,7 +79,7 @@ const Topic = styled.div`
         font-size: 18px;
     }
 `;
-const DisplayPodcast = () => {
+const DisplayPodcast = ({isFavorite,onFavorite,isLogined}) => {
   const [data, setData] = useState(null); // Store fetched data
   const [error, setError] = useState(null); // Handle errors
   const [loading, setLoading] = useState(true); // Loading state
@@ -132,7 +132,7 @@ const DisplayPodcast = () => {
                     </Topic>
                     <Podcasts >
                         {
-                            data && <PodcastCard apiData={data} type={genere}/>
+                            data && <PodcastCard apiData={data} type={genere} isFavorite={isFavorite} onFavorite={onFavorite} isLogined={isLogined}/>
                         }
                         
                     

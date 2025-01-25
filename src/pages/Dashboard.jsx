@@ -88,7 +88,7 @@ animation: l27 1s infinite steps(8);
 100% {transform: rotate(1turn)}
 }
 `;
-const Dashboard = () => {
+const Dashboard = ({isFavorite,onFavorite,isLogined}) => {
     const [data, setData] = useState(null); // State to store fetched data
     const [error, setError] = useState(null); // State to handle errors
     const [loading, setLoading] = useState(true); // State for loading status
@@ -109,6 +109,7 @@ const Dashboard = () => {
         fetchData();
     }, []); // Empty dependency array to fetch data only once on mount
     console.log(error)
+    
   return (
    
     <>
@@ -126,13 +127,13 @@ const Dashboard = () => {
                 <FilterContainer>
                 <Topic>
                     Most Popular
-                    <Link to={"/displaypodcast/mostpopular"} style={{textDecoration: "none"}} >
+                    <Link to={"/displaypodcast/mostpopular"} style={{textDecoration: "none"}}  >
                         <Span>Show All</Span>
                     </Link>
                 </Topic>
                     <Podcasts >
                         {
-                            data && <PodcastCard apiData={data} type={"mostpopular"}/>
+                            data && <PodcastCard apiData={data} type={"mostpopular"} isFavorite={isFavorite} onFavorite={onFavorite} isLogined={isLogined}/>
                         }
                         
                     
@@ -148,7 +149,7 @@ const Dashboard = () => {
                 </Topic>
                     <Podcasts >
                         {
-                            data && <PodcastCard apiData={data} type={"comedy"}/>
+                            data && <PodcastCard apiData={data} type={"comedy"} isFavorite={isFavorite} onFavorite={onFavorite} isLogined={isLogined}/>
                         }
                         
                     
@@ -164,7 +165,7 @@ const Dashboard = () => {
                 </Topic>
                     <Podcasts >
                         {
-                            data && <PodcastCard apiData={data} type={"culture"} />
+                            data && <PodcastCard apiData={data} type={"culture"} isFavorite={isFavorite} isLogined={isLogined}/>
                         }
                         
                     
