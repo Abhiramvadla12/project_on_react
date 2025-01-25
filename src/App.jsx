@@ -81,7 +81,7 @@ function App() {
               <NavBar setMenuOpen={setMenuOpen} menuOpen={menuOpen} isLogined={isLogined} onLogout={handleLogout} darkMode={darkMode} />
               <Routes>
                     <Route path="/" exact element={<Dashboard isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined}/>} />
-                    <Route path="/search" exact element={<Search/>} />
+                    <Route path="/search" exact element={<Search isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined}/>} />
                     <Route path="/favorite" exact element={<Favorite  isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined}/>}  />
                     <Route path="/profile" exact element={<Profile isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined}/>} />
                     <Route path="/podcast/:id" exact element={<PodcastDetails/>} />

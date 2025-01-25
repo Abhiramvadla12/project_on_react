@@ -111,7 +111,7 @@ padding: 18px 6px;
     grid-template-columns: repeat(1,1fr)
 }
 `;
-const Search = () => {
+const Search = ({isFavorite,onFavorite,isLogined}) => {
     const [searched, setSearched] = useState("");
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState(null);
@@ -196,7 +196,7 @@ const Search = () => {
                     <FilterContainer>
                                 <Podcasts >
                                       
-                                  <PodcastCard apiData={filteredData} type={"all"}/>
+                                  <PodcastCard apiData={filteredData} type={"all"} onFavorite={onFavorite} isLogined={isLogined} isFavorite={isFavorite}/>
                                         
                                         
                                 
