@@ -203,10 +203,10 @@ function Register() {
                     {/* <CircularProgress /> */}
                 </Loader>)
             ) : (
-              <>
+              < div className="form-container" style={{overflowX:"hidden",overflowY:scroll}}>
                   
                   <form onSubmit={handleSubmit}>
-                    <img src={LogoImg} alt="image not found" style={{height:"60px",width:"60px"}} />
+                    <img src={LogoImg} alt="image not found" style={{height:"60px",width:"60px",borderRadius:"50%"}} />
                     <span style={{ color: "white",fontSize:"1.75em",fontWeight:"bolder",marginLeft:"8px" }}>Register Page</span><br />
                     <label htmlFor="username">Username:</label>
                     <input
@@ -217,8 +217,8 @@ function Register() {
                       value={username}
                       onChange={handleChange}
                     />
-                    {errors.username && <p style={{ color: "aqua" }}>{errors.username}</p>}
-                    <br />
+                    {errors.username && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.username}</p>}
+                    
                     <label htmlFor="password">Password:</label>
                     <input
                       type="password"
@@ -228,8 +228,8 @@ function Register() {
                       value={password}
                       onChange={handleChange}
                     />
-                    {errors.password && <p style={{ color: "aqua" }}>{errors.password}</p>}
-                    <br />
+                    {errors.password && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.password}</p>}
+                    
                     <label htmlFor="email">Email:</label>
                     <input
                       type="email"
@@ -239,8 +239,8 @@ function Register() {
                       value={email}
                       onChange={handleChange}
                     />
-                    {errors.email && <p style={{ color: "aqua" }}>{errors.email}</p>}
-                    <br />
+                    {errors.email && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.email}</p>}
+                    
                     <input type="submit" value="Register" id="submit" />
                     <div className="google_button">
                       <img src={Image} alt="Google" style={{ height: "40px", width: "40px" }} />
@@ -254,7 +254,7 @@ function Register() {
                       </button>
                     </div>
                   </form>
-                  </>
+                  </div>
                   
 
             ) 

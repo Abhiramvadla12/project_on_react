@@ -1,24 +1,27 @@
-form{
+.form-container {
+    display: flex;
+    justify-content: center; /* Horizontally center the form */
+    align-items: center; /* Vertically center the form */
+    height: 100vh; /* Full height of the viewport */
+    background-color: black; /* Optional: Add a background color to the page */
+  }
+  
+  form {
     border: 2px solid blue;
     border-radius: 10px;
-    padding: 50px;
-    position: absolute;
-    margin: auto;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    background: linear-gradient(to bottom, blue,aqua);
-    width:320px;
-    
-}
+    padding: 30px;
+    background: linear-gradient(to bottom, blue, aqua);
+    width: 320px;
+    max-width: 600px;
+  }
 label{
     color: aqua;
     font-size: x-large;
 }
 label,input{
-    margin: 10px;
-    padding: 10px;
-    border-radius: 10px;
+    margin-bottom: 5px;
+    padding: 6px;
+    border-radius: 8px;
 }
 h1{
     text-align: center;
@@ -44,10 +47,14 @@ img{
     display: flex;
     border: 2px solid black;
     background-color: black;
-    border-radius: 10px;
-    width: 22em;
+    border-radius: 8px;
+    width: 15em;
     
 }
 input{
     width: 100%;
+}
+.lastRow{
+    display: flex;
+    gap: 4px;
 }

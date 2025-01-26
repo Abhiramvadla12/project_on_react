@@ -165,7 +165,7 @@ const Dashboard = ({isFavorite,onFavorite,isLogined}) => {
                 </Topic>
                     <Podcasts >
                         {
-                            data && <PodcastCard apiData={data} type={"culture"} isFavorite={isFavorite} isLogined={isLogined}/>
+                            data && <PodcastCard apiData={data} type={"culture"} isFavorite={isFavorite} isLogined={isLogined} onFavorite={onFavorite}/>
                         }
                         
                     

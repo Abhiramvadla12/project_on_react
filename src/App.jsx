@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled, { ThemeProvider } from 'styled-components'; //Styled-components is a popular library in the React ecosystem that allows you to write CSS directly within JavaScript files, using tagged template literals. It enables you to style components in a modular and maintainable way, keeping your styles scoped to specific components.
 import { lightTheme, darkTheme } from './utils/Themes'; //these themes imported from another file
 
@@ -39,10 +39,26 @@ function App() {
   
   const [isLogined, setIsLogined] = useState(false); // Track login state
 
-   // Initialize favorites from localStorage
-   const favData = JSON.parse(localStorage.getItem("favData")) || [];
+  const [userDetails, setUserDetails] = useState({});
 
-  const [favorite,setFavorite] = useState(favData);
+  const [favorite,setFavorite] = useState([]);
+  // Initialize user data and favorites from LocalStorage
+  useEffect(() => {
+    try {
+      const storedUser = JSON.parse(localStorage.getItem('display')) || {};
+      setUserDetails(storedUser);
+      setIsLogined(!!storedUser.username);
+
+      const storedFavorites = JSON.parse(
+        localStorage.getItem(`${storedUser.username} 's fav`) || '[]'
+      );
+      setFavorite(storedFavorites);
+    } catch (error) {
+      console.error('Error initializing data from localStorage:', error);
+    }
+  },  [isLogined]);
+
+  
 
   const handleLoginStatus = (status) => {
     setIsLogined(status); // Update login state
@@ -53,18 +69,27 @@ function App() {
     localStorage.removeItem("display"); // Optional: Clear user data
   };
 
-  const handleFavorites = (podcastId)=>{
-    setFavorite((prevFavorites) => {
-      const updatedFavorites = prevFavorites.includes(podcastId)
-        ? prevFavorites.filter((id) => id !== podcastId) // Remove if already favorite
-        : [...prevFavorites, podcastId]; // Add if not favorite
+ // Handle favorites update
+ const handleFavorites = (podcastId) => {
+  setFavorite((prevFavorites) => {
+    const updatedFavorites = prevFavorites.includes(podcastId)
+      ? prevFavorites.filter((id) => id !== podcastId) // Remove if already favorite
+      : [...prevFavorites, podcastId]; // Add if not favorite
 
-      // Update localStorage
-      localStorage.setItem("favData", JSON.stringify(updatedFavorites));
-      return updatedFavorites;
-    });
-  }
-  console.log(isLogined)
+    // Update LocalStorage
+    try {
+      localStorage.setItem(
+        `${userDetails.username} 's fav`,
+        JSON.stringify(updatedFavorites)
+      );
+    } catch (error) {
+      console.error('Error updating favorites in localStorage:', error);
+    }
+
+    return updatedFavorites;
+  });
+};
+  // console.log(isLogined)
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme} >
          
