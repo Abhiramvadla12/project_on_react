@@ -205,10 +205,10 @@ function Register() {
             ) : (
               < div className="form-container" style={{overflowX:"hidden",overflowY:scroll}}>
                   
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={handleSubmit} className="form">
                     <img src={LogoImg} alt="image not found" style={{height:"60px",width:"60px",borderRadius:"50%"}} />
                     <span style={{ color: "white",fontSize:"1.75em",fontWeight:"bolder",marginLeft:"8px" }}>Register Page</span><br />
-                    <label htmlFor="username">Username:</label>
+                    <label htmlFor="username" className="label">Username:</label>
                     <input
                       type="text"
                       name="username"
@@ -216,10 +216,11 @@ function Register() {
                       placeholder="Enter your username..."
                       value={username}
                       onChange={handleChange}
+                      className="input"
                     />
                     {errors.username && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.username}</p>}
                     
-                    <label htmlFor="password">Password:</label>
+                    <label htmlFor="password" className="label">Password:</label>
                     <input
                       type="password"
                       name="password"
@@ -227,10 +228,11 @@ function Register() {
                       placeholder="Enter your password..."
                       value={password}
                       onChange={handleChange}
+                      className="input"
                     />
                     {errors.password && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.password}</p>}
                     
-                    <label htmlFor="email">Email:</label>
+                    <label htmlFor="email" className="label">Email:</label>
                     <input
                       type="email"
                       name="email"
@@ -238,10 +240,11 @@ function Register() {
                       placeholder="Enter your email..."
                       value={email}
                       onChange={handleChange}
+                      className="input"
                     />
                     {errors.email && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.email}</p>}
                     
-                    <input type="submit" value="Register" id="submit" />
+                    <input type="submit" value="Register" id="submit"  className="input"/>
                     <div className="google_button">
                       <img src={Image} alt="Google" style={{ height: "40px", width: "40px" }} />
                       <button

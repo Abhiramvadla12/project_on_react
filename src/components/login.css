@@ -6,7 +6,7 @@
     background-color: black; /* Optional: Add a background color to the page */
   }
   
-  form {
+  .form {
     border: 2px solid blue;
     border-radius: 10px;
     padding: 30px;
@@ -14,11 +14,11 @@
     width: 320px;
     max-width: 600px;
   }
-label{
+.label{
     color: aqua;
     font-size: x-large;
 }
-label,input{
+.label,.input{
     margin-bottom: 5px;
     padding: 6px;
     border-radius: 8px;
@@ -51,7 +51,7 @@ img{
     width: 15em;
     
 }
-input{
+.input{
     width: 100%;
 }
 .lastRow{

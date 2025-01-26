@@ -203,10 +203,10 @@ function Login({ onLogin}) {
       ) : (
              <div style={{overflowX:"hidden",overflowY:scroll}} className="form-container" >
 
-                <form onSubmit={handleSubmit}  >
+                <form onSubmit={handleSubmit} className="form" >
                   <img src={LogoImg} alt="image not found" style={{height:"60px",width:"60px",borderRadius:"50%"}} />
                   <span style={{ color: "white",fontSize:"1.75em",fontWeight:"bolder",marginLeft:"8px" }}>Login Page</span><br />
-                  <label htmlFor="username" >Username:</label>
+                  <label htmlFor="username" className="label">Username:</label>
                   <input
                     type="text"
                     name="username"
@@ -214,10 +214,11 @@ function Login({ onLogin}) {
                     placeholder="Enter your username..."
                     value={username}
                     onChange={handleChange}
+                    className="input"
                   />
                    {errors.username && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.username}</p>}
               
-                  <label htmlFor="password">Password:</label>
+                  <label htmlFor="password" className="label">Password:</label>
                   <input
                     type="password"
                     name="password"
@@ -225,10 +226,11 @@ function Login({ onLogin}) {
                     placeholder="Enter your password..."
                     value={password}
                     onChange={handleChange}
+                    className="input"
                   />
                   {errors.password && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.password}</p>}
     
-                  <label htmlFor="email">Email: </label>
+                  <label htmlFor="email" className="label">Email: </label>
                   <input
                     type="email"
                     name="email"
@@ -236,10 +238,11 @@ function Login({ onLogin}) {
                     placeholder="Enter your email..."
                     value={email}
                     onChange={handleChange}
+                    className="input"
                   /> <br />
                    {errors.email && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.email}</p>}
         
-                  <input type="submit" value="Login" id="submit" /> <br />
+                  <input type="submit" value="Login" id="submit" className="input" /> <br />
                   <div className="lastRow">
                       <div className="google_button" style={{textAlign: "center"}}>
                         <img src={Image} alt="image not Found" style={{ height: "40px", width: "40px" }} />
