@@ -1,8 +1,8 @@
 export const darkTheme = {
     bg:"#15171E",
     bgLight: "#1C1E27",
-    primary:"#be1adb",
-    text_primary:"#27a3f5",
+    primary:"#8635d4",
+    text_primary:"#15c6ed",
     text_secondary:"#b1b2b3",
     card:"#121212",
     button:"#5c5b5b",
@@ -12,8 +12,8 @@ export const darkTheme = {
 export const lightTheme = {
     bg:"#FFFFFF",
     bgLight: "#f0f0f0",
-    primary:"#be1adb",
-    text_primary:"#27a3f5",
+    primary:"#43097a",
+    text_primary:"#15c6ed",
     text_secondary:"#48494a",
     card:"#FFFFFF",
     button:"#5c5b5b",

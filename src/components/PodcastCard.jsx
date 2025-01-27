@@ -155,8 +155,8 @@ const PodcastCard = ({apiData,type,isFavorite,onFavorite,isLogined}) => {
         return <div>No Data Available</div>;
       }
       const categories = {
-        mostpopular: ["business", "crime", "education"],
-        all: ["business", "crime", "education", "history", "comedy", "culture", "science"],
+        mostpopular: ["bussiness", "culture", "education"],
+        all: ["bussiness", "crime", "education", "history", "comedy", "culture", "science"],
     };
     const catArr = categories[type] || [type];
     // console.log("checking if it array or not",isFavorite)

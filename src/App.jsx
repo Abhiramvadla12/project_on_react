@@ -4,7 +4,7 @@ import { lightTheme, darkTheme } from './utils/Themes'; //these themes imported 
 
 import Sidebar from './components/Sidebar';
 import NavBar from './components/NavBar';
-import { Routes,Route } from 'react-router-dom';
+import { Routes,Route,useLocation } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Search from './pages/Search';
 import Favorite from './pages/Favorite';
@@ -14,6 +14,7 @@ import DisplayPodcast from './pages/DisplayPodcast';
 import Login from './components/Login';
 import Register from './components/Register';
 import Otp from './components/Otp';
+import Breadcrumb from './components/Breadcrumbs';
 //here we style the componet and for div i am Container as a name
 const Container = styled.div`
     // i am taking bg from themes file in which bg refers to background, theme is an object that is typically provided by a ThemeProvider from styled-components.
@@ -95,6 +96,36 @@ function App() {
 const handleISAdmin = ()=>{
     
 }
+const location = useLocation();
+  const pathSegments = location.pathname.split('/').filter(Boolean);
+  const getBreadcrumbs = () => {
+    const paths = {
+      '/': 'Dashboard', 
+      '/search': 'Search',
+      '/favorite': 'Favorites',
+      '/profile': 'Profile',
+      '/login': 'Login',
+      '/register': 'Register',
+      '/otp': 'OTP',
+    };
+
+    // If the path segments are empty (i.e., we're on the home route), show Dashboard
+    const breadcrumbs = pathSegments.map((segment, index) => {
+      const path = `/${pathSegments.slice(0, index + 1).join('/')}`;
+      return {
+        name: paths[path] || segment.charAt(0).toUpperCase() + segment.slice(1),
+        link: path
+      };
+    });
+
+    // Always include Dashboard breadcrumb for the home route
+    if (pathSegments.length === 0) {
+      return [{ name: 'Dashboard', link: '/' }];
+    }
+
+    return [{ name: 'Dashboard', link: '/' }, ...breadcrumbs];
+  };
+
   // console.log(isLogined)
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme} >
@@ -110,6 +141,8 @@ const handleISAdmin = ()=>{
       
            <Frame>
               <NavBar setMenuOpen={setMenuOpen} menuOpen={menuOpen} isLogined={isLogined} onLogout={handleLogout} darkMode={darkMode} />
+              {/* Render Breadcrumbs here */}
+              <Breadcrumb routes={getBreadcrumbs()} />
               <Routes>
                     <Route path="/" exact element={<Dashboard isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined}/>} />
                     <Route path="/search" exact element={<Search isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined}/>} />

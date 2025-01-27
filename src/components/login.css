@@ -3,14 +3,14 @@
     justify-content: center; /* Horizontally center the form */
     align-items: center; /* Vertically center the form */
     height: 100vh; /* Full height of the viewport */
-    background-color: black; /* Optional: Add a background color to the page */
+     /* Optional: Add a background color to the page */
   }
   
   .form {
     border: 2px solid blue;
     border-radius: 10px;
     padding: 30px;
-    background: linear-gradient(to bottom, blue, aqua);
+    background: linear-gradient(to bottom,#8635d4 , aqua);
     width: 320px;
     max-width: 600px;
   }

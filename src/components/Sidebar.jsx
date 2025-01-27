@@ -118,7 +118,7 @@ const Overlay = styled.div`
 const Input = styled.input`
   width: 100%;
   padding: 8px;
-  margin: 4px 0;
+  margin: 2px 0;
   box-sizing: border-box;
   border: 1px solid ${({ theme }) => theme.text_secondary};
   border-radius: 4px;
@@ -127,7 +127,7 @@ const Input = styled.input`
 const Button = styled.button`
   width: 100%;
   padding: 12px;
-  font-size: 16px;
+  font-size: 14px;
   background-color: ${({ theme }) => theme.primary};
   color: white;
   border: none;

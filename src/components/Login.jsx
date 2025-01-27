@@ -201,7 +201,7 @@ function Login({ onLogin}) {
               {/* <CircularProgress /> */}
           </Loader>)
       ) : (
-             <div style={{overflowX:"hidden",overflowY:scroll}} className="form-container" >
+             <div style={{overflowX:"hidden",overflowY:scroll,backgroundColor:`${({theme})=> theme.bg}`}} className="form-container" >
 
                 <form onSubmit={handleSubmit} className="form" >
                   <img src={LogoImg} alt="image not found" style={{height:"60px",width:"60px",borderRadius:"50%"}} />
