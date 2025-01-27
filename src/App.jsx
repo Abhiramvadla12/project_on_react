@@ -42,6 +42,8 @@ function App() {
   const [userDetails, setUserDetails] = useState({});
 
   const [favorite,setFavorite] = useState([]);
+
+  const [isAdmin,setIsAdmin] = useState(false)
   // Initialize user data and favorites from LocalStorage
   useEffect(() => {
     try {
@@ -89,6 +91,10 @@ function App() {
     return updatedFavorites;
   });
 };
+
+const handleISAdmin = ()=>{
+    
+}
   // console.log(isLogined)
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme} >
@@ -111,7 +117,7 @@ function App() {
                     <Route path="/profile" exact element={<Profile isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined}/>} />
                     <Route path="/podcast/:id" exact element={<PodcastDetails/>} />
                     <Route path="/displaypodcast/:type" exact element={<DisplayPodcast  isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined} />} />
-                    <Route path="/login"  element={<Login onLogin={handleLoginStatus} />} />
+                    <Route path="/login"  element={<Login onLogin={handleLoginStatus}  isAdmin={isAdmin}  onAdminLogin={handleISAdmin}/>} />
                     <Route path="/register"  element={<Register />} />
                     <Route path="/otp"  element={<Otp />} />
               </Routes>
