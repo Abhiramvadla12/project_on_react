@@ -40,14 +40,26 @@ const ButtonDIv = styled.div`
     border-radius: 10px;
     gap: 8px;
 `; 
+const DisplayToast = styled.div`
+
+        font-size: 25px;
+        font-weight: bolder;
+`;
 const NavBar = ({setMenuOpen, isLogined,darkMode }) => {
     const navigate = useNavigate();
+    const display = JSON.parse(localStorage.getItem("display"));
+
   return (
     <NavBardiv>
         <IcoButton onClick={()=> setMenuOpen((prev)=> !prev)} >
             <MenuIcon />
         </IcoButton>
-        
+        {display && (
+            <DisplayToast>
+                Welcome {display?.username} !!! 
+            </DisplayToast>
+        )}
+       
         <ButtonDIv>
             <PersonRounded />
             <button

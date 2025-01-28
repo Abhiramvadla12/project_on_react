@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import './register.css';
 import Image from '../images/google.webp';
 // import { CircularProgress } from "@mui/material";
+import { Button } from "@mui/material";
 import styled from "styled-components";
 import { initializeApp } from "firebase/app";
 import LogoImg from "../images/login_logo.jpeg";
@@ -244,7 +245,7 @@ function Register() {
                     />
                     {errors.email && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.email}</p>}
                     
-                    <input type="submit" value="Register" id="submit"  className="input"/>
+                    <Button type="submit" value="Register" id="submit"  className="input" style={{margin:"5px"}}>Register</Button>
                     <div className="google_button">
                       <img src={Image} alt="Google" style={{ height: "40px", width: "40px" }} />
                       <button

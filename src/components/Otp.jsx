@@ -25,10 +25,11 @@ const Otp = () => {
   };
 
   return (
-    <>
-      <h1>OTP Page</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="otp">Enter the OTP here:</label>
+    <div className="form-container">
+      
+      <form onSubmit={handleSubmit} className="form">
+        <span style={{ color: "white",fontSize:"1.75em",fontWeight:"bolder",marginLeft:"8px" }}>Otp Page</span><br />
+        <label htmlFor="otp" className="label">Enter the OTP here:</label>
         <input
           type="text"
           name="otp"
@@ -37,10 +38,11 @@ const Otp = () => {
           value={enteredOtp}
           onChange={(e) => setEnteredOtp(e.target.value)}
           required
+          className="input"
         />
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Submit"  className="input"/>
       </form>
-    </>
+    </div>
   );
 };
 

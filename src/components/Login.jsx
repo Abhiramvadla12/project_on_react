@@ -7,7 +7,7 @@ import Image from '../images/google.webp';
 import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import LogoImg from "../images/login_logo.jpeg";
-
+import { Button } from "@mui/material";
 
 import {
   getAuth,
@@ -64,7 +64,7 @@ animation: l27 1s infinite steps(8);
 }
 `;
 
-function Login({ onLogin}) {
+function Login({ onLogin,onAdminLogin}) {
   const navigate = useNavigate(); // Initialize useNavigate
 
   const [state, setState] = useState({
@@ -114,7 +114,11 @@ function Login({ onLogin}) {
         user.password === obj.password &&
         user.email === obj.email
     );
-
+    const adminCheck = ()=>{
+      return username === "Abhiram" && password === "Abhiram@1234" && email === "abhiramvadla61@gmail.com";
+    }
+    // console.log("is admin or not checking",adminCheck());
+    onAdminLogin(adminCheck())
     if (userFound) {
       alert("Login successful. Redirecting to the home page in 3 seconds...");
       onLogin(true); // Notify parent component of login success
@@ -242,7 +246,7 @@ function Login({ onLogin}) {
                   /> <br />
                    {errors.email && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.email}</p>}
         
-                  <input type="submit" value="Login" id="submit" className="input" /> <br />
+                  <Button type="submit"  id="submit" className="input" variant="contained" style={{margin:"4px"}}>Login</Button> <br />
                   <div className="lastRow">
                       <div className="google_button" style={{textAlign: "center"}}>
                         <img src={Image} alt="image not Found" style={{ height: "40px", width: "40px" }} />
@@ -250,7 +254,7 @@ function Login({ onLogin}) {
                           Sign In With Google
                         </button>
                       </div>
-                      <button style={{backgroundColor: "blue",borderRadius: "10px"}}><Link to={"/register"} style={{color: "aqua",textDecoration:"none",fontSize:"16px"}}>Create an account ?</Link></button>
+                      <button style={{backgroundColor: "blue",borderRadius: "10px",fontSize:"10px"}}><Link to={"/register"} style={{color: "aqua",textDecoration:"none",fontSize:"16px"}}>Create an account ?</Link></button>
                   </div>
                   
                 </form>

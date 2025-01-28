@@ -65,7 +65,7 @@ const ProfileBottom = styled.div`
     
 
 `;
-const Favorites = styled.p`
+const Favorites = styled.div`
      font-size: 1.5em;
     font-weight: bolder;
     color: blue;
@@ -126,7 +126,7 @@ const Profile = ({isFavorite,onFavorite,isLogined}) => {
   console.log(error)
   const filteredFav = data?.filter((item) => isFavorite.includes(item.id)) || [];
   const display = JSON.parse(localStorage.getItem("display"));
-  console.log(display);
+  // console.log(display);
   if (loading) {
     return (
       <Loader>
@@ -155,12 +155,12 @@ const Profile = ({isFavorite,onFavorite,isLogined}) => {
                         <UserName>
 
                             {
-                            display.username
+                            display?.username
                             }
                         </UserName>
                         <Email>
                             {
-                            display.email
+                            display?.email
                             }
                         </Email>
                     </Details>

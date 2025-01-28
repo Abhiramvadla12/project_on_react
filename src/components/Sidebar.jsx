@@ -139,7 +139,7 @@ const Button = styled.button`
     color:blue;
   }
 `;
-const Sidebar = ({menuOpen,setMenuOpen,setDarkMode,darkMode,isLogined,onLogout}) => {
+const Sidebar = ({menuOpen,setMenuOpen,setDarkMode,darkMode,isLogined,onLogout,isAdmin}) => {
   const [state,setState] = useState({
     Category:"",
     type:"",
@@ -273,24 +273,26 @@ const {Category,type,title,description,creatorName,views} = state;
             <HR/>
             
             {
-              buttons.map((item, index) => (
-                !isLogined && index === 2 ? (
-                  <Link to={item.path} key={index} style={{ textDecoration: 'none' }} onClick={()=>{ setMenuOpen()}}>
-                    <Elements>
+                buttons.map((item, index) => {
+                  if (item.name === "Upload" && !isAdmin) {
+                    // Skip rendering the upload button if not admin
+                    return null;
+                  }
+                  return !isLogined && index === 2 ? (
+                    <Link to={item.path} key={index} style={{ textDecoration: "none" }} onClick={() => setMenuOpen(false)}>
+                      <Elements>
+                        <item.icon />
+                        <NavText>{item.name}</NavText>
+                      </Elements>
+                    </Link>
+                  ) : (
+                    <Elements key={index} onClick={item.func}>
                       <item.icon />
                       <NavText>{item.name}</NavText>
                     </Elements>
-                  </Link>
-                ) : (
-                  <Elements key={index} onClick={item.func}>
-                    <item.icon />
-                    <NavText>{item.name}</NavText>
-                  </Elements>
-                )
-              ))
-              
-            }
-          
+                  );
+                })
+              }
         </MenuContainer>
         {isModalOpen && (
             <>

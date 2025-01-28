@@ -3,7 +3,7 @@ import { FavoriteRounded, HomeRounded, SearchRounded } from "@mui/icons-material
 export const menuItems = [
     {
         link:"/",
-        name:"Dashbord",
+        name:"Dashboard",
         icon:HomeRounded
     },
     {

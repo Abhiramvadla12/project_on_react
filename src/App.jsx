@@ -15,6 +15,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Otp from './components/Otp';
 import Breadcrumb from './components/Breadcrumbs';
+import NoPage from './pages/NoPage';
 //here we style the componet and for div i am Container as a name
 const Container = styled.div`
     // i am taking bg from themes file in which bg refers to background, theme is an object that is typically provided by a ThemeProvider from styled-components.
@@ -93,9 +94,10 @@ function App() {
   });
 };
 
-const handleISAdmin = ()=>{
-    
+const handleISAdmin = (val)=>{
+    setIsAdmin(val)
 }
+console.log("checking is he admin or not",isAdmin);
 const location = useLocation();
   const pathSegments = location.pathname.split('/').filter(Boolean);
   const getBreadcrumbs = () => {
@@ -135,7 +137,7 @@ const location = useLocation();
         < Container>
         {
           menuOpen && (
-            <Sidebar  setMenuOpen={setMenuOpen} setDarkMode={setDarkMode} darkMode={darkMode} menuOpen={menuOpen} isLogined={isLogined} onLogout={handleLogout}/>
+            <Sidebar  setMenuOpen={setMenuOpen} setDarkMode={setDarkMode} darkMode={darkMode} menuOpen={menuOpen} isLogined={isLogined} onLogout={handleLogout} isAdmin={isAdmin}/>
           )
         }
       
@@ -150,9 +152,10 @@ const location = useLocation();
                     <Route path="/profile" exact element={<Profile isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined}/>} />
                     <Route path="/podcast/:id" exact element={<PodcastDetails/>} />
                     <Route path="/displaypodcast/:type" exact element={<DisplayPodcast  isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined} />} />
-                    <Route path="/login"  element={<Login onLogin={handleLoginStatus}  isAdmin={isAdmin}  onAdminLogin={handleISAdmin}/>} />
+                    <Route path="/login"  element={<Login onLogin={handleLoginStatus}    onAdminLogin={handleISAdmin}/>} />
                     <Route path="/register"  element={<Register />} />
                     <Route path="/otp"  element={<Otp />} />
+                    <Route path="*" element={<NoPage />} />
               </Routes>
               
            </Frame>

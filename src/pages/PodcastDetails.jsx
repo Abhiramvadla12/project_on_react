@@ -170,18 +170,18 @@ const PodcastDetails = () => {
       ))}
 
       {/* Modal for playing video/audio */}
-      <Dialog open={openModal} onClose={handleCloseModal} fullWidth maxWidth="md">
-        <DialogTitle>{currentEpisode ? currentEpisode.title : ''}</DialogTitle>
-        <DialogContent>
+      <Dialog open={openModal} onClose={handleCloseModal} fullWidth maxWidth="md" >
+        <DialogTitle style={{color:"blue"}}>{currentEpisode ? currentEpisode.title : ''}</DialogTitle>
+        <DialogContent style={{background: `linear-gradient(to bottom,#8635d4 , aqua)`,padding:"10px",color:"#33064d",fontWeight:"bolder"}}>
           {currentEpisode && (
             <>
               {podcast.type === "audio" ? (
-                <audio key={currentEpisode.source} controls>
+                <audio key={currentEpisode.source} controls autoPlay loop>
                   <source src={currentEpisode.source} type="audio/mp3" />
                   Your browser does not support the audio element.
                 </audio>
               ) : podcast.type === "video" ? (
-                <video key={currentEpisode.source} controls width="100%">
+                <video key={currentEpisode.source} controls width="100%" autoPlay loop>
                   <source src={currentEpisode.source} type="video/mp4" />
                   Your browser does not support the video element.
                 </video>
@@ -193,13 +193,13 @@ const PodcastDetails = () => {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handlePrev} disabled={currentEpisodeIndex === 0}>
+          <Button onClick={handlePrev} disabled={currentEpisodeIndex === 0}  variant="contained">
             Previous
           </Button>
-          <Button onClick={handleNext} disabled={currentEpisodeIndex === podcast.files.length - 1}>
+          <Button onClick={handleNext} disabled={currentEpisodeIndex === podcast.files.length - 1}  variant="contained">
             Next
           </Button>
-          <Button onClick={handleCloseModal} color="primary">
+          <Button onClick={handleCloseModal} color="primary"  variant="contained">
             Close
           </Button>
         </DialogActions>
