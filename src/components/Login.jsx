@@ -74,10 +74,31 @@ function Login({ onLogin,onAdminLogin}) {
   });
   const [loading,setLoading] = useState(false);
   const [errors, setErrors] = useState({}); // State to store validation errors
+  const [login_details_data,setLoginDetails] = useState([]);
+  useEffect(() => {
+    const login_data = async () => {
+        try {
+            let res = await fetch("https://podcast-login-details-mongodb.onrender.com/login");
+            if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+            let data = await res.json();
+            // console.log(data);
+            setLoginDetails(data)
+            if (data.length === 0) {
+                console.log("No login details found.");
+            }
+        } catch (err) {
+            console.log("Error in fetching", err);
+        }
+    };
+    login_data();
+}, []);  // This will run only once when the component mounts
+  // console.log("login details from database",login_details_data);
   const validateFields = () => {
     const { username, password, email } = state;
     const newErrors = {};
-
+    
     const usernameRegex = /^[a-zA-Z0-9_ ]{3,15}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -107,7 +128,9 @@ function Login({ onLogin,onAdminLogin}) {
     }
     setErrors({}); // Clear errors if validation passes
     const obj = { username, password, email };
-    const localData = JSON.parse(localStorage.getItem("login_credential")) || [];
+    
+    // const localData = JSON.parse(localStorage.getItem("login_credential")) || [];
+    const localData = login_details_data || [];
     const userFound = localData.some(
       (user) =>
         user.username === obj.username &&

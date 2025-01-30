@@ -108,7 +108,7 @@ const Dashboard = ({isFavorite,onFavorite,isLogined}) => {
 
         fetchData();
     }, []); // Empty dependency array to fetch data only once on mount
-    console.log(error)
+    // console.log(error)
     
   return (
    

@@ -97,7 +97,7 @@ function App() {
 const handleISAdmin = (val)=>{
     setIsAdmin(val)
 }
-console.log("checking is he admin or not",isAdmin);
+// console.log("checking is he admin or not",isAdmin);
 const location = useLocation();
   const pathSegments = location.pathname.split('/').filter(Boolean);
   const getBreadcrumbs = () => {

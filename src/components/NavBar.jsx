@@ -44,6 +44,9 @@ const DisplayToast = styled.div`
 
         font-size: 25px;
         font-weight: bolder;
+         @media (max-width: 768px) {
+                font-size: 8px;
+        }
 `;
 const NavBar = ({setMenuOpen, isLogined,darkMode }) => {
     const navigate = useNavigate();

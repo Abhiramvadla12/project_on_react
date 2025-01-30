@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import './register.css';
 import Image from '../images/google.webp';
@@ -63,7 +63,26 @@ function Register() {
   const [errors, setErrors] = useState({});
   const [loading,setLoading] = useState(false);
   const navigate = useNavigate();
-
+  const [login_details_data,setLoginDetails] = useState([]);
+  useEffect(() => {
+      const login_data = async () => {
+          try {
+              let res = await fetch("https://podcast-login-details-mongodb.onrender.com/login");
+              if (!res.ok) {
+                  throw new Error(`HTTP error! Status: ${res.status}`);
+              }
+              let data = await res.json();
+              // console.log(data);
+              setLoginDetails(data)
+              if (data.length === 0) {
+                  console.log("No login details found.");
+              }
+          } catch (err) {
+              console.log("Error in fetching", err);
+          }
+      };
+      login_data();
+  }, []);  // This will run only once when the component mounts
   // Validate inputs with regex
   const validateInputs = () => {
     const { username, password, email } = state;
@@ -110,7 +129,7 @@ function Register() {
 
     const { username, password, email } = state;
 
-    const localData = JSON.parse(localStorage.getItem("login_credential")) || [];
+    const localData = login_details_data || [];
     const userFound = localData.some(
       (user) => user.username === username || user.email === email
     );
@@ -119,9 +138,9 @@ function Register() {
       alert("User already exists. Please log in.");
       navigate("/login");
     } else {
-      const otp = generateOtp();
-      localStorage.setItem("otp", JSON.stringify(otp));
-
+      const otp = generateOtp(); // Make sure generateOtp() is defined
+      localStorage.setItem("otp", JSON.stringify(otp)); // Store OTP temporarily in localStorage
+      alert("please wait for some time....");
       try {
         const response = await fetch("https://node-post-deploy.onrender.com/api/send-otp", {
           method: "POST",
@@ -130,25 +149,45 @@ function Register() {
           },
           body: JSON.stringify({ email, otp }),
         });
-
+  
         if (response.ok) {
           const newUser = { username, password, email };
-          localData.push(newUser);
-          localStorage.setItem("login_credential", JSON.stringify(localData));
-
-          alert("Registration successful. Redirecting to OTP verification...");
-          setLoading((prev => !prev))
-          setTimeout(()=>{
-            setLoading((prev => !prev))
-            navigate("/otp", { state: { user: newUser } });
-          },2000)
-         
+  
+          // Attempt to register user in the MongoDB backend
+          try {
+            const res = await fetch("https://podcast-login-details-mongodb.onrender.com/register", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ username, password, email }),
+            });
+  
+            if (!res.ok) {
+              throw new Error("Failed to register user in database.");
+            }
+  
+            // // Optional: Add the new user to localStorage to track their session if needed
+            // localData.push(newUser);
+            // localStorage.setItem("login_credential", JSON.stringify(localData));
+  
+            alert("Registration successful. Redirecting to OTP verification...");
+  
+            setLoading((prev) => !prev);
+            setTimeout(() => {
+              setLoading((prev) => !prev);
+              navigate("/otp", { state: { user: newUser } }); // Pass user data to OTP page
+            }, 2000);
+          } catch (err) {
+            console.error("Error registering user:", err);
+            alert("An error occurred while registering the user. Please try again.");
+          }
         } else {
           alert("Failed to send OTP. Please try again.");
         }
       } catch (error) {
         console.error("Error sending OTP:", error);
-        alert("An error occurred. Please try again.");
+        alert("An error occurred while sending OTP. Please try again.");
       }
     }
   };
