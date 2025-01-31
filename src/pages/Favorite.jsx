@@ -101,7 +101,7 @@ const Favorite = ({isFavorite,onFavorite,isLogined}) => {
   if (error) {
     return <div>Error: {error}</div>;
   }
-  console.log(isLogined);
+  // console.log(isLogined);
   return (
     <Container>
       <Topic>

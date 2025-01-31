@@ -33,6 +33,35 @@ const Frame = styled.div`
     flex-direction:column;
     flex:3;
 `;
+const Loader = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+`;
+
+const Spinner = styled.div`
+
+    --d:22px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  color: #25b09b;
+  box-shadow: 
+    calc(1*var(--d))      calc(0*var(--d))     0 0,
+    calc(0.707*var(--d))  calc(0.707*var(--d)) 0 1px,
+    calc(0*var(--d))      calc(1*var(--d))     0 2px,
+    calc(-0.707*var(--d)) calc(0.707*var(--d)) 0 3px,
+    calc(-1*var(--d))     calc(0*var(--d))     0 4px,
+    calc(-0.707*var(--d)) calc(-0.707*var(--d))0 5px,
+    calc(0*var(--d))      calc(-1*var(--d))    0 6px;
+  animation: l27 1s infinite steps(8);
+
+@keyframes l27 {
+  100% {transform: rotate(1turn)}
+}
+`;
 function App() {
   //hooks(useState) for darkmode
   const [darkMode, setDarkMode] = useState(true);
@@ -45,32 +74,60 @@ function App() {
 
   const [favorite,setFavorite] = useState([]);
 
-  const [isAdmin,setIsAdmin] = useState(false)
+  const [isAdmin,setIsAdmin] = useState(false);
+
+  const [loading, setLoading] = useState(false);
   // Initialize user data and favorites from LocalStorage
   useEffect(() => {
-    try {
-      const storedUser = JSON.parse(localStorage.getItem('display')) || {};
-      setUserDetails(storedUser);
-      setIsLogined(!!storedUser.username);
-
-      const storedFavorites = JSON.parse(
-        localStorage.getItem(`${storedUser.username} 's fav`) || '[]'
-      );
-      setFavorite(storedFavorites);
-    } catch (error) {
-      console.error('Error initializing data from localStorage:', error);
-    }
-  },  [isLogined]);
-
+    const favData = async () => {
+      setLoading(true);
+      try {
+        const storedUser = JSON.parse(localStorage.getItem("display")) || {};
+        setUserDetails(storedUser);  // Update user details
   
+        if (!storedUser.username) {  
+          setLoading(false);  
+          return;  // Stop execution if no user is logged in
+        }
+  
+        let res = await fetch("https://podcast-fav-data-mongodb.onrender.com/fav_ids_get");
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        let data = await res.json();
+        console.log("Fetched favorite data:", data);
+  
+        // Ensure `filterData[0]` exists before setting state
+        const filterData = data.filter((val) => val.name === `${storedUser.username} 's fav`);
+        if (filterData.length > 0) {
+          console.log("Filtered favorites:", filterData[0].fav_ids);
+          setFavorite(filterData[0].fav_ids);
+        } else {
+          setFavorite([]);  // Ensure favorites are reset if no data is found
+        }
+      } catch (error) {
+        console.error("Error initializing data:", error);
+      }
+      setLoading(false);
+    };
+  
+    favData();
+  }, [isLogined]);  // Run only when `isLogined` changes
+  
+
+ 
 
   const handleLoginStatus = (status) => {
     setIsLogined(status); // Update login state
+    
   };
   
   const handleLogout = () => {
     setIsLogined(false); // Reset login state
-    localStorage.removeItem("display"); // Optional: Clear user data
+    setUserDetails({});  // Clear user details
+    setFavorite([]);  // Reset favorite list
+    setIsAdmin(false); // Ensure admin state is reset (if needed)
+    localStorage.removeItem("display"); // Remove user data from localStorage
   };
 
  // Handle favorites update
@@ -80,15 +137,37 @@ function App() {
       ? prevFavorites.filter((id) => id !== podcastId) // Remove if already favorite
       : [...prevFavorites, podcastId]; // Add if not favorite
 
-    // Update LocalStorage
-    try {
-      localStorage.setItem(
-        `${userDetails.username} 's fav`,
-        JSON.stringify(updatedFavorites)
-      );
-    } catch (error) {
-      console.error('Error updating favorites in localStorage:', error);
-    }
+    
+      const requestOptions = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fav_ids: updatedFavorites }),
+      };
+
+      if (favorite.length === 0) {
+        fetch("https://podcast-fav-data-mongodb.onrender.com/fav_ids_post", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: `${userDetails.username} 's fav`,
+            fav_ids: updatedFavorites,
+          }),
+        })
+          .then((response) => response.json())
+          .then((result) => console.log("New favorite list created:", result))
+          .catch((error) => console.error(error));
+      } else {
+        fetch(`https://podcast-fav-data-mongodb.onrender.com/update/${userDetails.username} 's fav`, requestOptions)
+          .then((response) => response.json())
+          .then((result) => console.log("Updated favorites:", result))
+          .catch((error) => console.error(error));
+      }
+      // localStorage.setItem(
+      //   `${userDetails.username} 's fav`,
+      //   JSON.stringify(updatedFavorites)
+      // );
+
+    
 
     return updatedFavorites;
   });
@@ -145,18 +224,27 @@ const location = useLocation();
               <NavBar setMenuOpen={setMenuOpen} menuOpen={menuOpen} isLogined={isLogined} onLogout={handleLogout} darkMode={darkMode} />
               {/* Render Breadcrumbs here */}
               <Breadcrumb routes={getBreadcrumbs()} />
-              <Routes>
-                    <Route path="/" exact element={<Dashboard isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined}/>} />
-                    <Route path="/search" exact element={<Search isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined}/>} />
-                    <Route path="/favorite" exact element={<Favorite  isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined}/>}  />
-                    <Route path="/profile" exact element={<Profile isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined}/>} />
-                    <Route path="/podcast/:id" exact element={<PodcastDetails/>} />
-                    <Route path="/displaypodcast/:type" exact element={<DisplayPodcast  isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined} />} />
-                    <Route path="/login"  element={<Login onLogin={handleLoginStatus}    onAdminLogin={handleISAdmin}/>} />
-                    <Route path="/register"  element={<Register />} />
-                    <Route path="/otp"  element={<Otp />} />
+              {loading ? (
+                   <Loader>
+                   {/* <CircularProgress /> */}
+                   <Spinner>
+           
+                   </Spinner>
+                 </Loader>
+                ) : (
+                  <Routes>
+                    <Route path="/" exact element={<Dashboard isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined} />} />
+                    <Route path="/search" exact element={<Search isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined} />} />
+                    <Route path="/favorite" exact element={<Favorite isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined} />} />
+                    <Route path="/profile" exact element={<Profile isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined} />} />
+                    <Route path="/podcast/:id" exact element={<PodcastDetails />} />
+                    <Route path="/displaypodcast/:type" exact element={<DisplayPodcast isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined} />} />
+                    <Route path="/login" element={<Login onLogin={handleLoginStatus} onAdminLogin={handleISAdmin} />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/otp" element={<Otp />} />
                     <Route path="*" element={<NoPage />} />
-              </Routes>
+                  </Routes>
+                )}
               
            </Frame>
         </Container>
