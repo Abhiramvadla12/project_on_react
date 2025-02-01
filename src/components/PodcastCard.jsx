@@ -155,7 +155,7 @@ const PodcastCard = ({apiData,type,isFavorite,onFavorite,isLogined}) => {
         return <div>No Data Available</div>;
       }
       const categories = {
-        mostpopular: ["bussiness", "culture", "education"],
+        mostpopular: ["bussiness", "science", "education"],
         all: ["bussiness", "crime", "education", "history", "comedy", "culture", "science"],
     };
     const catArr = categories[type] || [type];
@@ -188,7 +188,7 @@ const PodcastCard = ({apiData,type,isFavorite,onFavorite,isLogined}) => {
                                 <div>
                                     <Top>
                                         <Favorite onClick={(event) => handleFavoriteClick(event, element.id)}>
-                                            <FavoriteIcon style={{ width: "16px", height: "16px",color:isFavorite.includes(element.id) ? "red":"white" }} />
+                                            <FavoriteIcon style={{ width: "16px", height: "16px",color:isLogined && isFavorite.includes(element.id) ? "red":"white" }} />
                                         </Favorite>
                                         <CardImage src={element.image} alt="Podcast" />
                                     </Top>

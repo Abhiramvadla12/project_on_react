@@ -64,6 +64,7 @@ function Register() {
   const [loading,setLoading] = useState(false);
   const navigate = useNavigate();
   const [login_details_data,setLoginDetails] = useState([]);
+  const [google_signups_data,setGooleSignupsData] = useState([]);
   useEffect(() => {
       const login_data = async () => {
           try {
@@ -83,7 +84,28 @@ function Register() {
       };
       login_data();
   }, []);  // This will run only once when the component mounts
+
+  useEffect(() => {
+    const google_signups_data = async () => {
+        try {
+            let res = await fetch("https://google-signup-mongodb.onrender.com/login");
+            if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+            let data = await res.json();
+            // console.log(data);
+            setGooleSignupsData(data);
+            if (data.length === 0) {
+                console.log("No login details found.");
+            }
+        } catch (err) {
+            console.log("Error in fetching", err);
+        }
+    };
+    google_signups_data();
+}, []); 
   // Validate inputs with regex
+  
   const validateInputs = () => {
     const { username, password, email } = state;
     let newErrors = {};
@@ -192,34 +214,52 @@ function Register() {
     }
   };
 
-  // Handle Google sign-up
   const handleGoogleSignUp = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-
-      // Check if this Google email is already in localStorage under google_signups
-      const googleData = JSON.parse(localStorage.getItem("google_signups")) || [];
+  
+      // Check if user already exists in backend
+      const googleData = google_signups_data || [];
       const googleUserFound = googleData.some((googleUser) => googleUser.email === user.email);
-
+  
       if (googleUserFound) {
         alert("This Google account is already registered. Redirecting to login...");
         navigate("/login");
       } else {
-        // Save Google user data in a separate localStorage object
+        // Prepare new Google user data
         const newGoogleUser = {
-          displayName: user.displayName || "Google User", // Use Google display name or fallback
+          displayName: user.displayName || "Google User",
           email: user.email,
         };
-        googleData.push(newGoogleUser);
-        localStorage.setItem("google_signups", JSON.stringify(googleData));
-        navigate("/login");
+  
+        // Send data to backend
+        try {
+          const res = await fetch("https://google-signup-mongodb.onrender.com/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newGoogleUser),
+          });
+  
+          if (!res.ok) {
+            throw new Error("Failed to register Google user in database.");
+          }
+  
+          alert("Google sign-up successful. Redirecting to login...");
+          navigate("/login");
+        } catch (err) {
+          console.error("Error registering Google user:", err);
+          alert("An error occurred while registering with Google. Please try again.");
+        }
       }
     } catch (error) {
       console.error("Error signing up with Google:", error);
       alert("There was an issue signing up with Google. Please try again.");
     }
   };
+  
 
   // Handle input changes
   const handleChange = (e) => {

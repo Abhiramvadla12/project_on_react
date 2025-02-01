@@ -155,7 +155,7 @@ const Search = ({isFavorite,onFavorite,isLogined}) => {
             item.creatorName.toLowerCase().includes(searched.toLowerCase())
         )
     );
-    console.log(filteredData);
+    // console.log(filteredData);
     return (
         <SearchMain>
             <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>

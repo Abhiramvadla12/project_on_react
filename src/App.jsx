@@ -95,12 +95,12 @@ function App() {
           throw new Error(`HTTP error! Status: ${res.status}`);
         }
         let data = await res.json();
-        console.log("Fetched favorite data:", data);
+        // console.log("Fetched favorite data:", data);
   
         // Ensure `filterData[0]` exists before setting state
         const filterData = data.filter((val) => val.name === `${storedUser.username} 's fav`);
         if (filterData.length > 0) {
-          console.log("Filtered favorites:", filterData[0].fav_ids);
+          // console.log("Filtered favorites:", filterData[0].fav_ids);
           setFavorite(filterData[0].fav_ids);
         } else {
           setFavorite([]);  // Ensure favorites are reset if no data is found

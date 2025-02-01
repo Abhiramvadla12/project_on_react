@@ -57,7 +57,7 @@ const NavBar = ({setMenuOpen, isLogined,darkMode }) => {
         <IcoButton onClick={()=> setMenuOpen((prev)=> !prev)} >
             <MenuIcon />
         </IcoButton>
-        {display && (
+        {(display && isLogined) && (
             <DisplayToast>
                 Welcome {display?.username} !!! 
             </DisplayToast>

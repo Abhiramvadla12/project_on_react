@@ -39,6 +39,10 @@ const EpisodeTop = styled.div`
   color: ${({ theme }) => theme.text_secondary};
   display: flex;
   gap: 5px;
+   @media (max-width: 430px) {
+        display: block;
+        text-align: center;
+    }
 `;
 
 const Episodes = styled.div`
@@ -65,7 +69,17 @@ const Episodes = styled.div`
   }
 `;
 
-const Information = styled.div``;
+const Information = styled.div`
+       @media (max-width: 430px) {
+       font-size: 14px;
+         overflow: hidden;
+    display: -webkit-box;
+    max-width: 100%;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    }
+`;
 
 const Views = styled.div`
   padding: 10px;

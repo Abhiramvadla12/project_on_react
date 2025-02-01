@@ -75,6 +75,7 @@ function Login({ onLogin,onAdminLogin}) {
   const [loading,setLoading] = useState(false);
   const [errors, setErrors] = useState({}); // State to store validation errors
   const [login_details_data,setLoginDetails] = useState([]);
+  const [google_signups_data,setGooleSignupsData] = useState([]);
   useEffect(() => {
     const login_data = async () => {
         try {
@@ -95,6 +96,26 @@ function Login({ onLogin,onAdminLogin}) {
     login_data();
 }, []);  // This will run only once when the component mounts
   // console.log("login details from database",login_details_data);
+  useEffect(() => {
+    const google_signups_data = async () => {
+        try {
+            let res = await fetch("https://google-signup-mongodb.onrender.com/login");
+            if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+            let data = await res.json();
+            // console.log(data);
+            setGooleSignupsData(data);
+            if (data.length === 0) {
+                console.log("No login details found.");
+            }
+        } catch (err) {
+            console.log("Error in fetching", err);
+        }
+    };
+    google_signups_data();
+}, []); 
+// console.log("google signups details from database",google_signups_data);
   const validateFields = () => {
     const { username, password, email } = state;
     const newErrors = {};
@@ -133,10 +154,11 @@ function Login({ onLogin,onAdminLogin}) {
     const localData = login_details_data || [];
     const userFound = localData.some(
       (user) =>
-        user.username === obj.username &&
+        user.name === obj.username &&
         user.password === obj.password &&
         user.email === obj.email
     );
+    // console.log(userFound);
     const adminCheck = ()=>{
       return username === "Abhiram" && password === "Abhiram@1234" && email === "abhiramvadla61@gmail.com";
     }
@@ -188,7 +210,8 @@ function Login({ onLogin,onAdminLogin}) {
       const googleUser = result.user;
       
       // Check if the Google email exists in localStorage under google_signups
-      const googleData = JSON.parse(localStorage.getItem("google_signups")) || [];
+      // const googleData = JSON.parse(localStorage.getItem("google_signups")) || [];
+      const googleData = google_signups_data || [];
       const googleUserFound = googleData.some(user => user.email === googleUser.email);
       const obj = {
         username: user.displayName || "Google User", // Use Google display name or fallback
