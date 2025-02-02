@@ -39,7 +39,11 @@ const ButtonDIv = styled.div`
     border: 2px solid#43097a;
     border-radius: 10px;
     gap: 8px;
+ 
+   
 `; 
+
+
 const DisplayToast = styled.div`
 
         font-size: 25px;
@@ -66,6 +70,7 @@ const NavBar = ({setMenuOpen, isLogined,darkMode }) => {
         <ButtonDIv>
             <PersonRounded />
             <button
+            
             style={{ border: "none", outline: "none", backgroundColor: darkMode ? "#1C1E27" : '#f0f0f0' }}
             onClick={() => {
                 setMenuOpen(); // Call setMenuOpen
@@ -76,6 +81,7 @@ const NavBar = ({setMenuOpen, isLogined,darkMode }) => {
                 navigate("/login"); // Navigate to login
                 }
             }}
+            
             >
             <span
                 style={{

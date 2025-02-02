@@ -26,12 +26,15 @@ const Topic = styled.div`
 `;
 const FavoriteContainer = styled.div`
     
-    display: flex;
-    felxwrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
     gap: 14px;
     padding: 18px 6px;
     @media (max-width: 550px) {
         justify-content: center;
+        display: grid;
+        grid-template-columns: 1fr;
+
     }
 `;
 const Loader = styled.div`

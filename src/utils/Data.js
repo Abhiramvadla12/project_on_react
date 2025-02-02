@@ -14,7 +14,11 @@ export const Category = [
         img: "https://m.media-amazon.com/images/M/MV5BMTc0Mjg1Nzc0MF5BMl5BanBnXkFtZTcwODM5OTcwOQ@@._V1_.jpg",
         color: "#8cabaa"
     },
-   
+    {
+        name: "Health",
+        img: "https://m.media-amazon.com/images/M/MV5BMjNjYjJkYTYtYjI5Zi00NWE4LWFiZjItMjM0N2VlZjgxY2U0XkEyXkFqcGdeQXVyNzg3NjQyOQ@@._V1_.jpg",
+        color: "#62bf62"
+    },
     {
         name: "Comedy",
         img: "https://deadline.com/wp-content/uploads/2023/03/LLZA-_Prime-Video-Brings-Trevor-Noah-Home-To-Host-Its-First-South-African-Original_LOL-Last-One-Laughing-South-Africa.jpg?w=1024",
@@ -31,9 +35,17 @@ export const Category = [
         img: "https://ssl-static.libsyn.com/p/assets/6/b/f/e/6bfe939ed4336498/HHA-1400px_b.jpg?crop=1:1,offset-y0",
         color: "#de577f"
     },
-    
+    {
+        name: "Religion",
+        img: "https://d1bsmz3sdihplr.cloudfront.net/media/podcast-shows/BP_podcast_cover_2-optimized.jpg",
+        color: "#aeb4b5"
+    },
+    {
+        name: "Development",
+        img: "https://i.scdn.co/image/ab6765630000ba8a1d971613512218740199a755",
+        color: "#74d0d6"
+    },
    
-    
     {
         name: "Crime",
         img: "https://images.squarespace-cdn.com/content/v1/5b6a11479f87707f6722bd01/1541786848970-Y0SCCZBCEY6OAE790VFB/MFM.jpg?format=1000w",

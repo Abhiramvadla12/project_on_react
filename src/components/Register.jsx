@@ -66,6 +66,7 @@ function Register() {
   const [login_details_data,setLoginDetails] = useState([]);
   const [google_signups_data,setGooleSignupsData] = useState([]);
   useEffect(() => {
+    setLoading(true)
       const login_data = async () => {
           try {
               let res = await fetch("https://podcast-login-details-mongodb.onrender.com/login");
@@ -73,6 +74,7 @@ function Register() {
                   throw new Error(`HTTP error! Status: ${res.status}`);
               }
               let data = await res.json();
+              setLoading(false)
               // console.log(data);
               setLoginDetails(data)
               if (data.length === 0) {
@@ -81,18 +83,21 @@ function Register() {
           } catch (err) {
               console.log("Error in fetching", err);
           }
+          setLoading(false)
       };
       login_data();
   }, []);  // This will run only once when the component mounts
 
   useEffect(() => {
     const google_signups_data = async () => {
+      setLoading(true)
         try {
             let res = await fetch("https://google-signup-mongodb.onrender.com/login");
             if (!res.ok) {
                 throw new Error(`HTTP error! Status: ${res.status}`);
             }
             let data = await res.json();
+            setLoading(false)
             // console.log(data);
             setGooleSignupsData(data);
             if (data.length === 0) {
@@ -101,6 +106,7 @@ function Register() {
         } catch (err) {
             console.log("Error in fetching", err);
         }
+        setLoading(false)
     };
     google_signups_data();
 }, []); 
@@ -163,6 +169,7 @@ function Register() {
       const otp = generateOtp(); // Make sure generateOtp() is defined
       localStorage.setItem("otp", JSON.stringify(otp)); // Store OTP temporarily in localStorage
       alert("please wait for some time....");
+      setLoading(true)
       try {
         const response = await fetch("https://node-post-deploy.onrender.com/api/send-otp", {
           method: "POST",
@@ -174,6 +181,7 @@ function Register() {
   
         if (response.ok) {
           const newUser = { username, password, email };
+          setLoading(false)
   
           // Attempt to register user in the MongoDB backend
           try {

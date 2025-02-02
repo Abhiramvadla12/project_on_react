@@ -202,6 +202,7 @@ const handleChange = (e) => {
   }
 };
 
+
 const handleSubmit = async (e) => {
   e.preventDefault();
   const formData = new FormData();
@@ -210,22 +211,22 @@ const handleSubmit = async (e) => {
   });
 
   try {
-    const response = await fetch("http://localhost:3000/upload", {
-      method: "POST",
+    const response = await fetch('https://api-backend-hejj.onrender.com/upload', {
+      method: 'POST',
       body: formData,
     });
 
     if (response.ok) {
       const result = await response.json();
-      toast.success("Uploaded successfully!");
-      console.log(result); // Handle server response here if needed
-      setIsModalOpen(false); // Close modal after submission
+      toast.success('Upload successful!');
+      console.log(result);
+      setIsModalOpen(false); // Close modal after successful upload
     } else {
-      toast.error("Upload failed. Please try again.");
+      toast.error('Upload failed. File size may exceed the 40MB limit.');
     }
   } catch (error) {
-    console.error("Error uploading files:", error);
-    toast.error("Upload failed. Please try again.");
+    console.error('Error uploading files:', error);
+    toast.error('Upload failed. Please try again.');
   }
 };
 const {Category,type,title,description,creatorName,views} = state;

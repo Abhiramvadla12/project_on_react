@@ -6,6 +6,7 @@ import { DefaultCard } from "../components/DefaultCard";
 import getData from "../components/api";
 import styled from "styled-components";
 import PodcastCard from "../components/PodcastCard";
+import { blue } from "@mui/material/colors";
 
 const SearchMain = styled.div`
     padding: 20px 30px;
@@ -111,7 +112,7 @@ padding: 18px 6px;
     grid-template-columns: repeat(1,1fr)
 }
 `;
-const Search = ({isFavorite,onFavorite,isLogined}) => {
+const Search = ({isFavorite,onFavorite,isLogined,darkMode}) => {
     const [searched, setSearched] = useState("");
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState(null);
@@ -172,7 +173,7 @@ const Search = ({isFavorite,onFavorite,isLogined}) => {
                             backgroundColor: "inherit",
                             padding: "4px 8px",
                             fontSize: "14px",
-                            color: "white",
+                            color: darkMode ? "white" :"blue",
                         }}
                         value={searched}
                         onChange={handleChange}

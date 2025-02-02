@@ -12,10 +12,11 @@
     padding: 30px;
     background: linear-gradient(to bottom,#8635d4 , aqua);
     width: 320px;
-    max-width: 600px;
+    /* max-width: 600px; */
+   
   }
 .label{
-    color: aqua;
+    color: white;
     font-size: x-large;
 }
 .label,.input{
@@ -57,4 +58,16 @@ img{
 .lastRow{
     display: flex;
     gap: 4px;
+}
+@media screen and (max-width:380px) {
+    .form{
+        width: 270px;
+        padding: 25px;
+    }
+}
+@media screen and (max-width:330px) {
+    .form{
+        width: 260px;
+        padding: 25px;
+    }
 }

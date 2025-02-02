@@ -17,23 +17,40 @@ const ProfileLogo= styled.div`
     height: 250px;
     width: 250px;
     border-radius: 50%;
+    @media (max-width: 550px) {
+        height: 101px;
+       width:100px;
+        
+    }
 `;
 const ProfileImage = styled.img`
       border: 2px solid blue;
     height: 250px;
     width: 250px;
     border-radius: 50%;
+    @media (max-width: 550px) {
+       height: 100px;
+       width:100px;
+        
+    }
 `;
 const UserName = styled.div`
     font-size: 1.5em;
     font-weight: bolder;
     color :  ${({theme})=> theme.text_secondary};
-   
+   @media (max-width: 550px) {
+        font-size: 1em;
+        
+    }
 `;
 const Email = styled.div`
         font-size: 1.5em;
     font-weight: bolder;
     color :  ${({theme})=> theme.text_secondary};
+     @media (max-width: 550px) {
+        font-size: 1em;
+        
+    }
 `;
 const ProfileTop = styled.div`
 
@@ -43,11 +60,15 @@ const ProfileTop = styled.div`
     gap: 40px;
    
     padding :10px 0 10px 0;
-
+ 
 `;
 const Details = styled.div`
       
       padding: 70px
+      @media (max-width: 550px) {
+        padding: 0;
+
+    }
 `;
 
 const HR = styled.div`
@@ -72,6 +93,12 @@ const Favorites = styled.div`
     display: flex;
     margin: 2em;
     gap: 1em;
+     @media (max-width: 550px) {
+        justify-content: center;
+        display: grid;
+        grid-template-columns: 1fr;
+        
+    }
 `;
 const Loader = styled.div`
   display: flex;
@@ -79,6 +106,7 @@ const Loader = styled.div`
   align-items: center;
   height: 100%;
   width: 100%;
+ 
 `;
 
 const Spinner = styled.div`

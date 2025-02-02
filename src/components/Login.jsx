@@ -78,12 +78,14 @@ function Login({ onLogin,onAdminLogin}) {
   const [google_signups_data,setGooleSignupsData] = useState([]);
   useEffect(() => {
     const login_data = async () => {
+        setLoading(true)
         try {
             let res = await fetch("https://podcast-login-details-mongodb.onrender.com/login");
             if (!res.ok) {
                 throw new Error(`HTTP error! Status: ${res.status}`);
             }
             let data = await res.json();
+            setLoading(false);
             // console.log(data);
             setLoginDetails(data)
             if (data.length === 0) {
@@ -92,18 +94,21 @@ function Login({ onLogin,onAdminLogin}) {
         } catch (err) {
             console.log("Error in fetching", err);
         }
+        setLoading(false)
     };
     login_data();
 }, []);  // This will run only once when the component mounts
   // console.log("login details from database",login_details_data);
   useEffect(() => {
     const google_signups_data = async () => {
+        setLoading(true)
         try {
             let res = await fetch("https://google-signup-mongodb.onrender.com/login");
             if (!res.ok) {
                 throw new Error(`HTTP error! Status: ${res.status}`);
             }
             let data = await res.json();
+            setLoading(false)
             // console.log(data);
             setGooleSignupsData(data);
             if (data.length === 0) {
@@ -112,6 +117,7 @@ function Login({ onLogin,onAdminLogin}) {
         } catch (err) {
             console.log("Error in fetching", err);
         }
+        setLoading(false)
     };
     google_signups_data();
 }, []); 
@@ -154,7 +160,7 @@ function Login({ onLogin,onAdminLogin}) {
     const localData = login_details_data || [];
     const userFound = localData.some(
       (user) =>
-        user.name === obj.username &&
+        user.username === obj.username &&
         user.password === obj.password &&
         user.email === obj.email
     );
@@ -300,7 +306,7 @@ function Login({ onLogin,onAdminLogin}) {
                           Sign In With Google
                         </button>
                       </div>
-                      <button style={{backgroundColor: "blue",borderRadius: "10px",fontSize:"10px"}}><Link to={"/register"} style={{color: "aqua",textDecoration:"none",fontSize:"16px"}}>Create an account ?</Link></button>
+                      <button style={{backgroundColor: "blue",borderRadius: "10px",fontSize:"10px"}}><Link to={"/register"} style={{color: "aqua",textDecoration:"none",fontSize:"13px"}}>Create an account ?</Link></button>
                   </div>
                   
                 </form>

@@ -1,92 +1,120 @@
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
 const app = express();
-let fs = require("fs");
 const multer = require("multer");
 const path = require("path");
-const { title } = require("process");
+const fs = require("fs");
+require("dotenv").config();
+
+const { dbConnect } = require("./db");
+
+dbConnect();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-// Set up the static directory for serving files (images and uploaded files)
-app.use('/uploadedContent', express.static(path.join(__dirname, 'uploadedContent')));
-// Ensure the upload directory exists
-const uploadDir = path.join(__dirname, "uploadedContent");
+
+mongoose.connection.once("open", () => {
+  console.log(`✅ Connected to database: ${mongoose.connection.name}`);
+});
+
+const mainDataSchema = new mongoose.Schema({
+  id: String,
+  Category: String,
+  type: String,
+  image: String,
+  files: [
+    {
+      title: String,
+      description: String,
+      creatorName: String,
+      views: String,
+      source: String,
+    },
+  ],
+});
+
+const mainModel = mongoose.model("main_multimedia", mainDataSchema, "main_multimedia");
+
+const uploadDir = './uploads';
 if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
+    fs.mkdirSync(uploadDir);
 }
 
-// Configure multer storage
+// Set up multer storage and file size limit
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
-    callback(null, uploadDir); // Store in 'uploadedContent' directory
+    callback(null, uploadDir);
   },
   filename: (req, file, callback) => {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    callback(null, uniqueSuffix + "-" + file.originalname);
+    callback(null, file.originalname);
   },
 });
 
-// Multer instance for handling file uploads
-const upload = multer({ storage });
-
-app.get("/data", (req, res) => {
-  fs.readFile('./data.json', "utf-8", (err, data) => {
-    if (err) {
-      res.send(err.message);
-    } else {
-      console.log("checking the data:", JSON.parse(data));
-      res.send(JSON.parse(data));
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 40 * 1024 * 1024, // 40MB in bytes
+  },
+  fileFilter: (req, file, callback) => {
+    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'audio/mpeg', 'video/mp4','image/jpg','audio/mp3'];
+    if (!allowedMimeTypes.includes(file.mimetype)) {
+      return callback(new Error('Invalid file type'), false);
     }
-  });
+    callback(null, true);
+  },
 });
 
-// Endpoint for handling multiple file uploads
-app.post("/upload", upload.fields([{ name: "image", maxCount: 1 }, { name: "file", maxCount: 1 }]), (req, res) => {
-    const newData = {
-        Category: req.body.Category,
-        type: req.body.type,
-        image: req.files["image"] ? `/uploadedContent/${req.files["image"][0].filename}` : null, // Update to match your file storage path
-        files: req.files["file"] 
-            ? req.files["file"].map((file) => ({
-                title: req.body.title || "Default Title", // If title is not provided, default it
-                description: req.body.description || "Default Description", // If description is not provided, default it
-                creatorName: req.body.creatorName || "Default Creator", // If creatorName is not provided, default it
-                views: req.body.views || "0 views", // If views is not provided, default it
-                source: `/uploadedContent/${file.filename}`, // Source will be the file name with path
-            })) 
-            : []
-    };
+app.get("/data", async (req, res) => {
+  try {
+    let data = await mainModel.find();
+    res.send(data);
+  } catch (err) {
+    console.error("❌ Error fetching data:", err);
+    res.status(500).send({ error: "Internal Server Error" });
+  }
+});
 
-  console.log(req.body);
-  // Read the existing data from data.json
-  fs.readFile("./data.json", "utf-8", (err, data) => {
-    if (err) {
-      res.status(500).send("Error reading data file");
-      return;
-    }
+app.post("/upload", upload.fields([{ name: "image", maxCount: 1 }, { name: "file", maxCount: 1 }]), async (req, res) => {
+  try {
+    const latestEntry = await mainModel.aggregate([
+      { $project: { id: { $toInt: "$id" } } }, // Convert `id` to a number
+      { $sort: { id: -1 } }, // Sort in descending order
+      { $limit: 1 }, // Get only the latest entry
+    ]);
 
-    const dataArr = JSON.parse(data);
+    const newId = latestEntry.length ? (latestEntry[0].id + 1).toString() : "17";
 
-    // Generate a new ID based on the highest current ID
-    const maxId = dataArr.reduce((max, item) => Math.max(max, parseInt(item.id, 10)), 0);
-    newData.id = (maxId + 1).toString();
-
-    // Append the new data
-    dataArr.push(newData);
-
-    // Write the updated data back to data.json
-    fs.writeFile("./data.json", JSON.stringify(dataArr, null, 2), (err) => {
-      if (err) {
-        res.status(500).send("Error writing data file");
-      } else {
-        res.status(200).json(newData);
-      }
+    const newData = new mainModel({
+      id: String(newId),
+      Category: req.body.Category,
+      type: req.body.type,
+      image: req.files["image"] ? `/${req.files["image"][0].filename}` : null,
+      files: req.files["file"]
+        ? req.files["file"].map((file) => ({
+            title: req.body.title || "Default Title",
+            description: req.body.description || "Default Description",
+            creatorName: req.body.creatorName || "Default Creator",
+            views: req.body.views || "0 views",
+            source: `/${file.filename}`,
+          }))
+        : [],
     });
-  });
+
+    await newData.save();
+    res.status(200).json(newData);
+  } catch (error) {
+    console.error("Error saving data:", error);
+
+    if (error instanceof multer.MulterError && error.code === 'LIMIT_FILE_SIZE') {
+      return res.status(400).send({ error: 'File size exceeds 40MB limit' });
+    }
+
+    res.status(500).send("Error saving data");
+  }
 });
 
-let port = 3000;
+let port = process.env.PORT || 3001;
 app.listen(port, () => {
-  console.log("server started on port", port);
+  console.log("Server started on port http://localhost:" + port);
 });

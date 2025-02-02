@@ -156,7 +156,7 @@ const PodcastCard = ({apiData,type,isFavorite,onFavorite,isLogined}) => {
       }
       const categories = {
         mostpopular: ["bussiness", "science", "education"],
-        all: ["bussiness", "crime", "education", "history", "comedy", "culture", "science"],
+        all: ["bussiness", "crime", "education", "history", "comedy", "culture", "science","health","development"],
     };
     const catArr = categories[type] || [type];
     // console.log("checking if it array or not",isFavorite)

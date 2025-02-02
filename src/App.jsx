@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import styled, { ThemeProvider } from 'styled-components'; //Styled-components is a popular library in the React ecosystem that allows you to write CSS directly within JavaScript files, using tagged template literals. It enables you to style components in a modular and maintainable way, keeping your styles scoped to specific components.
 import { lightTheme, darkTheme } from './utils/Themes'; //these themes imported from another file
-
+import { useNavigate, useLocation } from "react-router-dom";
 import Sidebar from './components/Sidebar';
 import NavBar from './components/NavBar';
-import { Routes,Route,useLocation } from 'react-router-dom';
+import { Routes,Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Search from './pages/Search';
 import Favorite from './pages/Favorite';
@@ -77,6 +77,24 @@ function App() {
   const [isAdmin,setIsAdmin] = useState(false);
 
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const location1 = useLocation();
+
+  useEffect(() => {
+    // Check if user is logged in on initial load or refresh
+    const storedUser = JSON.parse(localStorage.getItem("display"));
+    if (storedUser && storedUser.username) {
+      setIsLogined(true);
+      setUserDetails(storedUser);
+      setIsAdmin(true);
+    }
+  }, []);
+  useEffect(() => {
+    // If user is logged in and tries to go back to login, redirect to home
+    if (isLogined && location1.pathname === "/login") {
+      navigate("/", { replace: true });
+    }
+  }, [isLogined, location1.pathname, navigate]);
   // Initialize user data and favorites from LocalStorage
   useEffect(() => {
     const favData = async () => {
@@ -234,7 +252,7 @@ const location = useLocation();
                 ) : (
                   <Routes>
                     <Route path="/" exact element={<Dashboard isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined} />} />
-                    <Route path="/search" exact element={<Search isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined} />} />
+                    <Route path="/search" exact element={<Search isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined}  darkMode={darkMode}/>} />
                     <Route path="/favorite" exact element={<Favorite isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined} />} />
                     <Route path="/profile" exact element={<Profile isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined} />} />
                     <Route path="/podcast/:id" exact element={<PodcastDetails />} />
