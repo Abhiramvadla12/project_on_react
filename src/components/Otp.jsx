@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Otp = () => {
   const navigate = useNavigate();
   const otp = JSON.parse(localStorage.getItem("otp"));
@@ -8,23 +9,24 @@ const Otp = () => {
   const [enteredOtp, setEnteredOtp] = useState("");
 
   useEffect(() => {
-    alert("Please wait a few seconds to get the OTP!");
+    toast.success("Please wait a few seconds to get the OTP!");
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (enteredOtp === otp) {
-      alert("Successfully registered!");
+      toast.success("Successfully registered!");
       setTimeout(() => {
         navigate("/login");
       }, 3000);
     } else {
-      alert("Entered OTP is wrong. Please try again.");
-      alert("Please wait a few seconds to get the OTP!");
+      toast.error("Entered OTP is wrong. Please try again.");
+      toast.error("Please wait a few seconds to get the OTP!");
     }
   };
 
-  return (
+  return (<>
+            <ToastContainer/>
     <div className="form-container">
       
       <form onSubmit={handleSubmit} className="form">
@@ -43,6 +45,8 @@ const Otp = () => {
         <input type="submit" value="Submit"  className="input"/>
       </form>
     </div>
+  </>
+    
   );
 };
 

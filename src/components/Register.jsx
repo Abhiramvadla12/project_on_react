@@ -7,6 +7,8 @@ import { Button } from "@mui/material";
 import styled from "styled-components";
 import { initializeApp } from "firebase/app";
 import LogoImg from "../images/login_logo.jpeg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   getAuth,
   signInWithPopup,
@@ -163,12 +165,13 @@ function Register() {
     );
 
     if (userFound) {
-      alert("User already exists. Please log in.");
-      navigate("/login");
+      toast.error("User already exists. Please log in.");
+      setTimeout(()=> navigate("/login"),3000)
+      // navigate("/login");
     } else {
       const otp = generateOtp(); // Make sure generateOtp() is defined
       localStorage.setItem("otp", JSON.stringify(otp)); // Store OTP temporarily in localStorage
-      alert("please wait for some time....");
+      toast.success("please wait for some time....");
       setLoading(true)
       try {
         const response = await fetch("https://node-post-deploy.onrender.com/api/send-otp", {
@@ -201,23 +204,24 @@ function Register() {
             // localData.push(newUser);
             // localStorage.setItem("login_credential", JSON.stringify(localData));
   
-            alert("Registration successful. Redirecting to OTP verification...");
+            toast.success("Registration successful. Redirecting to OTP verification...");
   
             setLoading((prev) => !prev);
             setTimeout(() => {
               setLoading((prev) => !prev);
               navigate("/otp", { state: { user: newUser } }); // Pass user data to OTP page
-            }, 2000);
+            }, 3000);
+            // navigate("/otp", { state: { user: newUser } }); 
           } catch (err) {
             console.error("Error registering user:", err);
-            alert("An error occurred while registering the user. Please try again.");
+            toast.error("An error occurred while registering the user. Please try again.");
           }
         } else {
-          alert("Failed to send OTP. Please try again.");
+          toast.error("Failed to send OTP. Please try again.");
         }
       } catch (error) {
         console.error("Error sending OTP:", error);
-        alert("An error occurred while sending OTP. Please try again.");
+        toast.error("An error occurred while sending OTP. Please try again.");
       }
     }
   };
@@ -232,7 +236,7 @@ function Register() {
       const googleUserFound = googleData.some((googleUser) => googleUser.email === user.email);
   
       if (googleUserFound) {
-        alert("This Google account is already registered. Redirecting to login...");
+        toast.success("This Google account is already registered. Redirecting to login...");
         navigate("/login");
       } else {
         // Prepare new Google user data
@@ -255,16 +259,16 @@ function Register() {
             throw new Error("Failed to register Google user in database.");
           }
   
-          alert("Google sign-up successful. Redirecting to login...");
+          toast.success("Google sign-up successful. Redirecting to login...");
           navigate("/login");
         } catch (err) {
           console.error("Error registering Google user:", err);
-          alert("An error occurred while registering with Google. Please try again.");
+          toast.error("An error occurred while registering with Google. Please try again.");
         }
       }
     } catch (error) {
       console.error("Error signing up with Google:", error);
-      alert("There was an issue signing up with Google. Please try again.");
+      toast.error("There was an issue signing up with Google. Please try again.");
     }
   };
   
@@ -282,6 +286,7 @@ function Register() {
 
   return (
     <>
+    <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
       {loading  ? (
               (
                 <Loader>

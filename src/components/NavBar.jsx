@@ -6,7 +6,7 @@ import { IconButton } from '@mui/material';
 // import {Link} from 'react-router-dom';
 // import {useState} from "react";
 import { useNavigate } from "react-router-dom";
-
+import "./navbar.css"
 const NavBardiv = styled.div`
 
     display: flex;
@@ -67,7 +67,7 @@ const NavBar = ({setMenuOpen, isLogined,darkMode }) => {
             </DisplayToast>
         )}
        
-        <ButtonDIv>
+        <ButtonDIv className='buttonDiv'>
             <PersonRounded />
             <button
             

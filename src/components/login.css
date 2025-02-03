@@ -4,6 +4,7 @@
     align-items: center; /* Vertically center the form */
     height: 100vh; /* Full height of the viewport */
      /* Optional: Add a background color to the page */
+    
   }
   
   .form {
@@ -11,13 +12,13 @@
     border-radius: 10px;
     padding: 30px;
     background: linear-gradient(to bottom,#8635d4 , aqua);
-    width: 320px;
+    width: 310px;
     /* max-width: 600px; */
    
   }
 .label{
     color: white;
-    font-size: x-large;
+    font-size: large;
 }
 .label,.input{
     margin-bottom: 5px;
@@ -41,23 +42,26 @@ h1{
     background-color:black;
 }
 img{
-    height: 20xp;
+    height: 20px;
     width: 20px;
 }
 .google_button{
     display: flex;
     border: 2px solid black;
     background-color: black;
-    border-radius: 8px;
-    width: 15em;
+    border-radius: 10px;
+    width: 17.5em;
     
 }
 .input{
-    width: 100%;
+    width: 20em;
 }
 .lastRow{
     display: flex;
     gap: 4px;
+}
+.guest{
+    font-size: 12px !important;
 }
 @media screen and (max-width:380px) {
     .form{
@@ -71,3 +75,36 @@ img{
         padding: 25px;
     }
 }
+
+@media screen and (max-width:770px) {
+    .form{
+        font-size: medium;
+        width: 300px;
+    }
+    .guest{
+     font-size: 12px !important;
+    }
+ }
+ @media screen and (max-width:430px) {
+    .label{
+        font-size: 14px;
+    }
+    
+ }
+ @media screen  and (max-width:380px) {
+    .guest{
+        font-size: 8.5px !important;
+    }
+ }
+ @media screen  and (max-width:330px) {
+    .guest{
+        font-size: 7px !important;
+    }
+    img{
+        height: 15px;
+        width: 15px;
+    }
+    .form{
+        padding: 5px;
+    }
+ }

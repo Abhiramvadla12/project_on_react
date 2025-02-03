@@ -1,13 +1,12 @@
+
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import { useState, useEffect } from "react";
 import { Category } from "../utils/Data";
 import { Link } from "react-router-dom";
 import { DefaultCard } from "../components/DefaultCard";
 import getData from "../components/api";
 import styled from "styled-components";
 import PodcastCard from "../components/PodcastCard";
-import { blue } from "@mui/material/colors";
-
+import { useState,useEffect } from "react";
 const SearchMain = styled.div`
     padding: 20px 30px;
     padding-bottom: 200px;
@@ -16,6 +15,7 @@ const SearchMain = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
+    position: relative;
 
     @media (max-width: 768px) {
         padding: 20px 9px;
@@ -34,10 +34,34 @@ const SearchBar = styled.div`
     align-items: center;
     gap: 6px;
     color: ${({ theme }) => theme.text_secondary};
+    position: relative;
 
     @media (max-width: 768px) {
         max-width: 100%;
         padding: 10px;
+    }
+`;
+
+const SuggestionBox = styled.div`
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: ${({ theme }) => theme.bg};
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    margin-top: 5px;
+    z-index: 1000;
+`;
+
+const SuggestionItem = styled.div`
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    color: ${({ theme }) => theme.text_secondary};
+
+    &:hover {
+        background-color: ${({ theme }) => theme.hover};
     }
 `;
 
@@ -90,36 +114,38 @@ const Spinner = styled.div`
         }
     }
 `;
+
 const FilterContainer = styled.div`
-display: flex;
-flex-direction: column;
-background-color: ${({ theme})=> theme.bg};
-border-radius: 10px;
-padding: 20px 30px;
-
-
+    display: flex;
+    flex-direction: column;
+    background-color: ${({ theme }) => theme.bg};
+    border-radius: 10px;
+    padding: 20px 30px;
 `;
 
 const Podcasts = styled.div`
-width: 100%;
-display: grid;
-grid-template-columns: repeat(4,1fr);
-margin: 10px;
-gap: 14px;
-padding: 18px 6px;
-@media (max-width: 550px) {
-    justify-content: center;
-    grid-template-columns: repeat(1,1fr)
-}
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 10px;
+    gap: 14px;
+    padding: 18px 6px;
+    @media (max-width: 550px) {
+        justify-content: center;
+        grid-template-columns: repeat(1, 1fr);
+    }
 `;
-const Search = ({isFavorite,onFavorite,isLogined,darkMode}) => {
+
+const Search = ({ isFavorite, onFavorite, isLogined, darkMode }) => {
     const [searched, setSearched] = useState("");
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
-
+    const [suggestions, setSuggestions] = useState([]);
+    const [showSuggestion ,setShowSuggestion] = useState(true);
     const handleChange = (e) => {
         setSearched(e.target.value);
+        setShowSuggestion(true)
     };
 
     useEffect(() => {
@@ -137,10 +163,30 @@ const Search = ({isFavorite,onFavorite,isLogined,darkMode}) => {
         fetchData();
     }, []);
 
+    useEffect(() => {
+        if (searched === "") {
+            setSuggestions([]);
+        } else {
+            const filteredSuggestions = data.filter((element) =>
+                element.files.some((item) =>
+                    item.title.toLowerCase().includes(searched.toLowerCase()) ||
+                    item.description.toLowerCase().includes(searched.toLowerCase()) ||
+                    item.creatorName.toLowerCase().includes(searched.toLowerCase())
+                )
+            );
+            setSuggestions(filteredSuggestions);
+        }
+    }, [searched, data]);
+
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter") {
+            setShowSuggestion(false)
+        }
+    };
     if (loading) {
         return (
             <Loader>
-                <Spinner></Spinner>
+                <Spinner />
             </Loader>
         );
     }
@@ -149,14 +195,6 @@ const Search = ({isFavorite,onFavorite,isLogined,darkMode}) => {
         return <div>Error: {error}</div>;
     }
 
-    const filteredData = data.filter((element) =>
-        element.files.some((item) =>
-            item.title.toLowerCase().includes(searched.toLowerCase()) ||
-            item.description.toLowerCase().includes(searched.toLowerCase()) ||
-            item.creatorName.toLowerCase().includes(searched.toLowerCase())
-        )
-    );
-    // console.log(filteredData);
     return (
         <SearchMain>
             <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
@@ -173,11 +211,27 @@ const Search = ({isFavorite,onFavorite,isLogined,darkMode}) => {
                             backgroundColor: "inherit",
                             padding: "4px 8px",
                             fontSize: "14px",
-                            color: darkMode ? "white" :"blue",
+                            color: darkMode ? "white" : "blue",
                         }}
                         value={searched}
                         onChange={handleChange}
+                        onKeyDown={handleKeyDown} // Handle Enter key
                     />
+                       {suggestions.length > 0 && (
+                        showSuggestion &&
+                        (<SuggestionBox>
+                            {suggestions.map((item, index) =>
+                                item.files.map((file, fileIndex) => (
+                                    <SuggestionItem
+                                        key={`${index}-${fileIndex}`}
+                                        onClick={() => setSearched(file.title)}
+                                    >
+                                        {file.title}
+                                    </SuggestionItem>
+                                ))
+                            )}
+                        </SuggestionBox>)
+                    )}
                 </SearchBar>
             </div>
 
@@ -195,13 +249,15 @@ const Search = ({isFavorite,onFavorite,isLogined,darkMode}) => {
             ) : (
                 <div>
                     <FilterContainer>
-                                <Podcasts >
-                                      
-                                  <PodcastCard apiData={filteredData} type={"all"} onFavorite={onFavorite} isLogined={isLogined} isFavorite={isFavorite}/>
-                                        
-                                        
-                                
-                                </Podcasts>
+                        <Podcasts>
+                            <PodcastCard
+                                apiData={suggestions}
+                                type={"all"}
+                                onFavorite={onFavorite}
+                                isLogined={isLogined}
+                                isFavorite={isFavorite}
+                            />
+                        </Podcasts>
                     </FilterContainer>
                 </div>
             )}

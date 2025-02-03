@@ -24,3 +24,6 @@ body {
   border-radius: 6px;
   height: 50px;
 }
+.Toastify__toast-container {
+  z-index: 9999;
+}

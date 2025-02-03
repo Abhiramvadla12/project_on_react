@@ -8,7 +8,8 @@ import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import LogoImg from "../images/login_logo.jpeg";
 import { Button } from "@mui/material";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   getAuth,
   onAuthStateChanged,
@@ -76,6 +77,9 @@ function Login({ onLogin,onAdminLogin}) {
   const [errors, setErrors] = useState({}); // State to store validation errors
   const [login_details_data,setLoginDetails] = useState([]);
   const [google_signups_data,setGooleSignupsData] = useState([]);
+  
+  
+ 
   useEffect(() => {
     const login_data = async () => {
         setLoading(true)
@@ -171,14 +175,15 @@ function Login({ onLogin,onAdminLogin}) {
     // console.log("is admin or not checking",adminCheck());
     onAdminLogin(adminCheck())
     if (userFound) {
-      alert("Login successful. Redirecting to the home page in 3 seconds...");
+      // toast.success("Login successful! Redirecting to the home page...");
+      alert("Login successful! Redirecting to the home page...")
       onLogin(true); // Notify parent component of login success
       setLoading((prev => !prev))
       localStorage.setItem("display", JSON.stringify(obj));
       setTimeout(() => {
         setLoading((prev => !prev))
         navigate("/"); // Redirect to the home page
-      }, 3000);
+      }, 2000);
 
     } else {
       if (confirm("User not found. Do you want to register?")) {
@@ -187,6 +192,7 @@ function Login({ onLogin,onAdminLogin}) {
           setLoading((prev => !prev))
           navigate("/register"); // Redirect to the Register page
         }, 3000);
+        // navigate("/register"); // Redirect to the Register page
       }
     }
   };
@@ -226,28 +232,75 @@ function Login({ onLogin,onAdminLogin}) {
       localStorage.setItem("display",JSON.stringify(obj))
 
       if (googleUserFound) {
-        alert("Login successful with Google. Redirecting to the home page...");
+        // toast.success("Login successful with Google. Redirecting to the home page...");
+        alert("Login successful with Google. Redirecting to the home page...")
         onLogin(true); // Notify parent component of login success
         navigate('/');
       } else {
-        alert("Google account not found in the system. Please register first.");
+        toast.error("Google account not found in the system. Please register first.");
         setLoading((prev => !prev))
         setTimeout(() => {
           setLoading((prev => !prev))
           navigate("/register"); // Redirect to the Register page if the Google account is not found
-        }, 3000);
+        }, 2000);
+        // navigate("/register");
       }
     } catch (error) {
       console.error("Error signing in with Google:", error);
-      alert("There was an error signing in with Google.");
+      toast.error("There was an error signing in with Google.");
     }
   };
   
- 
+  const handleGuestLogin = async () => {
+    
+    const guestCredentials = {
+      username: "guest",
+      password: "Guest@1234",
+      email: "guest@gmail.com",
+    };
+  
+    try {
+      // Check if guest credentials exist in your database
+      const userFound = login_details_data.some(
+        (user) =>
+          user.username === guestCredentials.username &&
+          user.password === guestCredentials.password &&
+          user.email === guestCredentials.email
+      );
+  
+      if (userFound) {
+        
+        setLoading(true);
+        alert("Guest login successful! Redirecting to home...")
+        
+        onLogin(true); // Notify parent component of login success
+        localStorage.setItem("display", JSON.stringify(guestCredentials));
+
+        // toast.success("Guest login successful! Redirecting to home...");
+        setTimeout(() => {
+          
+          setLoading(false)
+          navigate("/"); // Redirect to home page
+        }, 3000);
+        // navigate("/");
+      } else {
+        toast.error("Guest account not found in the system.");
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error("Error in guest login:", error);
+      toast.error("Error logging in as guest.");
+      setLoading(false);
+    }
+  };
+  
+  
   const { username, password, email } = state;
   
   return (
     <>
+      
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
       {loading  ? (
         (
           <Loader>
@@ -257,6 +310,7 @@ function Login({ onLogin,onAdminLogin}) {
               {/* <CircularProgress /> */}
           </Loader>)
       ) : (
+              
              <div style={{overflowX:"hidden",overflowY:scroll,backgroundColor:`${({theme})=> theme.bg}`}} className="form-container" >
 
                 <form onSubmit={handleSubmit} className="form" >
@@ -298,23 +352,33 @@ function Login({ onLogin,onAdminLogin}) {
                   /> <br />
                    {errors.email && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.email}</p>}
         
-                  <Button type="submit"  id="submit" className="input" variant="contained" style={{margin:"4px"}}>Login</Button> <br />
-                  <div className="lastRow">
-                      <div className="google_button" style={{textAlign: "center"}}>
+                  <Button type="submit"  id="submit" className="input" variant="contained" style={{margin:"4px"}}>Login</Button> <br /><br />
+                  <div className="google_button" style={{textAlign: "center"}}>
                         <img src={Image} alt="image not Found" style={{ height: "40px", width: "40px" }} />
                         <button onClick={signInWithGoogle} id="signIn" style={{ border: "none", outline: "none", backgroundColor: "black", color: "white" ,textAlign: "center"}} type="button">
                           Sign In With Google
                         </button>
-                      </div>
-                      <button style={{backgroundColor: "blue",borderRadius: "10px",fontSize:"10px"}}><Link to={"/register"} style={{color: "aqua",textDecoration:"none",fontSize:"13px"}}>Create an account ?</Link></button>
+                  </div> 
+                  <div className="lastRow">
+                      <Button 
+                        onClick={handleGuestLogin} 
+                        variant="contained" 
+                        // color="secondary" 
+                        style={{ margin: "4px" }}
+                        className="guest"
+                      >
+                        Guest Login
+                      </Button>
+                      <Button  variant="contained" style={{ margin: "4px" }}><Link to={"/register"} style={{textDecoration:"none",fontSize:"10px",color:"white"}}>Create an account ?</Link></Button>
                   </div>
                   
+
                 </form>
              </div> 
       
         )
       }
-    
+      
     </>
   );
 }

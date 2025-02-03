@@ -186,16 +186,16 @@ const PodcastDetails = () => {
       {/* Modal for playing video/audio */}
       <Dialog open={openModal} onClose={handleCloseModal} fullWidth maxWidth="md" >
         <DialogTitle style={{color:"blue"}}>{currentEpisode ? currentEpisode.title : ''}</DialogTitle>
-        <DialogContent style={{background: `linear-gradient(to bottom,#8635d4 , aqua)`,padding:"10px",color:"#33064d",fontWeight:"bolder"}}>
+        <DialogContent style={{background: `linear-gradient(to bottom,#8635d4 , aqua)`,padding:"10px",color:"#33064d",fontWeight:"bolder",textAlign:"center"}}>
           {currentEpisode && (
             <>
               {podcast.type === "audio" ? (
-                <audio key={currentEpisode.source} controls autoPlay loop>
+                <audio key={currentEpisode.source} controls autoPlay loop >
                   <source src={currentEpisode.source} type="audio/mp3" />
                   Your browser does not support the audio element.
                 </audio>
               ) : podcast.type === "video" ? (
-                <video key={currentEpisode.source} controls width="100%" autoPlay loop>
+                <video key={currentEpisode.source} controls width="100%" autoPlay loop style={{borderRadius:"10px"}}>
                   <source src={currentEpisode.source} type="video/mp4" />
                   Your browser does not support the video element.
                 </video>
