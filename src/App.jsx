@@ -86,7 +86,9 @@ function App() {
     if (storedUser && storedUser.username) {
       setIsLogined(true);
       setUserDetails(storedUser);
-      setIsAdmin(true);
+      if(storedUser.username == "Abhiram" &&storedUser.email == "abhiramvadla61@gmail.com"){
+        setIsAdmin(true)
+      }
     }
   }, []);
   useEffect(() => {
