@@ -155,7 +155,7 @@ const PodcastCard = ({apiData,type,isFavorite,onFavorite,isLogined}) => {
         return <div>No Data Available</div>;
       }
       const categories = {
-        mostpopular: ["bussiness", "science", "education"],
+        mostpopular: ["bussiness", "science", "education","health"],
         all: ["bussiness", "crime", "education", "history", "comedy", "culture", "science","health","development"],
     };
     const catArr = categories[type] || [type];

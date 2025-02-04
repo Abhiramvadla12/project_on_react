@@ -25,7 +25,7 @@ const FilterContainer = styled.div`
     background-color: ${({ theme})=> theme.bg};
     border-radius: 10px;
     padding: 20px 30px;
-
+    
 
 `;
 const Topic = styled.div`
@@ -55,10 +55,14 @@ const Podcasts = styled.div`
     gap: 14px;
     padding: 18px 6px;
     @media (max-width: 550px) {
-        justify-content: center;
-        align-items: center;
-        grid-template-columns: repeat(1,1fr)
+       justify-content: center;
+      align-items: center;
+        grid-template-columns: repeat(1,1fr);
+        padding: 0;
+        
     }
+    
+   
 `;
 const Loader = styled.div`
       display: flex;

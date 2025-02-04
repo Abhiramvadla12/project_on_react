@@ -39,7 +39,10 @@ const ButtonDIv = styled.div`
     border: 2px solid#43097a;
     border-radius: 10px;
     gap: 8px;
- 
+    &:hover{
+    
+        background-color: ${({theme})=> theme.hover_background}
+    }
    
 `; 
 
@@ -71,7 +74,7 @@ const NavBar = ({setMenuOpen, isLogined,darkMode }) => {
             <PersonRounded />
             <button
             
-            style={{ border: "none", outline: "none", backgroundColor: darkMode ? "#1C1E27" : '#f0f0f0' }}
+            style={{ border: "none", outline: "none", background: "transparent"}}
             onClick={() => {
                 setMenuOpen(); // Call setMenuOpen
                 if (isLogined) {
@@ -88,7 +91,7 @@ const NavBar = ({setMenuOpen, isLogined,darkMode }) => {
                 textDecoration: "none",
                 fontSize: "15px",
                 fontWeight: "bolder",
-                color: "blue",
+                color: darkMode ? "#15c6ed" : "#a20afa",
                 }}
             >
                 {isLogined ? "profile" : "Login"}
