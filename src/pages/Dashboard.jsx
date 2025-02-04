@@ -56,6 +56,7 @@ const Podcasts = styled.div`
     padding: 18px 6px;
     @media (max-width: 550px) {
         justify-content: center;
+        align-items: center;
         grid-template-columns: repeat(1,1fr)
     }
 `;
@@ -90,7 +91,7 @@ animation: l27 1s infinite steps(8);
 `;
 const Dashboard = ({isFavorite,onFavorite,isLogined}) => {
     const [data, setData] = useState(null); // State to store fetched data
-    const [error, setError] = useState(null); // State to handle errors
+   
     const [loading, setLoading] = useState(true); // State for loading status
     
 
@@ -100,7 +101,7 @@ const Dashboard = ({isFavorite,onFavorite,isLogined}) => {
                 const result = await getData(); // Call your getData function
                 setData(result); // Update state with the fetched data
             } catch (err) {
-                setError(err.message); // Handle and display errors
+                console.log(err.message); // Handle and display errors
             } finally {
                 setLoading(false); // Set loading to false after fetching
             }

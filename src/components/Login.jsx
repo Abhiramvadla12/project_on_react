@@ -175,15 +175,16 @@ function Login({ onLogin,onAdminLogin}) {
     // console.log("is admin or not checking",adminCheck());
     onAdminLogin(adminCheck())
     if (userFound) {
-      // toast.success("Login successful! Redirecting to the home page...");
-      alert("Login successful! Redirecting to the home page...")
-      onLogin(true); // Notify parent component of login success
+      toast.success("Login successful! Redirecting to the home page...");
+      // alert("Login successful! Redirecting to the home page...")
+      
       setLoading((prev => !prev))
       localStorage.setItem("display", JSON.stringify(obj));
       setTimeout(() => {
+        onLogin(true);//Notify parent component of login success
         setLoading((prev => !prev))
         navigate("/"); // Redirect to the home page
-      }, 2000);
+      }, 3000);
 
     } else {
       if (confirm("User not found. Do you want to register?")) {
@@ -232,10 +233,10 @@ function Login({ onLogin,onAdminLogin}) {
       localStorage.setItem("display",JSON.stringify(obj))
 
       if (googleUserFound) {
-        // toast.success("Login successful with Google. Redirecting to the home page...");
-        alert("Login successful with Google. Redirecting to the home page...")
-        onLogin(true); // Notify parent component of login success
-        navigate('/');
+        toast.success("Login successful with Google. Redirecting to the home page...");
+        // alert("Login successful with Google. Redirecting to the home page...")
+        setTimeout(()=> {onLogin(true); // Notify parent component of login success
+        navigate('/');},3000)
       } else {
         toast.error("Google account not found in the system. Please register first.");
         setLoading((prev => !prev))
@@ -263,28 +264,43 @@ function Login({ onLogin,onAdminLogin}) {
       // Check if guest credentials exist in your database
       const userFound = login_details_data.some(
         (user) =>
-          user.username === guestCredentials.username &&
-          user.password === guestCredentials.password &&
-          user.email === guestCredentials.email
+        {
+          return (user.username === guestCredentials.username &&
+            user.password === guestCredentials.password &&
+            user.email === guestCredentials.email)
+          
+          // console.log(guestCredentials);
+          
+        }
       );
-  
+
+      // console.log(userFound);
+
       if (userFound) {
+        toast.success("Guest login successful! Redirecting to home...");
         
         setLoading(true);
-        alert("Guest login successful! Redirecting to home...")
+        // alert("Guest login successful! Redirecting to home...")
         
-        onLogin(true); // Notify parent component of login success
-        localStorage.setItem("display", JSON.stringify(guestCredentials));
 
-        // toast.success("Guest login successful! Redirecting to home...");
         setTimeout(() => {
+          onLogin(true); // Notify parent component of login success
+          localStorage.setItem("display", JSON.stringify(guestCredentials));
           
           setLoading(false)
           navigate("/"); // Redirect to home page
-        }, 3000);
+        }, 5000);
+
+
+
+
+        
+
+
         // navigate("/");
       } else {
         toast.error("Guest account not found in the system.");
+        
         setLoading(false);
       }
     } catch (error) {
