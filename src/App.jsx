@@ -201,7 +201,7 @@ const location = useLocation();
   const pathSegments = location.pathname.split('/').filter(Boolean);
   const getBreadcrumbs = () => {
     const paths = {
-      '/': 'Dashboard', 
+      '/': 'Home', 
       '/search': 'Search',
       '/favorite': 'Favorites',
       '/profile': 'Profile',
@@ -221,10 +221,10 @@ const location = useLocation();
 
     // Always include Dashboard breadcrumb for the home route
     if (pathSegments.length === 0) {
-      return [{ name: 'Dashboard', link: '/' }];
+      return [{ name: 'Home', link: '/' }];
     }
 
-    return [{ name: 'Dashboard', link: '/' }, ...breadcrumbs];
+    return [{ name: 'Home', link: '/' }, ...breadcrumbs];
   };
 
   // console.log(isLogined)
@@ -260,8 +260,8 @@ const location = useLocation();
                     <Route path="/profile" exact element={<Profile isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined} />} />
                     <Route path="/podcast/:id" exact element={<PodcastDetails />} />
                     <Route path="/displaypodcast/:type" exact element={<DisplayPodcast isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined} />} />
-                    <Route path="/login" element={<Login onLogin={handleLoginStatus} onAdminLogin={handleISAdmin} />} />
-                    <Route path="/register" element={<Register />} />
+                    <Route path="/login" element={<Login onLogin={handleLoginStatus} onAdminLogin={handleISAdmin}  darkMode={darkMode}/>} />
+                    <Route path="/register" element={<Register darkMode={darkMode} />}  />
                     <Route path="/otp" element={<Otp />} />
                     <Route path="*" element={<NoPage />} />
                   </Routes>

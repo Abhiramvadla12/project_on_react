@@ -7,7 +7,8 @@ import Image from '../images/google.webp';
 import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import LogoImg from "../images/login_logo.jpeg";
-import { Button } from "@mui/material";
+import { Button ,Input} from "@mui/material";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -65,16 +66,16 @@ animation: l27 1s infinite steps(8);
 }
 `;
 
-function Login({ onLogin,onAdminLogin}) {
+function Login({ onLogin,onAdminLogin,darkMode}) {
   const navigate = useNavigate(); // Initialize useNavigate
 
   const [state, setState] = useState({
     username: "",
     password: "",
-    email: "",
+    
   });
   const [loading,setLoading] = useState(false);
-  const [errors, setErrors] = useState({}); // State to store validation errors
+  // const [errors, setErrors] = useState({}); // State to store validation errors
   const [login_details_data,setLoginDetails] = useState([]);
   const [google_signups_data,setGooleSignupsData] = useState([]);
   
@@ -126,51 +127,46 @@ function Login({ onLogin,onAdminLogin}) {
     google_signups_data();
 }, []); 
 // console.log("google signups details from database",google_signups_data);
-  const validateFields = () => {
-    const { username, password, email } = state;
-    const newErrors = {};
-    
-    const usernameRegex = /^[a-zA-Z0-9_ ]{3,15}$/;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+const validateFields = () => {
+  const { username, password} = state;
+  const usernameRegex = /^[a-zA-Z0-9_ ]{3,15}$/;
+  // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+ 
+  if (!username || !usernameRegex.test(username)) {
+    toast.error("Invalid Username: Use 3-15 characters (letters, numbers, or underscores).");
+    return false;
+  }
 
-    if (!username || !usernameRegex.test(username)) {
-      newErrors.username = "Invalid Username: Use 3-15 characters (letters, numbers, or underscores).";
-    }
+  // if (!email || !emailRegex.test(email)) {
+  //   toast.error("Invalid Email: Enter a valid email address.");
+  //   return false;
+  // }
 
-    if (!email || !emailRegex.test(email)) {
-      newErrors.email = "Invalid Email: Enter a valid email address.";
-    }
+  if (!password || !passwordRegex.test(password)) {
+    toast.error("Invalid Password: Must be at least 8 characters, with 1 letter, 1 number, and 1 special character.");
+    return false;
+  }
 
-    if (!password || !passwordRegex.test(password)) {
-      newErrors.password =
-        "Invalid Password: Must be at least 8 characters, with at least 1 letter, 1 number, and 1 special character (@, $, !, %, *, ?, &).";
-    }
+  return true;
+};
 
-    return newErrors;
-  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newErrors = validateFields();
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors); // Set errors in state
-      return;
-    }
-    setErrors({}); // Clear errors if validation passes
-    const obj = { username, password, email };
+    
+    if (!validateFields()) return;
+    const obj = { username, password};
     
     // const localData = JSON.parse(localStorage.getItem("login_credential")) || [];
     const localData = login_details_data || [];
     const userFound = localData.some(
       (user) =>
         user.username === obj.username &&
-        user.password === obj.password &&
-        user.email === obj.email
+        user.password === obj.password 
     );
     // console.log(userFound);
     const adminCheck = ()=>{
-      return username === "Abhiram" && password === "Abhiram@1234" && email === "abhiramvadla61@gmail.com";
+      return username === "Abhiram" && password === "Abhiram@1234" ;
     }
     // console.log("is admin or not checking",adminCheck());
     onAdminLogin(adminCheck())
@@ -311,7 +307,7 @@ function Login({ onLogin,onAdminLogin}) {
   };
   
   
-  const { username, password, email } = state;
+  const { username, password } = state;
   
   return (
     <>
@@ -330,10 +326,13 @@ function Login({ onLogin,onAdminLogin}) {
              <div style={{overflowX:"hidden",overflowY:scroll,backgroundColor:`${({theme})=> theme.bg}`}} className="form-container" >
 
                 <form onSubmit={handleSubmit} className="form" >
-                  <img src={LogoImg} alt="image not found" style={{height:"60px",width:"60px",borderRadius:"50%"}} />
-                  <span style={{ color: "white",fontSize:"1.75em",fontWeight:"bolder",marginLeft:"8px" }}>Login Page</span><br />
-                  <label htmlFor="username" className="label">Username:</label>
-                  <input
+                  <div className="loginTop">
+                      <img src={LogoImg} alt="image not found" style={{height:"60px",width:"60px",borderRadius:"50%"}} />
+                      <span style={{ color:darkMode ? "#15c6ed" : "#a20afa",fontSize:"1.75em",fontWeight:"bolder",marginLeft:"8px" }}>Login Page</span><br />
+                  </div>
+                 
+                  <label htmlFor="username" className="label" style={{color: darkMode ? "#15c6ed":"#a20afa"}}>Username </label>
+                  <Input
                     type="text"
                     name="username"
                     id="username"
@@ -341,11 +340,12 @@ function Login({ onLogin,onAdminLogin}) {
                     value={username}
                     onChange={handleChange}
                     className="input"
+                    
                   />
-                   {errors.username && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.username}</p>}
+                   
               
-                  <label htmlFor="password" className="label">Password:</label>
-                  <input
+                  <label htmlFor="password" className="label" style={{color: darkMode ? "#15c6ed":"#a20afa"}}>Password </label>
+                  <Input
                     type="password"
                     name="password"
                     id="password"
@@ -353,10 +353,12 @@ function Login({ onLogin,onAdminLogin}) {
                     value={password}
                     onChange={handleChange}
                     className="input"
+                    
+                    
                   />
-                  {errors.password && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.password}</p>}
+                
     
-                  <label htmlFor="email" className="label">Email: </label>
+                  {/* <label htmlFor="email" className="label">Email: </label>
                   <input
                     type="email"
                     name="email"
@@ -367,11 +369,12 @@ function Login({ onLogin,onAdminLogin}) {
                     className="input"
                   /> <br />
                    {errors.email && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.email}</p>}
-        
-                  <Button type="submit"  id="submit" className="input" variant="contained" style={{margin:"4px"}}>Login</Button> <br /><br />
+                  */}
+                  <Button type="submit"  id="submit"  variant="contained" style={{margin:"4px",textAlign:"center"}}>Login</Button> <br />
+                  <hr />
                   <div className="google_button" style={{textAlign: "center"}}>
                         <img src={Image} alt="image not Found" style={{ height: "40px", width: "40px" }} />
-                        <button onClick={signInWithGoogle} id="signIn" style={{ border: "none", outline: "none", backgroundColor: "black", color: "white" ,textAlign: "center"}} type="button">
+                        <button onClick={signInWithGoogle} id="signIn" style={{ border: "none", outline: "none", backgroundColor: "white", color: "black" ,textAlign: "center"}} type="button">
                           Sign In With Google
                         </button>
                   </div> 

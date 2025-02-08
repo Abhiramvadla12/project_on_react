@@ -40,7 +40,7 @@ const ButtonDIv = styled.div`
     border-radius: 10px;
     gap: 8px;
     &:hover{
-    
+        box-shadow: 1px 1px 8px ${({theme})=> theme.hover_background};
         background-color: ${({theme})=> theme.hover_background}
     }
    

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import './register.css';
 import Image from '../images/google.webp';
 // import { CircularProgress } from "@mui/material";
-import { Button } from "@mui/material";
+import { Button,Input} from "@mui/material";
 import styled from "styled-components";
 import { initializeApp } from "firebase/app";
 import LogoImg from "../images/login_logo.jpeg";
@@ -60,9 +60,9 @@ animation: l27 1s infinite steps(8);
 100% {transform: rotate(1turn)}
 }
 `;
-function Register() {
+function Register({darkMode}) {
   const [state, setState] = useState({ username: "", password: "", email: "" });
-  const [errors, setErrors] = useState({});
+  // const [errors, setErrors] = useState({});
   const [loading,setLoading] = useState(false);
   const navigate = useNavigate();
   const [login_details_data,setLoginDetails] = useState([]);
@@ -116,28 +116,35 @@ function Register() {
   
   const validateInputs = () => {
     const { username, password, email } = state;
-    let newErrors = {};
+    // let newErrors = {};
 
     // Username validation (3-15 characters, letters, numbers, or underscores)
     const usernameRegex = /^[a-zA-Z0-9_ ]{3,15}$/;
     if (!username || !usernameRegex.test(username)) {
-      newErrors.username = "Invalid Username: Use 3-15 characters (letters, numbers, or underscores).";
+      // newErrors.username = "Invalid Username: Use 3-15 characters (letters, numbers, or underscores).";
+      toast.error("Invalid Username: Use 3-15 characters (letters, numbers, or underscores).");
+      return false;
     }
 
     // Email validation (valid email format)
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !emailRegex.test(email)) {
-      newErrors.email = "Invalid Email: Enter a valid email address.";
+      // newErrors.email = "Invalid Email: Enter a valid email address.";
+        toast.error("Invalid Email: Enter a valid email address.");
+    return false;
+
     }
 
     // Password validation (min 8 characters, 1 letter, 1 number, and 1 special character)
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!password || !passwordRegex.test(password)) {
-      newErrors.password = "Invalid Password: Must be at least 8 characters, with at least 1 letter, 1 number, and 1 special character (@, $, !, %, *, ?, &).";
+      // newErrors.password = "Invalid Password: Must be at least 8 characters, with at least 1 letter, 1 number, and 1 special character (@, $, !, %, *, ?, &).";
+      toast.error("Invalid Password: Must be at least 8 characters, with 1 letter, 1 number, and 1 special character.");
+      return false;
     }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return true;
+    // setErrors(newErrors);
+    // return Object.keys(newErrors).length === 0;
   };
 
   // OTP generation function
@@ -299,10 +306,12 @@ function Register() {
               < div className="form-container" style={{overflowX:"hidden",overflowY:scroll}}>
                   
                   <form onSubmit={handleSubmit} className="form">
-                    <img src={LogoImg} alt="image not found" style={{height:"60px",width:"60px",borderRadius:"50%"}} />
-                    <span style={{ color: "white",fontSize:"1.75em",fontWeight:"bolder",marginLeft:"8px" }}>Register Page</span><br />
-                    <label htmlFor="username" className="label">Username:</label>
-                    <input
+                    <div className="loginTop">
+                        <img src={LogoImg} alt="image not found" style={{height:"60px",width:"60px",borderRadius:"50%"}} />
+                        <span style={{color:darkMode ? "#15c6ed" : "#a20afa",fontSize:"1.75em",fontWeight:"bolder",marginLeft:"8px"}}>Register Page</span><br />
+                    </div>
+                    <label htmlFor="username" className="label" style={{color: darkMode ? "#15c6ed":"#a20afa"}}>Username</label>
+                    <Input
                       type="text"
                       name="username"
                       id="username"
@@ -311,10 +320,10 @@ function Register() {
                       onChange={handleChange}
                       className="input"
                     />
-                    {errors.username && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.username}</p>}
+                    {/* {errors.username && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.username}</p>} */}
                     
-                    <label htmlFor="password" className="label">Password:</label>
-                    <input
+                    <label htmlFor="password" className="label" style={{color: darkMode ? "#15c6ed":"#a20afa"}}>Password</label>
+                    <Input
                       type="password"
                       name="password"
                       id="password"
@@ -323,10 +332,10 @@ function Register() {
                       onChange={handleChange}
                       className="input"
                     />
-                    {errors.password && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.password}</p>}
+                    {/* {errors.password && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.password}</p>} */}
                     
-                    <label htmlFor="email" className="label">Email:</label>
-                    <input
+                    <label htmlFor="email" className="label" style={{color: darkMode ? "#15c6ed":"#a20afa"}}>Email</label>
+                    <Input
                       type="email"
                       name="email"
                       id="email"
@@ -335,15 +344,15 @@ function Register() {
                       onChange={handleChange}
                       className="input"
                     />
-                    {errors.email && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.email}</p>}
-                    
-                    <Button type="submit" value="Register" id="submit"  className="input" style={{margin:"5px"}}>Register</Button>
+                    {/* {errors.email && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.email}</p>} */}
+                    <Button type="submit"  id="submit"  variant="contained" style={{margin:"4px",textAlign:"center"}}>Register</Button> <br />
+                    <hr />
                     <div className="google_button">
                       <img src={Image} alt="Google" style={{ height: "40px", width: "40px" }} />
                       <button
                         onClick={handleGoogleSignUp}
                         id="signUp"
-                        style={{ border: "none", outline: "none", backgroundColor: "black", color: "white" }}
+                        style={{ border: "none", outline: "none", backgroundColor: "white" }}
                         type="button"
                       >
                         Sign Up With Google

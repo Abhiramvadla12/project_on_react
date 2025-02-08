@@ -83,12 +83,12 @@ const HR = styled.div`
 `;
 
 const Close = styled.div`
-    display: block; /* Initially hidden */
+    display: none; /* Initially hidden */
     
-    // @media (max-width: 440px) {
-    //     display: block; /* Show the close icon in smaller screens */
-    //     cursor: pointer;
-    // }
+    @media (max-width: 440px) {
+        display: block; /* Show the close icon in smaller screens */
+        cursor: pointer;
+    }
 `;
 
 const Modal = styled.div`
