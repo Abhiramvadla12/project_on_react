@@ -50,7 +50,7 @@ const Card = styled.div`
         &:hover ${PlayIcon}{
             display: flex;
         }
-
+    
 `;
 const Favorite = styled(IconButton)`
         color: white;

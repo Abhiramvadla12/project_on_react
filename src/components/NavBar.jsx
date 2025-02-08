@@ -36,7 +36,7 @@ const ButtonDIv = styled.div`
     display: flex;
     padding: 8px 10px;
     color: ${({theme})=> theme.primary};
-    border: 2px solid#43097a;
+    border: 2px solid ${({theme})=> theme.primary};;
     border-radius: 10px;
     gap: 8px;
     &:hover{
