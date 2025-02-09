@@ -4,7 +4,7 @@ import getData from "../components/api";
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from "@mui/material";
 import styled from "styled-components";
 import Logo from "../images/profile_dummy.webp";
-
+import "./PodcastDetails.css"
 const Loader = styled.div`
   display: flex;
   justify-content: center;
@@ -37,14 +37,18 @@ const Spinner = styled.div`
 const EpisodeTop = styled.div`
   padding: 10px;
   color: ${({ theme }) => theme.text_secondary};
-  display: flex;
-  gap: 5px;
+  // display: flex;
+  // gap: 5px;
    @media (max-width: 430px) {
         display: block;
         text-align: center;
     }
 `;
 
+const Episodebottom = styled.div`
+
+
+`;
 const Episodes = styled.div`
   border-radius: 6px;
   margin: 1em;
@@ -71,7 +75,7 @@ const Episodes = styled.div`
 
 const Information = styled.div`
        @media (max-width: 430px) {
-       font-size: 14px;
+       font-size: 12px;
          overflow: hidden;
     display: -webkit-box;
     max-width: 100%;
@@ -88,6 +92,17 @@ const Views = styled.div`
   gap: 8px;
 `;
 
+const ChannelTotal = styled.div`
+      display: grid;
+      justify-content: center;
+      // align-items: center;
+      grid-template-columns: 0.5fr 1.5fr;
+      gap:1em;
+      @media (max-width: 430px) {
+        display: block;
+        text-align: center;
+    }
+`;
 const PodcastDetails = () => {
   const [data, setData] = useState(null); // Store fetched data
   const [error, setError] = useState(null); // Handle errors
@@ -159,29 +174,32 @@ const PodcastDetails = () => {
   };
 
   return (
-    <div style={{ overflowY: "scroll" }}>
+    <ChannelTotal style={{ overflowY: "scroll" }} >
       <EpisodeTop>
-        <img src={podcast.image} alt="image not found" style={{ height: "250px", width: "250px",borderRadius:"10px" }} />
+        <img src={podcast.image} alt="image not found"  className="channel_img" />
         <Information>
-          <h4>{podcast.files[0].title}</h4>
-          <h6>{podcast.files[0].description}</h6>
           <Views>
             <img src={Logo} alt="image not found" style={{ height: "50px", width: "50px", borderRadius: "50%" }} />
             <h6>{podcast.files[0].creatorName}</h6>
             <h6>{podcast.files[0].views}</h6>
           </Views>
+          <h4>{podcast.files[0].title}</h4>
+          <h6 style={{textAlign: "justify"}}>{podcast.files[0].description}</h6>
+         
         </Information>
       </EpisodeTop>
-
-      {podcast.files.map((item, index) => (
-        <Episodes key={item.id} onClick={() => handleOpenModal(index)}>
-          <img src={podcast.image} alt="image not found" style={{ height: "150px", width: "150px",borderRadius:"10px" }} />
-          <Information>
-            <h4>{item.title}</h4>
-            <h6>{item.description}</h6>
-          </Information>
-        </Episodes>
-      ))}
+      <Episodebottom>
+          {podcast.files.map((item, index) => (
+            <Episodes key={item.id} onClick={() => handleOpenModal(index)}>
+              <img src={podcast.image} alt="image not found" style={{ height: "150px", width: "150px",borderRadius:"10px" }} />
+              <Information>
+                <h4>{item.title}</h4>
+                <h6 style={{textAlign: "justify"}}>{item.description}</h6>
+              </Information>
+            </Episodes> 
+          ))}
+      </Episodebottom>
+      
 
       {/* Modal for playing video/audio */}
       <Dialog open={openModal} onClose={handleCloseModal} fullWidth maxWidth="md" >
@@ -218,7 +236,7 @@ const PodcastDetails = () => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </ChannelTotal>
   );
 };
 

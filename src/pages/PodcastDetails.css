@@ -1,0 +1,17 @@
+.channel_img{
+    height: 275px;
+    width: 400px;
+    border-radius: 10px;
+}
+@media screen and (max-width: 770px) {
+    .channel_img{
+        height: 200;
+        width: 300px;
+    }
+}
+@media screen and (max-width: 430px) {
+    .channel_img{
+        height:250px;
+        width: 250px;
+    }
+}

@@ -12,32 +12,33 @@ const ProfileTotal = styled.div`
     overflow-y: scroll;
         
 `;
-const ProfileLogo= styled.div`
-    border: 2px solid blue;
-    height: 250px;
-    width: 250px;
-    border-radius: 50%;
-    @media (max-width: 550px) {
-        height: 101px;
-       width:100px;
+
+const BackgroundImg = styled.img`
+   
+    height: 300px;
+    width: 100%;
+     @media (max-width: 550px) {
+       height: 200px;
+       width:100%;
         
     }
 `;
+
 const ProfileImage = styled.img`
       border: 2px solid blue;
     height: 250px;
     width: 250px;
     border-radius: 50%;
     @media (max-width: 550px) {
-       height: 100px;
-       width:100px;
+       height: 200px;
+       width:200px;
         
     }
 `;
 const UserName = styled.div`
     font-size: 1.5em;
     font-weight: bolder;
-    color :  ${({theme})=> theme.text_secondary};
+    color :  ${({theme})=> theme.primary};
    @media (max-width: 550px) {
         font-size: 1em;
         
@@ -46,7 +47,7 @@ const UserName = styled.div`
 const Email = styled.div`
         font-size: 1.5em;
     font-weight: bolder;
-    color :  ${({theme})=> theme.text_secondary};
+    color :  ${({theme})=> theme.primary};
      @media (max-width: 550px) {
         font-size: 1em;
         
@@ -55,11 +56,17 @@ const Email = styled.div`
 const ProfileTop = styled.div`
 
     display: flex;
-    justify-content: center;
+    // justify-content: center;
     align-items: center;
     gap: 40px;
-   
-    padding :10px 0 10px 0;
+    position: relative;
+    top: -90px;
+    // padding :10px 0 10px 0;
+     @media (max-width: 550px) {
+        display: block;
+        text-align: center;
+        
+    }
  
 `;
 const Details = styled.div`
@@ -76,13 +83,14 @@ const HR = styled.div`
       width: 100%;
       height: 1px;
       background-color: ${({theme})=> theme.text_secondary};
-      margin: 30px 0px;
+      margin: 10px 0px;
 
 `;
 const ProfileBottom = styled.div`
 
    color :  ${({theme})=> theme.text_secondary};
-  
+  background-image: url("/profile_fav_bg.jpg");
+  background-size: cover;
     
 
 `;
@@ -91,14 +99,19 @@ const Favorites = styled.div`
     font-weight: bolder;
     color: blue;
     display: flex;
+    flex-wrap: wrap;
     margin: 2em;
     gap: 1em;
+    padding: 10px;
      @media (max-width: 550px) {
         justify-content: center;
+        align-items: center;
+        justify-items: center;
         display: grid;
         grid-template-columns: 1fr;
         
     }
+       
 `;
 const Loader = styled.div`
   display: flex;
@@ -172,11 +185,15 @@ const Profile = ({isFavorite,onFavorite,isLogined}) => {
   return (
     <>
         <ProfileTotal>
+                <BackgroundImg src="/profile_bg.jpg"/>
+
+                
                 <ProfileTop>
+                    
                     <ProfilePhoto>
-                        <ProfileLogo>
+                       
                             <ProfileImage src={ProfileImg} />
-                        </ProfileLogo>
+                        
                         {/* <input type="file" placeholder="upload profile photo" style={{color: 'white'}}/> */}
                     </ProfilePhoto>
                     <Details>
@@ -195,10 +212,11 @@ const Profile = ({isFavorite,onFavorite,isLogined}) => {
                 
                 </ProfileTop>
                 <HR/>
-                <ProfileBottom>
-                        <UserName>
+                <UserName>
                             Your favorites
-                        </UserName>
+                </UserName>
+                <ProfileBottom>
+                        
                         <Favorites>
                                 <PodcastCard apiData={filteredFav} type={"all"} isFavorite={isFavorite} onFavorite={onFavorite} isLogined={isLogined}/>
                         </Favorites>

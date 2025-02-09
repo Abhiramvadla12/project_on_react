@@ -22,6 +22,11 @@ const NavBardiv = styled.div`
     @media (max-width: 768px) {
         padding: 16px;
     }
+    @media (max-width: 320px) {
+       gap:10px;
+       justify-content: center;
+        
+    }
 `;
 const IcoButton = styled(IconButton)`
     color: ${({ theme }) => theme.text_secondary} !important;
@@ -43,7 +48,16 @@ const ButtonDIv = styled.div`
         box-shadow: 1px 1px 8px ${({theme})=> theme.hover_background};
         background-color: ${({theme})=> theme.hover_background}
     }
-   
+    @media (max-width: 550px) {
+       padding: 6px 8px;
+        
+    }
+    @media (max-width: 320px) {
+       gap: 4px;
+       padding: 4px 6px;
+        
+    }
+        
 `; 
 
 
@@ -93,6 +107,7 @@ const NavBar = ({setMenuOpen, isLogined,darkMode }) => {
                 fontWeight: "bolder",
                 color: darkMode ? "#15c6ed" : "#a20afa",
                 }}
+                className='login_button_nav'
             >
                 {isLogined ? "profile" : "Login"}
             </span>

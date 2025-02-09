@@ -85,7 +85,7 @@ const HR = styled.div`
 const Close = styled.div`
     display: none; /* Initially hidden */
     
-    @media (max-width: 440px) {
+    @media (max-width: 1024px) {
         display: block; /* Show the close icon in smaller screens */
         cursor: pointer;
     }
@@ -179,6 +179,7 @@ const handleFavoriteClick = (e) => {
   if (!isLogined) {
     // Show toast if the user isn't logged in
     e.preventDefault(); // Prevent the default navigation behavior
+    console.log("working");
     toast.warning("Please log in to set or view favorites!", {
       position: "top-center",
       autoClose: 3000,

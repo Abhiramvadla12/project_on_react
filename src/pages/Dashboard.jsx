@@ -56,6 +56,7 @@ const Podcasts = styled.div`
     padding: 18px 6px;
     @media (max-width: 550px) {
        justify-content: center;
+       justify-items: center;
         align-items: center;
         grid-template-columns: repeat(1,1fr);
         padding: 0;

@@ -285,7 +285,7 @@ const validateFields = () => {
           
           setLoading(false)
           navigate("/"); // Redirect to home page
-        }, 5000);
+        }, 2000);
 
 
 
