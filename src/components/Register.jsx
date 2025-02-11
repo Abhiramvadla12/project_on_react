@@ -1,9 +1,9 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import './register.css';
 import Image from '../images/google.webp';
 // import { CircularProgress } from "@mui/material";
-import { Button,Input} from "@mui/material";
+import { Button, Input } from "@mui/material";
 import styled from "styled-components";
 import { initializeApp } from "firebase/app";
 import LogoImg from "../images/login_logo.jpeg";
@@ -39,7 +39,7 @@ const Loader = styled.div`
       width: 100%;
 
   `;
-  const Spinner = styled.div`
+const Spinner = styled.div`
 
   --d:22px;
 width: 4px;
@@ -60,60 +60,60 @@ animation: l27 1s infinite steps(8);
 100% {transform: rotate(1turn)}
 }
 `;
-function Register({darkMode}) {
+function Register({ darkMode }) {
   const [state, setState] = useState({ username: "", password: "", email: "" });
   // const [errors, setErrors] = useState({});
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const [login_details_data,setLoginDetails] = useState([]);
-  const [google_signups_data,setGooleSignupsData] = useState([]);
-  useEffect(() => {
-    setLoading(true)
-      const login_data = async () => {
-          try {
-              let res = await fetch("https://podcast-login-details-mongodb.onrender.com/login");
-              if (!res.ok) {
-                  throw new Error(`HTTP error! Status: ${res.status}`);
-              }
-              let data = await res.json();
-              setLoading(false)
-              // console.log(data);
-              setLoginDetails(data)
-              if (data.length === 0) {
-                  console.log("No login details found.");
-              }
-          } catch (err) {
-              console.log("Error in fetching", err);
-          }
-          setLoading(false)
-      };
-      login_data();
-  }, []);  // This will run only once when the component mounts
+  // const [login_details_data,setLoginDetails] = useState([]);
+  const [google_signups_data, setGooleSignupsData] = useState([]);
+  // useEffect(() => {
+  //   setLoading(true)
+  //     const login_data = async () => {
+  //         try {
+  //             let res = await fetch("https://podcast-login-details-mongodb.onrender.com/login");
+  //             if (!res.ok) {
+  //                 throw new Error(`HTTP error! Status: ${res.status}`);
+  //             }
+  //             let data = await res.json();
+  //             setLoading(false)
+  //             // console.log(data);
+  //             setLoginDetails(data)
+  //             if (data.length === 0) {
+  //                 console.log("No login details found.");
+  //             }
+  //         } catch (err) {
+  //             console.log("Error in fetching", err);
+  //         }
+  //         setLoading(false)
+  //     };
+  //     login_data();
+  // }, []);  // This will run only once when the component mounts
 
   useEffect(() => {
     const google_signups_data = async () => {
       setLoading(true)
-        try {
-            let res = await fetch("https://google-signup-mongodb.onrender.com/login");
-            if (!res.ok) {
-                throw new Error(`HTTP error! Status: ${res.status}`);
-            }
-            let data = await res.json();
-            setLoading(false)
-            // console.log(data);
-            setGooleSignupsData(data);
-            if (data.length === 0) {
-                console.log("No login details found.");
-            }
-        } catch (err) {
-            console.log("Error in fetching", err);
+      try {
+        let res = await fetch("https://google-signup-mongodb.onrender.com/login");
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
         }
+        let data = await res.json();
         setLoading(false)
+        // console.log(data);
+        setGooleSignupsData(data);
+        if (data.length === 0) {
+          console.log("No login details found.");
+        }
+      } catch (err) {
+        console.log("Error in fetching", err);
+      }
+      setLoading(false)
     };
     google_signups_data();
-}, []); 
+  }, []);
   // Validate inputs with regex
-  
+
   const validateInputs = () => {
     const { username, password, email } = state;
     // let newErrors = {};
@@ -130,8 +130,8 @@ function Register({darkMode}) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !emailRegex.test(email)) {
       // newErrors.email = "Invalid Email: Enter a valid email address.";
-        toast.error("Invalid Email: Enter a valid email address.");
-    return false;
+      toast.error("Invalid Email: Enter a valid email address.");
+      return false;
 
     }
 
@@ -166,82 +166,82 @@ function Register({darkMode}) {
 
     const { username, password, email } = state;
 
-    const localData = login_details_data || [];
-    const userFound = localData.some(
-      (user) => user.username === username || user.email === email
-    );
+    // const localData = login_details_data || [];
+    // const userFound = localData.some(
+    //   (user) => user.username === username || user.email === email
+    // );
 
-    if (userFound) {
-      toast.error("User already exists. Please log in.");
-      setTimeout(()=> navigate("/login"),3000)
-      // navigate("/login");
-    } else {
-      const otp = generateOtp(); // Make sure generateOtp() is defined
-      localStorage.setItem("otp", JSON.stringify(otp)); // Store OTP temporarily in localStorage
-      toast.success("please wait for some time....");
-      setLoading(true)
-      try {
-        const response = await fetch("https://node-post-deploy.onrender.com/api/send-otp", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, otp }),
-        });
-  
-        if (response.ok) {
-          const newUser = { username, password, email };
-          setLoading(false)
-  
-          // Attempt to register user in the MongoDB backend
-          try {
-            const res = await fetch("https://podcast-login-details-mongodb.onrender.com/register", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ username, password, email }),
-            });
-  
-            if (!res.ok) {
-              throw new Error("Failed to register user in database.");
-            }
-  
-            // // Optional: Add the new user to localStorage to track their session if needed
-            // localData.push(newUser);
-            // localStorage.setItem("login_credential", JSON.stringify(localData));
-  
-            toast.success("Registration successful. Redirecting to OTP verification...");
-  
-            setLoading((prev) => !prev);
-            setTimeout(() => {
-              setLoading((prev) => !prev);
-              navigate("/otp", { state: { user: newUser } }); // Pass user data to OTP page
-            }, 3000);
-            // navigate("/otp", { state: { user: newUser } }); 
-          } catch (err) {
-            console.error("Error registering user:", err);
-            toast.error("An error occurred while registering the user. Please try again.");
+    // if (userFound) {
+    //   toast.error("User already exists. Please log in.");
+    //   setTimeout(()=> navigate("/login"),3000)
+    //   // navigate("/login");
+    // } else {
+    const otp = generateOtp(); // Make sure generateOtp() is defined
+    localStorage.setItem("otp", JSON.stringify(otp)); // Store OTP temporarily in localStorage
+    toast.success("please wait for some time....");
+    setLoading(true)
+    try {
+      const response = await fetch("https://node-post-deploy.onrender.com/api/send-otp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, otp }),
+      });
+
+      if (response.ok) {
+        const newUser = { username, password, email };
+        setLoading(false)
+
+        // Attempt to register user in the MongoDB backend
+        try {
+          const res = await fetch("https://podcast-login-details-mongodb.onrender.com/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password, email }),
+          });
+
+          if (!res.ok) {
+            throw new Error("Failed to register user in database.");
           }
-        } else {
-          toast.error("Failed to send OTP. Please try again.");
+
+          // // Optional: Add the new user to localStorage to track their session if needed
+          // localData.push(newUser);
+          // localStorage.setItem("login_credential", JSON.stringify(localData));
+
+          toast.success("Registration successful. Redirecting to OTP verification...");
+
+          setLoading((prev) => !prev);
+          setTimeout(() => {
+            setLoading((prev) => !prev);
+            navigate("/otp", { state: { user: newUser } }); // Pass user data to OTP page
+          }, 3000);
+          // navigate("/otp", { state: { user: newUser } }); 
+        } catch (err) {
+          console.error("Error registering user:", err);
+          toast.error("An error occurred while registering the user. Please try again.");
         }
-      } catch (error) {
-        console.error("Error sending OTP:", error);
-        toast.error("An error occurred while sending OTP. Please try again.");
+      } else {
+        toast.error("Failed to send OTP. Please try again.");
       }
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+      toast.error("An error occurred while sending OTP. Please try again.");
     }
+
   };
 
   const handleGoogleSignUp = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-  
+
       // Check if user already exists in backend
       const googleData = google_signups_data || [];
       const googleUserFound = googleData.some((googleUser) => googleUser.email === user.email);
-  
+
       if (googleUserFound) {
         toast.success("This Google account is already registered. Redirecting to login...");
         navigate("/login");
@@ -251,7 +251,7 @@ function Register({darkMode}) {
           displayName: user.displayName || "Google User",
           email: user.email,
         };
-  
+
         // Send data to backend
         try {
           const res = await fetch("https://google-signup-mongodb.onrender.com/register", {
@@ -261,11 +261,11 @@ function Register({darkMode}) {
             },
             body: JSON.stringify(newGoogleUser),
           });
-  
+
           if (!res.ok) {
             throw new Error("Failed to register Google user in database.");
           }
-  
+
           toast.success("Google sign-up successful. Redirecting to login...");
           navigate("/login");
         } catch (err) {
@@ -278,7 +278,7 @@ function Register({darkMode}) {
       toast.error("There was an issue signing up with Google. Please try again.");
     }
   };
-  
+
 
   // Handle input changes
   const handleChange = (e) => {
@@ -293,80 +293,83 @@ function Register({darkMode}) {
 
   return (
     <>
-    <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
-      {loading  ? (
-              (
-                <Loader>
-                  <Spinner>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
+      {loading ? (
+        (
+          <Loader>
+            <Spinner>
 
-                  </Spinner>
-                    {/* <CircularProgress /> */}
-                </Loader>)
-            ) : (
-              < div className="form-container" style={{overflowX:"hidden",overflowY:scroll}}>
-                  
-                  <form onSubmit={handleSubmit} className="form">
-                    <div className="loginTop">
-                        <img src={LogoImg} alt="image not found" style={{height:"60px",width:"60px",borderRadius:"50%"}} />
-                        <span style={{color:darkMode ? "#15c6ed" : "#a20afa",fontSize:"1.75em",fontWeight:"bolder",marginLeft:"8px"}}>Register Page</span><br />
-                    </div>
-                    <label htmlFor="username" className="label" style={{color: darkMode ? "#15c6ed":"#a20afa"}}>Username</label>
-                    <Input
-                      type="text"
-                      name="username"
-                      id="username"
-                      placeholder="Enter your username..."
-                      value={username}
-                      onChange={handleChange}
-                      className="input"
-                    />
-                    {/* {errors.username && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.username}</p>} */}
-                    
-                    <label htmlFor="password" className="label" style={{color: darkMode ? "#15c6ed":"#a20afa"}}>Password</label>
-                    <Input
-                      type="password"
-                      name="password"
-                      id="password"
-                      placeholder="Enter your password..."
-                      value={password}
-                      onChange={handleChange}
-                      className="input"
-                    />
-                    {/* {errors.password && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.password}</p>} */}
-                    
-                    <label htmlFor="email" className="label" style={{color: darkMode ? "#15c6ed":"#a20afa"}}>Email</label>
-                    <Input
-                      type="email"
-                      name="email"
-                      id="email"
-                      placeholder="Enter your email..."
-                      value={email}
-                      onChange={handleChange}
-                      className="input"
-                    />
-                    {/* {errors.email && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.email}</p>} */}
-                    <Button type="submit"  id="submit"  variant="contained" style={{margin:"4px",textAlign:"center"}}>Register</Button> <br />
-                    <hr />
-                    <div className="google_button">
-                      <img src={Image} alt="Google" style={{ height: "40px", width: "40px" }} />
-                      <button
-                        onClick={handleGoogleSignUp}
-                        id="signUp"
-                        style={{ border: "none", outline: "none", backgroundColor: "white" }}
-                        type="button"
-                      >
-                        Sign Up With Google
-                      </button>
-                    </div>
-                  </form>
-                  </div>
-                  
+            </Spinner>
+            {/* <CircularProgress /> */}
+          </Loader>)
+      ) : (
+        < div className="form-container" style={{ overflowX: "hidden", overflowY: "scroll" }}>
 
-            ) 
+          <form onSubmit={handleSubmit} className="form">
+            <div className="loginTop" style={{ textAlign: "center" }}>
+              {/* <img src={LogoImg} alt="image not found" style={{height:"60px",width:"60px",borderRadius:"50%"}} /> */}
+              <span style={{ color: darkMode ? "#15c6ed" : "#a20afa", fontSize: "1.75em", fontWeight: "bolder", marginLeft: "8px", textAlign: "center" }}>Register </span><br />
+            </div>
+            <label htmlFor="username" className="label" style={{ color: darkMode ? "#15c6ed" : "#a20afa" }}>Username</label>
+            <Input
+              type="text"
+              name="username"
+              id="username"
+              placeholder="Enter your username..."
+              value={username}
+              onChange={handleChange}
+              className="input"
+            />
+            {/* {errors.username && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.username}</p>} */}
+
+            <label htmlFor="password" className="label" style={{ color: darkMode ? "#15c6ed" : "#a20afa" }}>Password</label>
+            <Input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Enter your password..."
+              value={password}
+              onChange={handleChange}
+              className="input"
+            />
+            {/* {errors.password && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.password}</p>} */}
+
+            <label htmlFor="email" className="label" style={{ color: darkMode ? "#15c6ed" : "#a20afa" }}>Email</label>
+            <Input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Enter your email..."
+              value={email}
+              onChange={handleChange}
+              className="input"
+            />
+            {/* {errors.email && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.email}</p>} */}
+            <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
+              <Button type="submit" id="submit" variant="contained">
+                Register
+              </Button>
+            </div>
+            <hr />
+            <div className="google_button">
+              <img src={Image} alt="Google" style={{ height: "40px", width: "40px" }} />
+              <button
+                onClick={handleGoogleSignUp}
+                id="signUp"
+                style={{ border: "none", outline: "none", backgroundColor: "white" }}
+                type="button"
+              >
+                Sign Up With Google
+              </button>
+            </div>
+          </form>
+        </div>
+
+
+      )
       }
-      
+
     </>
   );
 }
-
 export default Register;

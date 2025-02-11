@@ -199,14 +199,10 @@ const Profile = ({isFavorite,onFavorite,isLogined}) => {
                     <Details>
                         <UserName>
 
-                            {
-                            display?.username
-                            }
+                              { display.displayName ?  display?.displayName : display.username   } 
                         </UserName>
                         <Email>
-                            {
-                            display?.email
-                            }
+                              { display.email ?  display?.email : display.email   } !!!
                         </Email>
                     </Details>
                 

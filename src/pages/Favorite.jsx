@@ -28,7 +28,7 @@ const FavoriteContainer = styled.div`
     
     display: grid;
     grid-template-columns: repeat(5,1fr);
-    gap: 14px;
+    gap: 12px;
     padding: 18px 6px;
     @media (max-width: 550px) {
         justify-content: center;

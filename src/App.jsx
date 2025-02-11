@@ -83,10 +83,10 @@ function App() {
   useEffect(() => {
     // Check if user is logged in on initial load or refresh
     const storedUser = JSON.parse(localStorage.getItem("display"));
-    if (storedUser && storedUser.username) {
+    if (storedUser && storedUser.username || storedUser?.displayName) {
       setIsLogined(true);
       setUserDetails(storedUser);
-      if(storedUser.username == "Abhiram" &&storedUser.email == "abhiramvadla61@gmail.com"){
+      if((storedUser.username == "Abhiram" || storedUser?.displayName == "Abhiram") &&(storedUser.email == "abhiramvadla61@gmail.com" )){
         setIsAdmin(true)
       }
     }
@@ -103,11 +103,11 @@ function App() {
       setLoading(true);
       try {
         const storedUser = JSON.parse(localStorage.getItem("display")) || {};
-        setUserDetails(storedUser);  // Update user details
+        setUserDetails(storedUser); // Update state with user details
   
-        if (!storedUser.username) {  
+        if (!(storedUser.username || storedUser.displayName)) {  
           setLoading(false);  
-          return;  // Stop execution if no user is logged in
+          return; // Stop execution if no user is logged in
         }
   
         let res = await fetch("https://podcast-fav-data-mongodb.onrender.com/fav_ids_get");
@@ -115,15 +115,17 @@ function App() {
           throw new Error(`HTTP error! Status: ${res.status}`);
         }
         let data = await res.json();
-        // console.log("Fetched favorite data:", data);
+        console.log(data);
+        // Use storedUser instead of userDetails (which is set asynchronously)
+        const filterData = data.filter((val) => 
+          val.name === `${storedUser?.displayName || storedUser?.username} 's fav`
+        );
   
-        // Ensure `filterData[0]` exists before setting state
-        const filterData = data.filter((val) => val.name === `${storedUser.username} 's fav`);
         if (filterData.length > 0) {
-          // console.log("Filtered favorites:", filterData[0].fav_ids);
+          console.log("Filtered favorites:", filterData[0].fav_ids);
           setFavorite(filterData[0].fav_ids);
         } else {
-          setFavorite([]);  // Ensure favorites are reset if no data is found
+          setFavorite([]); // Reset favorites if no data is found
         }
       } catch (error) {
         console.error("Error initializing data:", error);
@@ -132,7 +134,8 @@ function App() {
     };
   
     favData();
-  }, [isLogined]);  // Run only when `isLogined` changes
+  }, [isLogined]); // Run only when `isLogined` changes
+  
   
 
  
@@ -169,7 +172,7 @@ function App() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            name: `${userDetails.username} 's fav`,
+            name: `${ userDetails.displayName ?  userDetails?.displayName : userDetails.username   }'s fav`,
             fav_ids: updatedFavorites,
           }),
         })
@@ -177,7 +180,7 @@ function App() {
           .then((result) => console.log("New favorite list created:", result))
           .catch((error) => console.error(error));
       } else {
-        fetch(`https://podcast-fav-data-mongodb.onrender.com/update/${userDetails.username} 's fav`, requestOptions)
+        fetch(`https://podcast-fav-data-mongodb.onrender.com/update/${userDetails.username ? userDetails.username : userDetails.displayName} 's fav`, requestOptions)
           .then((response) => response.json())
           .then((result) => console.log("Updated favorites:", result))
           .catch((error) => console.error(error));

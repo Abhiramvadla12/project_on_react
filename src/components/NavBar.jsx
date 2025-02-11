@@ -80,7 +80,7 @@ const NavBar = ({setMenuOpen, isLogined,darkMode }) => {
         </IcoButton>
         {(display && isLogined) && (
             <DisplayToast>
-                Welcome {display?.username} !!! 
+                Welcome       { display.displayName ?  display?.displayName : display.username   } !!!
             </DisplayToast>
         )}
        
@@ -109,7 +109,7 @@ const NavBar = ({setMenuOpen, isLogined,darkMode }) => {
                 }}
                 className='login_button_nav'
             >
-                {isLogined ? "profile" : "Login"}
+                {isLogined ? "Profile" : "Login"}
             </span>
             </button>
         </ButtonDIv>
