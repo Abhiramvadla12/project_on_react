@@ -3,6 +3,7 @@
     justify-content: center; /* Horizontally center the form */
     align-items: center; /* Vertically center the form */
     height: 100vh; /* Full height of the viewport */
+    
      /* Optional: Add a background color to the page */
     
   }
@@ -10,17 +11,19 @@
   .form {
     border: 2px solid blue;
     border-radius: 10px;
-    padding: 30px;
+    padding: 50px;
     /* background: linear-gradient(to bottom,#8635d4 , aqua); */
     background-color: black;
     width: 310px;
     /* max-width: 600px; */
     box-shadow: 2px 2px 10px aqua;
+
    
   }
 .label{
     
-    font-size: large;
+    font-size: larger;
+    font-weight: bolder;
 }
 .input{
     background-color: #f0f0f0;
@@ -50,9 +53,9 @@ h1{
 /* body{
     background-image:url("../images/16619825-purple-clouds-space-moon-desktop.jpg");
   } */
-  body {
-    background-color:black;
-}
+  /* body {
+background-color:${({theme})=> theme.bgLight};
+} */
 img{
     height: 20px;
     width: 20px;
@@ -71,6 +74,7 @@ img{
 .lastRow{
     display: flex;
     gap: 4px;
+    margin-top: 5px;
 }
 .guest{
     font-size: 12px !important;

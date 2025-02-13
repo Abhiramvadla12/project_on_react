@@ -245,13 +245,14 @@
 
 
 
-
+import CustomAudioPlayer from "./CustomAudioPlayer";
 import { useParams } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import getData from "../components/api";
 import styled from "styled-components";
 import "./PodcastDetails.css";
-import { Button } from "@mui/material";
+// import { Button } from "@mui/material";
+
 const Loader = styled.div`
   display: flex;
   justify-content: center;
@@ -316,16 +317,16 @@ const Information = styled.div`
   }
 `;
 
-const AudioPlayerContainer = styled.div`
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-`;
+// const AudioPlayerContainer = styled.div`
+//   position: fixed;
+//   bottom: 0;
+//   width: 100%;
+//   background: #fff;
+//   display: flex;
+//   align-items: center;
+//   padding: 10px;
+//   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+// `;
 
 const ChannelTotal = styled.div`
   display: grid;
@@ -399,19 +400,19 @@ const PodcastDetails = () => {
     setTimeout(playMedia, 100);
   };
 
-  const handleNext = () => {
-    if (currentEpisodeIndex < podcast.files.length - 1) {
-      setCurrentEpisodeIndex((prevIndex) => prevIndex + 1);
-      setTimeout(playMedia, 100);
-    }
-  };
+  // const handleNext = () => {
+  //   if (currentEpisodeIndex < podcast.files.length - 1) {
+  //     setCurrentEpisodeIndex((prevIndex) => prevIndex + 1);
+  //     setTimeout(playMedia, 100);
+  //   }
+  // };
 
-  const handlePrev = () => {
-    if (currentEpisodeIndex > 0) {
-      setCurrentEpisodeIndex((prevIndex) => prevIndex - 1);
-      setTimeout(playMedia, 100);
-    }
-  };
+  // const handlePrev = () => {
+  //   if (currentEpisodeIndex > 0) {
+  //     setCurrentEpisodeIndex((prevIndex) => prevIndex - 1);
+  //     setTimeout(playMedia, 100);
+  //   }
+  // };
 
   return (
     <>
@@ -421,40 +422,44 @@ const PodcastDetails = () => {
             {podcast.type === "video" ? (
               <>
                 
-                <video ref={videoRef} controls width="100%"  height="auto" poster={podcast.image} style={{ maxHeight: "400px", objectFit: "cover", borderRadius: "10px" }}  >
+                <video ref={videoRef} controls width="100%"  height="auto" poster={podcast.image} style={{ maxHeight: "500px", objectFit: "cover", borderRadius: "10px" }}  >
                   <source src={currentEpisode.source} type="video/mp4" />
                 </video>
-                <Button onClick={handlePrev} disabled={currentEpisodeIndex === 0} style={{margin:"10px"}} variant="contained">
+                {/* <Button onClick={handlePrev} disabled={currentEpisodeIndex === 0} style={{margin:"10px"}} variant="contained">
                   Prev
                 </Button >
                 <Button onClick={handleNext} disabled={currentEpisodeIndex === podcast.files.length - 1} style={{margin:"10px"}} variant="contained">
                   Next
-                </Button>
+                </Button> */}
               </>
             ) : (
               <>
-                <img src={podcast.image} alt="Podcast Cover" className="channel_img" />
-                <h4>{currentEpisode.title}</h4>
-                <h6 style={{ textAlign: "justify" }}>{currentEpisode.description}</h6>
+                <img src={podcast.image} alt="Podcast Cover" className="channel_img"  />
+                {/* <h4>{currentEpisode.title}</h4>
+                <h6 style={{ textAlign: "justify" }}>{currentEpisode.description}</h6> */}
               </>
+            )} <br />
+                  {podcast.type === "audio" && (
+                
+                  
+                // <Button onClick={handlePrev} disabled={currentEpisodeIndex === 0} style={{margin:"10px"}} variant="contained">
+                //   Prev
+                // </Button>
+                <CustomAudioPlayer 
+                    episodes={podcast.files} 
+                    currentEpisodeIndex={currentEpisodeIndex} 
+                    setCurrentEpisodeIndex={setCurrentEpisodeIndex} 
+                  />
+
+                // <Button onClick={handleNext} disabled={currentEpisodeIndex === podcast.files.length - 1} style={{margin:"10px"}} variant="contained">
+                //   Next
+                // </Button>
+            
             )}
           </Information>
         </EpisodeTop>
 
-        {podcast.type === "audio" && (
-          <AudioPlayerContainer>
-            <img src={podcast.image} alt="Podcast Thumbnail" style={{ height: "60px", width: "60px", borderRadius: "50%" }} />
-            <Button onClick={handlePrev} disabled={currentEpisodeIndex === 0} style={{margin:"10px"}} variant="contained">
-              Prev
-            </Button>
-            <audio ref={audioRef} controls>
-              <source src={currentEpisode.source} type="audio/mp3" />
-            </audio>
-            <Button onClick={handleNext} disabled={currentEpisodeIndex === podcast.files.length - 1} style={{margin:"10px"}} variant="contained">
-              Next
-            </Button>
-          </AudioPlayerContainer>
-        )}
+        
       
 
       {/* Episodes List for both Audio & Video */}

@@ -253,7 +253,8 @@ const {Category,type,title,description,creatorName,views} = state;
                       <Link to={item.link}  key={index} style={{ textDecoration: 'none' }} onClick={handleFavoriteClick}  >
                       <Elements >
                             {<item.icon/>}
-                            <NavText>{item.name}</NavText>
+                            
+                            <NavText style={{marginLeft:"6px"}}>{item.name}</NavText>
                       </Elements>
                     </Link>
                     ):
@@ -261,7 +262,7 @@ const {Category,type,title,description,creatorName,views} = state;
                       <Link to={item.link}  key={index} style={{ textDecoration: 'none' }}  >
                       <Elements >
                             {<item.icon/>}
-                            <NavText>{item.name}</NavText>
+                            <NavText style={{marginLeft:"6px"}}>{item.name}</NavText>
                       </Elements>
                     </Link>
                     )
@@ -284,13 +285,13 @@ const {Category,type,title,description,creatorName,views} = state;
                     <Link to={item.path} key={index} style={{ textDecoration: "none" }} onClick={() => setMenuOpen(false)}>
                       <Elements>
                         <item.icon />
-                        <NavText>{item.name}</NavText>
+                        <NavText  style={{marginLeft:"6px"}}>{item.name}</NavText>
                       </Elements>
                     </Link>
                   ) : (
                     <Elements key={index} onClick={item.func}>
                       <item.icon />
-                      <NavText>{item.name}</NavText>
+                      <NavText  style={{marginLeft:"6px"}}>{item.name}</NavText>
                     </Elements>
                   );
                 })

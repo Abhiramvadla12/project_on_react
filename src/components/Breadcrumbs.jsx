@@ -18,7 +18,7 @@ const BreadcrumbItem = styled.span`
   }
   
   &::after {
-    content: '>';
+    content: '/';
     margin-left: 8px;
     color: ${({ theme }) => theme.text_primary};
   }
@@ -30,7 +30,7 @@ const BreadcrumbItem = styled.span`
 
 const Breadcrumb = ({ routes }) => {
   return (
-    <BreadcrumbContainer>
+    <BreadcrumbContainer  style={{marginLeft:"5em"}}>
       {routes.map((route, index) => (
         <BreadcrumbItem key={index}>
           {route.link ? <Link to={route.link} style={{color:"#15c6ed"}}>{route.name}</Link> : route.name}

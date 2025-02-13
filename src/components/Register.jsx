@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './register.css';
 import Image from '../images/google.webp';
@@ -6,7 +6,7 @@ import Image from '../images/google.webp';
 import { Button, Input } from "@mui/material";
 import styled from "styled-components";
 import { initializeApp } from "firebase/app";
-import LogoImg from "../images/login_logo.jpeg";
+// import LogoImg from "../images/login_logo.jpeg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -66,7 +66,7 @@ function Register({ darkMode }) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   // const [login_details_data,setLoginDetails] = useState([]);
-  const [google_signups_data, setGooleSignupsData] = useState([]);
+  // const [google_signups_data, setGooleSignupsData] = useState([]);
   // useEffect(() => {
   //   setLoading(true)
   //     const login_data = async () => {
@@ -90,29 +90,29 @@ function Register({ darkMode }) {
   //     login_data();
   // }, []);  // This will run only once when the component mounts
 
-  useEffect(() => {
-    const google_signups_data = async () => {
-      setLoading(true)
-      try {
-        let res = await fetch("https://google-signup-mongodb.onrender.com/login");
-        if (!res.ok) {
-          throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-        let data = await res.json();
-        setLoading(false)
-        // console.log(data);
-        setGooleSignupsData(data);
-        if (data.length === 0) {
-          console.log("No login details found.");
-        }
-      } catch (err) {
-        console.log("Error in fetching", err);
-      }
-      setLoading(false)
-    };
-    google_signups_data();
-  }, []);
-  // Validate inputs with regex
+  // useEffect(() => {
+  //   const google_signups_data = async () => {
+  //     setLoading(true)
+  //     try {
+  //       let res = await fetch("https://google-signup-mongodb.onrender.com/login");
+  //       if (!res.ok) {
+  //         throw new Error(`HTTP error! Status: ${res.status}`);
+  //       }
+  //       let data = await res.json();
+  //       setLoading(false)
+  //       // console.log(data);
+  //       setGooleSignupsData(data);
+  //       if (data.length === 0) {
+  //         console.log("No login details found.");
+  //       }
+  //     } catch (err) {
+  //       console.log("Error in fetching", err);
+  //     }
+  //     setLoading(false)
+  //   };
+  //   google_signups_data();
+  // }, []);
+  // // Validate inputs with regex
 
   const validateInputs = () => {
     const { username, password, email } = state;
@@ -156,128 +156,113 @@ function Register({ darkMode }) {
     return otp;
   };
 
-  // Handle regular registration
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!validateInputs()) {
-      return;
-    }
-
+  
+    if (!validateInputs()) return;
+  
     const { username, password, email } = state;
-
-    // const localData = login_details_data || [];
-    // const userFound = localData.some(
-    //   (user) => user.username === username || user.email === email
-    // );
-
-    // if (userFound) {
-    //   toast.error("User already exists. Please log in.");
-    //   setTimeout(()=> navigate("/login"),3000)
-    //   // navigate("/login");
-    // } else {
-    const otp = generateOtp(); // Make sure generateOtp() is defined
-    localStorage.setItem("otp", JSON.stringify(otp)); // Store OTP temporarily in localStorage
-    toast.success("please wait for some time....");
-    setLoading(true)
+    const otp = generateOtp(); // Ensure this function is defined
+    localStorage.setItem("otp", JSON.stringify(otp)); // Temporarily store OTP
+  
+    toast.success("Please wait while we process your request...");
+    setLoading(true);
+  
     try {
-      const response = await fetch("https://node-post-deploy.onrender.com/api/send-otp", {
+      // Send OTP via email
+      const otpResponse = await fetch("https://node-post-deploy.onrender.com/api/send-otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, otp }),
       });
-
-      if (response.ok) {
-        const newUser = { username, password, email };
-        setLoading(false)
-
-        // Attempt to register user in the MongoDB backend
-        try {
-          const res = await fetch("https://podcast-login-details-mongodb.onrender.com/register", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ username, password, email }),
-          });
-
-          if (!res.ok) {
-            throw new Error("Failed to register user in database.");
-          }
-
-          // // Optional: Add the new user to localStorage to track their session if needed
-          // localData.push(newUser);
-          // localStorage.setItem("login_credential", JSON.stringify(localData));
-
-          toast.success("Registration successful. Redirecting to OTP verification...");
-
-          setLoading((prev) => !prev);
-          setTimeout(() => {
-            setLoading((prev) => !prev);
-            navigate("/otp", { state: { user: newUser } }); // Pass user data to OTP page
-          }, 3000);
-          // navigate("/otp", { state: { user: newUser } }); 
-        } catch (err) {
-          console.error("Error registering user:", err);
-          toast.error("An error occurred while registering the user. Please try again.");
-        }
-      } else {
-        toast.error("Failed to send OTP. Please try again.");
+  
+      if (!otpResponse.ok) {
+        const errorData = await otpResponse.json();
+        throw new Error(errorData.error || "Failed to send OTP. Please try again.");
       }
+  
+      // Register the user in MongoDB
+      const res = await fetch("https://podcast-login-details-mongodb.onrender.com/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password, email }),
+      });
+  
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Failed to register user in database.");
+      }
+  
+      toast.success("Registration successful! Redirecting to OTP verification...");
+      
+      setTimeout(() => {
+        navigate("/otp", { state: { user: { username, password, email } } });
+      }, 2000); // Delay for better UX
     } catch (error) {
-      console.error("Error sending OTP:", error);
-      toast.error("An error occurred while sending OTP. Please try again.");
+      console.error("❌ Error:", error);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
-
   };
+  
+
+ 
 
   const handleGoogleSignUp = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-
-      // Check if user already exists in backend
-      const googleData = google_signups_data || [];
-      const googleUserFound = googleData.some((googleUser) => googleUser.email === user.email);
-
-      if (googleUserFound) {
-        toast.success("This Google account is already registered. Redirecting to login...");
-        navigate("/login");
-      } else {
-        // Prepare new Google user data
-        const newGoogleUser = {
-          displayName: user.displayName || "Google User",
-          email: user.email,
-        };
-
-        // Send data to backend
-        try {
-          const res = await fetch("https://google-signup-mongodb.onrender.com/register", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newGoogleUser),
-          });
-
-          if (!res.ok) {
-            throw new Error("Failed to register Google user in database.");
-          }
-
-          toast.success("Google sign-up successful. Redirecting to login...");
-          navigate("/login");
-        } catch (err) {
-          console.error("Error registering Google user:", err);
-          toast.error("An error occurred while registering with Google. Please try again.");
+  
+      const newGoogleUser = {
+        displayName: user.displayName || "Google User",
+        email: user.email,
+      };
+  
+      try {
+        setLoading(true);
+  
+        const res = await fetch("https://google-signup-mongodb.onrender.com/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newGoogleUser),
+        });
+  
+        const responseData = await res.json();
+  
+        if (res.status === 409) {
+          toast.success("This Google account is already registered. Redirecting to login...");
+          console.log("User exists, toast should be showing...");
+          setTimeout(() => navigate("/login"), 3000); // Delay to show toast
+          return;
         }
+  
+        if (!res.ok) {
+          throw new Error(responseData.error || "Failed to register Google user in database.");
+        }
+  
+        toast.success("Google sign-up successful. Redirecting to login...");
+        console.log("Toast should be showing...");
+        setTimeout(() => navigate("/login"), 3000);
+      } catch (err) {
+        console.error("Error registering Google user:", err);
+        toast.error(err.message || "An error occurred while registering with Google. Please try again.");
+      } finally {
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error signing up with Google:", error);
       toast.error("There was an issue signing up with Google. Please try again.");
     }
   };
+  
+  
 
 
   // Handle input changes
@@ -345,11 +330,11 @@ function Register({ darkMode }) {
               className="input"
             />
             {/* {errors.email && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.email}</p>} */}
-            <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
-              <Button type="submit" id="submit" variant="contained">
+            
+              <Button type="submit" id="submit" variant="contained" style={{padding: "0.7em 6.45em 0.7em 9em",marginTop:"5px"}}>
                 Register
               </Button>
-            </div>
+           
             <hr />
             <div className="google_button">
               <img src={Image} alt="Google" style={{ height: "40px", width: "40px" }} />

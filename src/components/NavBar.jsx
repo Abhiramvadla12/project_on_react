@@ -72,6 +72,10 @@ const DisplayToast = styled.div`
 const NavBar = ({setMenuOpen, isLogined,darkMode }) => {
     const navigate = useNavigate();
     const display = JSON.parse(localStorage.getItem("display"));
+    const handleLoginTotal = ()=>{
+        navigate("/login"); // Navigate to login
+             
+    }
 
   return (
     <NavBardiv>
@@ -84,7 +88,7 @@ const NavBar = ({setMenuOpen, isLogined,darkMode }) => {
             </DisplayToast>
         )}
        
-        <ButtonDIv className='buttonDiv'>
+        <ButtonDIv className='buttonDiv' onClick={handleLoginTotal}>
             <PersonRounded />
             <button
             

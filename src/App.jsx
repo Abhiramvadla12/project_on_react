@@ -63,6 +63,7 @@ const Spinner = styled.div`
 }
 `;
 function App() {
+  
   //hooks(useState) for darkmode
   const [darkMode, setDarkMode] = useState(true);
   //for menuBar another hook
@@ -247,7 +248,7 @@ const location = useLocation();
            <Frame>
               <NavBar setMenuOpen={setMenuOpen} menuOpen={menuOpen} isLogined={isLogined} onLogout={handleLogout} darkMode={darkMode} />
               {/* Render Breadcrumbs here */}
-              <Breadcrumb routes={getBreadcrumbs()} />
+              <Breadcrumb routes={getBreadcrumbs()}  />
               {loading ? (
                    <Loader>
                    {/* <CircularProgress /> */}
@@ -265,7 +266,7 @@ const location = useLocation();
                     <Route path="/displaypodcast/:type" exact element={<DisplayPodcast isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined} />} />
                     <Route path="/login" element={<Login onLogin={handleLoginStatus} onAdminLogin={handleISAdmin}  darkMode={darkMode}/>} />
                     <Route path="/register" element={<Register darkMode={darkMode} />}  />
-                    <Route path="/otp" element={<Otp />} />
+                    <Route path="/otp" element={<Otp  darkMode={darkMode}/>} />
                     <Route path="*" element={<NoPage />} />
                   </Routes>
                 )}

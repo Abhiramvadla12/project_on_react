@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Image from '../images/google.webp';
 import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
-import LogoImg from "../images/login_logo.jpeg";
+// import LogoImg from "../images/login_logo.jpeg";
 import { Button, Input } from "@mui/material";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -77,7 +77,7 @@ function Login({ onLogin, onAdminLogin, darkMode }) {
   const [loading, setLoading] = useState(false);
   // const [errors, setErrors] = useState({}); // State to store validation errors
   // const [login_details_data, setLoginDetails] = useState([]);
-  const [google_signups_data, setGooleSignupsData] = useState([]);
+  // const [google_signups_data, setGooleSignupsData] = useState([]);
 
 
 
@@ -439,11 +439,11 @@ function Login({ onLogin, onAdminLogin, darkMode }) {
                    {errors.email && <p style={{ color: "red",fontSize:"0.8em" }}>{errors.email}</p>}
                   */}
 
-            <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
-              <Button type="submit" id="submit" variant="contained">
+           
+              <Button type="submit" id="submit" variant="contained" style={{padding: "0.7em 8.3em 0.7em 9em",marginTop:"5px"}}>
                 Login
               </Button>
-            </div>
+           
 
 
             <hr />
