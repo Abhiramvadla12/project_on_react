@@ -68,42 +68,47 @@ const Spinner = styled.div`
 `;
 const Favorite = ({isFavorite,onFavorite,isLogined}) => {
   const [data, setData] = useState(null); // State to store fetched data
-  const [error, setError] = useState(null); // State to handle errors
-  const [loading, setLoading] = useState(true); // State for loading status
+  // const [error, setError] = useState(null); // State to handle errors
+  // const [loading, setLoading] = useState(true); // State for loading status
   
 
-  useEffect(() => {
-      const fetchData = async () => {
-          try {
-              const result = await getData(); // Call your getData function
-              setData(result); // Update state with the fetched data
-          } catch (err) {
-              setError(err.message); // Handle and display errors
-          } finally {
-              setLoading(false); // Set loading to false after fetching
-          }
-      };
+  // useEffect(() => {
+  //     const fetchData = async () => {
+  //         try {
+  //             const result = await getData(); // Call your getData function
+  //             setData(result); // Update state with the fetched data
+  //         } catch (err) {
+  //             setError(err.message); // Handle and display errors
+  //         } finally {
+  //             setLoading(false); // Set loading to false after fetching
+  //         }
+  //     };
 
-      fetchData();
-  }, []); // Empty dependency array to fetch data only once on mount
-  console.log(error)
+  //     fetchData();
+  // }, []); // Empty dependency array to fetch data only once on mount
+
+  let main_data = JSON.parse(localStorage.getItem("main_data"));
+  useEffect(()=>{
+    setData(main_data)
+},[]);
+  // console.log(error)
   const filteredFav = data?.filter((item) => isFavorite.includes(item.id)) || [];
 
   // console.log("favFiltered data",filteredFav);
-  if (loading) {
-    return (
-      <Loader>
-        {/* <CircularProgress /> */}
-        <Spinner>
+  // if (loading) {
+  //   return (
+  //     <Loader>
+  //       {/* <CircularProgress /> */}
+  //       <Spinner>
 
-        </Spinner>
-      </Loader>
-    );
-  }
+  //       </Spinner>
+  //     </Loader>
+  //   );
+  // }
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  // if (error) {
+  //   return <div>Error: {error}</div>;
+  // }
   // console.log(isLogined);
   return (
     <Container>

@@ -81,44 +81,48 @@ const Topic = styled.div`
 `;
 const DisplayPodcast = ({isFavorite,onFavorite,isLogined}) => {
   const [data, setData] = useState(null); // Store fetched data
-  const [error, setError] = useState(null); // Handle errors
-  const [loading, setLoading] = useState(true); // Loading state
+  // const [error, setError] = useState(null); // Handle errors
+  // const [loading, setLoading] = useState(true); // Loading state
   const [genere,setGenere] = useState('all');
   const {type} = useParams();
   console.log(type);
   useEffect(()=>{
         setGenere(type);
   },[])
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await getData(); // Fetch data
-        setData(result); // Set data
-      } catch (err) {
-        setError(err.message); // Set error
-      } finally {
-        setLoading(false); // Stop loading
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const result = await getData(); // Fetch data
+  //       setData(result); // Set data
+  //     } catch (err) {
+  //       setError(err.message); // Set error
+  //     } finally {
+  //       setLoading(false); // Stop loading
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
+  let main_data = JSON.parse(localStorage.getItem("main_data"));
+  useEffect(()=>{
+    setData(main_data)
+},[]);
   console.log(genere);
 
-  if (loading) {
-      return (
-        <Loader>
-          <Spinner>
+  // if (loading) {
+  //     return (
+  //       <Loader>
+  //         <Spinner>
 
-          </Spinner>
-          {/* <CircularProgress /> */}
-        </Loader>
-      );
-    }
+  //         </Spinner>
+  //         {/* <CircularProgress /> */}
+  //       </Loader>
+  //     );
+  //   }
   
-    if (error) {
-      return <div>Error: {error}</div>;
-    }
+  //   if (error) {
+  //     return <div>Error: {error}</div>;
+  //   }
     if (!data || !Array.isArray(data)) {
       return <div>No Data Available</div>;
     }

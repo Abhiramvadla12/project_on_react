@@ -73,7 +73,12 @@ const NavBar = ({setMenuOpen, isLogined,darkMode }) => {
     const navigate = useNavigate();
     const display = JSON.parse(localStorage.getItem("display"));
     const handleLoginTotal = ()=>{
-        navigate("/login"); // Navigate to login
+        if (isLogined) {
+            // onLogout(); // Call onLogout if logged in
+            navigate("/profile"); // Navigate to home
+            } else {
+            navigate("/login"); // Navigate to login
+            }
              
     }
 
@@ -84,7 +89,7 @@ const NavBar = ({setMenuOpen, isLogined,darkMode }) => {
         </IcoButton>
         {(display && isLogined) && (
             <DisplayToast>
-                Welcome       { display.displayName ?  display?.displayName : display.username   } !!!
+                Welcome       {display?.username   } !!!
             </DisplayToast>
         )}
        

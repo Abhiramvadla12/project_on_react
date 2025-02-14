@@ -9,6 +9,7 @@ import { initializeApp } from "firebase/app";
 // import LogoImg from "../images/login_logo.jpeg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 import {
   getAuth,
   signInWithPopup,
@@ -219,7 +220,7 @@ function Register({ darkMode }) {
       const user = result.user;
   
       const newGoogleUser = {
-        displayName: user.displayName || "Google User",
+        username: user.displayName || "Google User",
         email: user.email,
       };
   
@@ -346,7 +347,8 @@ function Register({ darkMode }) {
               >
                 Sign Up With Google
               </button>
-            </div>
+            </div> <br />
+            <Link to={'/login'} style={{color: "white"}}>Go To Login </Link>
           </form>
         </div>
 

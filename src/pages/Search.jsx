@@ -138,9 +138,9 @@ const Podcasts = styled.div`
 
 const Search = ({ isFavorite, onFavorite, isLogined, darkMode }) => {
     const [searched, setSearched] = useState("");
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
     const [data, setData] = useState(null);
-    const [error, setError] = useState(null);
+    // const [error, setError] = useState(null);
     const [suggestions, setSuggestions] = useState([]);
     const [showSuggestion ,setShowSuggestion] = useState(true);
     const handleChange = (e) => {
@@ -148,20 +148,25 @@ const Search = ({ isFavorite, onFavorite, isLogined, darkMode }) => {
         setShowSuggestion(true)
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const result = await getData(); // Call your getData function
-                setData(result); // Update state with the fetched data
-            } catch (err) {
-                setError(err.message); // Handle and display errors
-            } finally {
-                setLoading(false); // Set loading to false after fetching
-            }
-        };
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const result = await getData(); // Call your getData function
+    //             setData(result); // Update state with the fetched data
+    //         } catch (err) {
+    //             setError(err.message); // Handle and display errors
+    //         } finally {
+    //             setLoading(false); // Set loading to false after fetching
+    //         }
+    //     };
 
-        fetchData();
-    }, []);
+    //     fetchData();
+    // }, []);
+    let main_data = JSON.parse(localStorage.getItem("main_data"));
+    useEffect(()=>{
+        setData(main_data)
+    },[]);
+    
 
     useEffect(() => {
         if (searched === "") {
@@ -183,17 +188,17 @@ const Search = ({ isFavorite, onFavorite, isLogined, darkMode }) => {
             setShowSuggestion(false)
         }
     };
-    if (loading) {
-        return (
-            <Loader>
-                <Spinner />
-            </Loader>
-        );
-    }
+    // if (loading) {
+    //     return (
+    //         <Loader>
+    //             <Spinner />
+    //         </Loader>
+    //     );
+    // }
 
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
+    // if (error) {
+    //     return <div>Error: {error}</div>;
+    // }
 
     return (
         <SearchMain>

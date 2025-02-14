@@ -116,14 +116,14 @@ function App() {
           throw new Error(`HTTP error! Status: ${res.status}`);
         }
         let data = await res.json();
-        console.log(data);
+        // console.log(data);
         // Use storedUser instead of userDetails (which is set asynchronously)
         const filterData = data.filter((val) => 
           val.name === `${storedUser?.displayName || storedUser?.username} 's fav`
         );
   
         if (filterData.length > 0) {
-          console.log("Filtered favorites:", filterData[0].fav_ids);
+          // console.log("Filtered favorites:", filterData[0].fav_ids);
           setFavorite(filterData[0].fav_ids);
         } else {
           setFavorite([]); // Reset favorites if no data is found
@@ -262,7 +262,7 @@ const location = useLocation();
                     <Route path="/search" exact element={<Search isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined}  darkMode={darkMode}/>} />
                     <Route path="/favorite" exact element={<Favorite isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined} />} />
                     <Route path="/profile" exact element={<Profile isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined} />} />
-                    <Route path="/podcast/:id" exact element={<PodcastDetails />} />
+                    <Route path="/podcast/:id" exact element={<PodcastDetails  darkMode={darkMode}/>} />
                     <Route path="/displaypodcast/:type" exact element={<DisplayPodcast isFavorite={favorite} onFavorite={handleFavorites} isLogined={isLogined} />} />
                     <Route path="/login" element={<Login onLogin={handleLoginStatus} onAdminLogin={handleISAdmin}  darkMode={darkMode}/>} />
                     <Route path="/register" element={<Register darkMode={darkMode} />}  />

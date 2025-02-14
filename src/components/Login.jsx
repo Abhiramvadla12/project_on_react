@@ -218,7 +218,7 @@ function Login({ onLogin, onAdminLogin, darkMode }) {
       }
 
       toast.success("Login successful! Redirecting...");
-      localStorage.setItem("display", JSON.stringify({ username }));
+      localStorage.setItem("display", JSON.stringify({ username}));
 
       setTimeout(() => {
         onLogin(true);
@@ -295,7 +295,7 @@ function Login({ onLogin, onAdminLogin, darkMode }) {
         const googleUser = result.user;
 
         const obj = {
-            displayName: googleUser.displayName || "Google User",
+            username: googleUser.displayName || "Google User",
             email: googleUser.email,
         };
 

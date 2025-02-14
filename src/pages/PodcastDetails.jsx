@@ -185,7 +185,7 @@
 //           </Views>
 //           <h4>{podcast.files[0].title}</h4>
 //           <h6 style={{textAlign: "justify"}}>{podcast.files[0].description}</h6>
-         
+
 //         </Information>
 //       </EpisodeTop>
 //       <Episodebottom>
@@ -199,7 +199,7 @@
 //             </Episodes> 
 //           ))}
 //       </Episodebottom>
-      
+
 
 //       {/* Modal for playing video/audio
 //       <Dialog open={openModal} onClose={handleCloseModal} fullWidth maxWidth="md" >
@@ -297,9 +297,11 @@ const Episodes = styled.div`
   display: flex;
   gap: 5px;
   cursor: pointer;
+  transition: all 0.4s ease-in-out;
+  box-shadow: ${({ isActive }) => (isActive ? "0 0 15px rgba(37, 176, 155, 0.6)" : "none")};
+
   &:hover {
     transform: translateY(-4px);
-    transition: all 0.4s ease-in-out;
     box-shadow: 0 0 18px 0 rgba(0, 0, 0, 0.3);
     filter: brightness(1.3);
   }
@@ -341,42 +343,46 @@ const ChannelTotal = styled.div`
   }
 `;
 
-const PodcastDetails = () => {
+const PodcastDetails = ({ darkMode }) => {
   const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
+  // const [loading, setLoading] = useState(true);
   const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(0);
   const audioRef = useRef(null);
   const videoRef = useRef(null);
   const { id } = useParams();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await getData();
-        setData(result);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const result = await getData();
+  //       setData(result);
+  //     } catch (err) {
+  //       setError(err.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
+  let main_data = JSON.parse(localStorage.getItem("main_data"));
+  useEffect(()=>{
+    setData(main_data)
+},[]);
   const filteredData = data ? data.filter((item) => item.id === id) : [];
 
-  if (loading) {
-    return (
-      <Loader>
-        <Spinner />
-      </Loader>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <Loader>
+  //       <Spinner />
+  //     </Loader>
+  //   );
+  // }
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  // if (error) {
+  //   return <div>Error: {error}</div>;
+  // }
 
   if (filteredData.length === 0) {
     return <div>No podcast found with the provided ID.</div>;
@@ -421,8 +427,8 @@ const PodcastDetails = () => {
           <Information>
             {podcast.type === "video" ? (
               <>
-                
-                <video ref={videoRef} controls width="100%"  height="auto" poster={podcast.image} style={{ maxHeight: "500px", objectFit: "cover", borderRadius: "10px" }}  >
+
+                <video ref={videoRef} controls width="100%" height="auto" poster={podcast.image} style={{ maxHeight: "500px", objectFit: "cover", borderRadius: "10px" }}  >
                   <source src={currentEpisode.source} type="video/mp4" />
                 </video>
                 {/* <Button onClick={handlePrev} disabled={currentEpisodeIndex === 0} style={{margin:"10px"}} variant="contained">
@@ -434,49 +440,54 @@ const PodcastDetails = () => {
               </>
             ) : (
               <>
-                <img src={podcast.image} alt="Podcast Cover" className="channel_img"  />
+                <img src={podcast.image} alt="Podcast Cover" className="channel_img" />
                 {/* <h4>{currentEpisode.title}</h4>
                 <h6 style={{ textAlign: "justify" }}>{currentEpisode.description}</h6> */}
               </>
             )} <br />
-                  {podcast.type === "audio" && (
-                
-                  
-                // <Button onClick={handlePrev} disabled={currentEpisodeIndex === 0} style={{margin:"10px"}} variant="contained">
-                //   Prev
-                // </Button>
-                <CustomAudioPlayer 
-                    episodes={podcast.files} 
-                    currentEpisodeIndex={currentEpisodeIndex} 
-                    setCurrentEpisodeIndex={setCurrentEpisodeIndex} 
-                  />
+            {podcast.type === "audio" && (
 
-                // <Button onClick={handleNext} disabled={currentEpisodeIndex === podcast.files.length - 1} style={{margin:"10px"}} variant="contained">
-                //   Next
-                // </Button>
-            
+
+              // <Button onClick={handlePrev} disabled={currentEpisodeIndex === 0} style={{margin:"10px"}} variant="contained">
+              //   Prev
+              // </Button>
+              <CustomAudioPlayer
+                episodes={podcast.files}
+                currentEpisodeIndex={currentEpisodeIndex}
+                setCurrentEpisodeIndex={setCurrentEpisodeIndex}
+                darkMode={darkMode}
+              />
+
+              // <Button onClick={handleNext} disabled={currentEpisodeIndex === podcast.files.length - 1} style={{margin:"10px"}} variant="contained">
+              //   Next
+              // </Button>
+
             )}
           </Information>
         </EpisodeTop>
 
-        
-      
 
-      {/* Episodes List for both Audio & Video */}
-      <div>
-        {podcast.files.map((item, index) => (
-          <Episodes key={item.id} onClick={() => handleEpisodeChange(index)}>
-            <img src={podcast.image} alt="Episode Cover" style={{ height: "150px", width: "150px", borderRadius: "10px" }} />
-            <Information>
-              <h4>{item.title}</h4>
-              <h6 style={{ textAlign: "justify" }}>{item.description}</h6>
-            </Information>
-          </Episodes>
-        ))}
-      </div>
+
+
+        {/* Episodes List for both Audio & Video */}
+        <div>
+          {podcast.files.map((item, index) => (
+            <Episodes
+              key={item.id}
+              onClick={() => handleEpisodeChange(index)}
+              isActive={index === currentEpisodeIndex}
+            >
+              <img src={podcast.image} alt="Episode Cover" style={{ height: "150px", width: "150px", borderRadius: "10px" }} />
+              <Information>
+                <h4>{item.title}</h4>
+                <h6 style={{ textAlign: "justify" }}>{item.description}</h6>
+              </Information>
+            </Episodes>
+          ))}
+        </div>
       </ChannelTotal>
     </>
-    
+
   );
 };
 
