@@ -202,34 +202,50 @@ const handleISAdmin = (val)=>{
 }
 // console.log("checking is he admin or not",isAdmin);
 const location = useLocation();
-  const pathSegments = location.pathname.split('/').filter(Boolean);
-  const getBreadcrumbs = () => {
-    const paths = {
-      '/': 'Home', 
-      '/search': 'Search',
-      '/favorite': 'Favorites',
-      '/profile': 'Profile',
-      '/login': 'Login',
-      '/register': 'Register',
-      '/otp': 'OTP',
-    };
+const pathSegments = location.pathname.split('/').filter(Boolean);
 
-    // If the path segments are empty (i.e., we're on the home route), show Dashboard
-    const breadcrumbs = pathSegments.map((segment, index) => {
-      const path = `/${pathSegments.slice(0, index + 1).join('/')}`;
-      return {
-        name: paths[path] || segment.charAt(0).toUpperCase() + segment.slice(1),
-        link: path
-      };
-    });
+const getBreadcrumbs = () => {
+  const paths = {
+    '/': 'Home',
+    '/search': 'Search',
+    '/favorite': 'Favorites',
+    '/profile': 'Profile',
+    '/login': 'Login',
+    '/register': 'Register',
+    '/otp': 'OTP',
+  };
 
-    // Always include Dashboard breadcrumb for the home route
-    if (pathSegments.length === 0) {
-      return [{ name: 'Home', link: '/' }];
+  let breadcrumbs = [];
+  
+  for (let i = 0; i < pathSegments.length; i++) {
+    const segment = pathSegments[i];
+
+    // Skip "displaypodcast" and only add the next segment
+    if (segment === "displaypodcast" && i + 1 < pathSegments.length) {
+      breadcrumbs.push({
+        name: pathSegments[i + 1].charAt(0).toUpperCase() + pathSegments[i + 1].slice(1),
+        link: `/${pathSegments[i + 1]}`,
+      });
+      i++; // Skip next segment as it's already added
+      continue;
     }
 
-    return [{ name: 'Home', link: '/' }, ...breadcrumbs];
-  };
+    // Skip "podcast" and replace it with "Podcast Details"
+    if (segment === "podcast" && i + 1 < pathSegments.length) {
+      breadcrumbs.push({ name: "Podcast Details", link: "/podcast" });
+      break; // Stop further processing after podcast details
+    }
+
+    const path = `/${pathSegments.slice(0, i + 1).join('/')}`;
+    breadcrumbs.push({
+      name: paths[path] || segment.charAt(0).toUpperCase() + segment.slice(1),
+      link: path,
+    });
+  }
+
+  return [{ name: 'Home', link: '/' }, ...breadcrumbs];
+};
+
 
   // console.log(isLogined)
   return (

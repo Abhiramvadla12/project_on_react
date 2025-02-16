@@ -116,7 +116,7 @@ const Dashboard = ({isFavorite,onFavorite,isLogined}) => {
         fetchData();
     }, []); // Empty dependency array to fetch data only once on mount
     // console.log(error)
-    console.log(data);
+    // console.log(data);
     localStorage.setItem("main_data",JSON.stringify(data))
   return (
    

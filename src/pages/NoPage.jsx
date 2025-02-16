@@ -2,17 +2,24 @@ import styled from "styled-components";
 import NopageImg from "/404.jpg";
 
 const NoPageContainer = styled.div`
-  background-image: url(${({ img }) => img});
-  background-size: contain; /* Ensures the image covers the container */
-  background-position: center; /* Centers the image */
-  height: 100vh; /* Example height */
-  width: 100%; /* Example width */
+  height: 100vh; /* Full viewport height */
+  width: 100vw;  /* Full viewport width */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Prevents scrolling */
+`;
+
+const NoPageImage = styled.img`
+  height: 100%;
+  width: 100%;
+  // object-fit: cover; /* Ensures the image covers the entire container */
 `;
 
 const NoPage = () => {
   return (
-    <NoPageContainer img={NopageImg}>
-      {/* Add any other content here */}
+    <NoPageContainer>
+      <NoPageImage src={NopageImg} alt="Image not found" />
     </NoPageContainer>
   );
 };

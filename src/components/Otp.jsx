@@ -36,7 +36,7 @@ const Otp = ({darkMode}) => {
       
       <form onSubmit={handleSubmit} className="form1">
         <span style={{ color: darkMode ? "#15c6ed" : "#a20afa",fontSize:"1.75em",fontWeight:"bolder",marginLeft:"8px" }}>OTP</span><br />
-        <label htmlFor="otp" className="label1"  style={{ color: darkMode ? "#15c6ed" : "#a20afa" }}>Enter the OTP here:</label>
+        {/* <label htmlFor="otp" className="label1"  style={{ color: darkMode ? "#15c6ed" : "#a20afa" }}>Enter the OTP here:</label> */}
         <Input
           type="text"
           name="otp"

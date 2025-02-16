@@ -85,7 +85,7 @@ const DisplayPodcast = ({isFavorite,onFavorite,isLogined}) => {
   // const [loading, setLoading] = useState(true); // Loading state
   const [genere,setGenere] = useState('all');
   const {type} = useParams();
-  console.log(type);
+  // console.log(type);
   useEffect(()=>{
         setGenere(type);
   },[])
@@ -107,7 +107,7 @@ const DisplayPodcast = ({isFavorite,onFavorite,isLogined}) => {
   useEffect(()=>{
     setData(main_data)
 },[]);
-  console.log(genere);
+  // console.log(genere);
 
   // if (loading) {
   //     return (

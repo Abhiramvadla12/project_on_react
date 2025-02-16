@@ -100,25 +100,28 @@ const ProfileTop = styled.div`
   align-items: center;
   gap: 10px;
   position: relative;
-  top: -90px;
+  top: -50px; /* Adjust as needed */
 
   @media (max-width: 550px) {
     text-align: center;
     font-size: 0.5em;
   }
 `;
-
 const EditButton = styled.button`
   margin-top: 10px;
-  padding: 10px;
+  padding: 10px 15px;
   background-color: ${({ theme }) => theme.primary};
-  color:black ;
+  color: black;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  // &:hover {
-  //   background-color: ${({ theme }) => theme.hover_background};
-  // }
+  font-weight: bold;
+  font-size: 0.9em;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.hover_background};
+  }
 `;
 
 const CloseButton = styled.button`
@@ -180,7 +183,12 @@ const Spinner = styled.div`
   100% {transform: rotate(1turn)}
 }
 `;
-const ProfilePhoto = styled.div``;
+const ProfilePhoto = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; /* Space between image and button */
+`;
 const Profile = ({ isFavorite, onFavorite, isLogined }) => {
   const [data, setData] = useState(null); // State to store fetched data
   const [error, setError] = useState(null); // State to handle errors
@@ -304,8 +312,8 @@ const Profile = ({ isFavorite, onFavorite, isLogined }) => {
 
             <ProfilePhoto>
 
-            <ProfileImage src={profile.image || ProfileImg} alt="Profile" />
-
+                <ProfileImage src={profile.image || ProfileImg} alt="Profile" />
+                <EditButton onClick={handleOpen}>Edit Profile</EditButton>
 
             </ProfilePhoto>
             <Details>
@@ -319,7 +327,7 @@ const Profile = ({ isFavorite, onFavorite, isLogined }) => {
               <UserName>{profile?.country}</UserName>
               <UserName>{profile?.about}</UserName>
               <UserName>{profile?.gender}</UserName><br />
-              <EditButton onClick={handleOpen}>Edit Profile</EditButton>
+              
             </Details>
 
           </ProfileTop>
