@@ -1,4 +1,4 @@
-import getData from "../components/api";
+// import getData from "../components/api";
 import { useState,useEffect } from "react";
 // import { CircularProgress } from "@mui/material";
 import PodcastCard from '../components/PodcastCard';

@@ -13,9 +13,7 @@ const Otp = ({darkMode}) => {
 
   const [enteredOtp, setEnteredOtp] = useState("");
 
-  useEffect(() => {
-    toast.success("Please wait a few seconds to get the OTP!");
-  }, []);
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();

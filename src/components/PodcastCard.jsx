@@ -7,7 +7,7 @@ import HeadphonesIcon from "@mui/icons-material/Headphones";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useNavigate } from "react-router-dom";
 const PlayIcon = styled.div`
 
         padding: 10px;
@@ -150,6 +150,7 @@ const Views = styled.div`
 `;
 
 const PodcastCard = ({apiData,type,isFavorite,onFavorite,isLogined}) => {
+    const navigate = useNavigate();
     // console.log("received",apiData);
     if (!apiData || !Array.isArray(apiData)) {
         return <div>No Data Available</div>;
@@ -169,6 +170,7 @@ const PodcastCard = ({apiData,type,isFavorite,onFavorite,isLogined}) => {
             position: "top-center",
             autoClose: 3000,
           });
+          navigate("/login")
           return;
         }
     

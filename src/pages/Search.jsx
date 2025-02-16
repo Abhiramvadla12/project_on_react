@@ -3,7 +3,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Category } from "../utils/Data";
 import { Link } from "react-router-dom";
 import { DefaultCard } from "../components/DefaultCard";
-import getData from "../components/api";
+// import getData from "../components/api";
 import styled from "styled-components";
 import PodcastCard from "../components/PodcastCard";
 import { useState,useEffect } from "react";
@@ -84,36 +84,36 @@ const BrowseAll = styled.div`
     padding: 14px;
 `;
 
-const Loader = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-`;
+// const Loader = styled.div`
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     height: 100%;
+//     width: 100%;
+// `;
 
-const Spinner = styled.div`
-    --d: 22px;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    color: #25b09b;
-    box-shadow: 
-        calc(1 * var(--d)) calc(0 * var(--d)) 0 0,
-        calc(0.707 * var(--d)) calc(0.707 * var(--d)) 0 1px,
-        calc(0 * var(--d)) calc(1 * var(--d)) 0 2px,
-        calc(-0.707 * var(--d)) calc(0.707 * var(--d)) 0 3px,
-        calc(-1 * var(--d)) calc(0 * var(--d)) 0 4px,
-        calc(-0.707 * var(--d)) calc(-0.707 * var(--d)) 0 5px,
-        calc(0 * var(--d)) calc(-1 * var(--d)) 0 6px;
-    animation: l27 1s infinite steps(8);
+// const Spinner = styled.div`
+//     --d: 22px;
+//     width: 4px;
+//     height: 4px;
+//     border-radius: 50%;
+//     color: #25b09b;
+//     box-shadow: 
+//         calc(1 * var(--d)) calc(0 * var(--d)) 0 0,
+//         calc(0.707 * var(--d)) calc(0.707 * var(--d)) 0 1px,
+//         calc(0 * var(--d)) calc(1 * var(--d)) 0 2px,
+//         calc(-0.707 * var(--d)) calc(0.707 * var(--d)) 0 3px,
+//         calc(-1 * var(--d)) calc(0 * var(--d)) 0 4px,
+//         calc(-0.707 * var(--d)) calc(-0.707 * var(--d)) 0 5px,
+//         calc(0 * var(--d)) calc(-1 * var(--d)) 0 6px;
+//     animation: l27 1s infinite steps(8);
 
-    @keyframes l27 {
-        100% {
-            transform: rotate(1turn);
-        }
-    }
-`;
+//     @keyframes l27 {
+//         100% {
+//             transform: rotate(1turn);
+//         }
+//     }
+// `;
 
 const FilterContainer = styled.div`
     display: flex;

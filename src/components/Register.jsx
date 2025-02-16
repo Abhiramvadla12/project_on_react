@@ -198,7 +198,7 @@ function Register({ darkMode }) {
         throw new Error(errorData.error || "Failed to register user in database.");
       }
   
-      toast.success("Registration successful! Redirecting to OTP verification...");
+      toast.success(" Redirecting to OTP verification...");
       
       setTimeout(() => {
         navigate("/otp", { state: { user: { username, password, email } } });
