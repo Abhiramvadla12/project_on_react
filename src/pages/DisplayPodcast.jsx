@@ -36,38 +36,39 @@ const Podcasts = styled.div`
     padding: 18px 6px;
     @media (max-width: 550px) {
         justify-content: center;
+        justify-items: center;
         grid-template-columns: repeat(1,1fr)
     }
   `;
-const Loader = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-`;
+// const Loader = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 100%;
+//   width: 100%;
+// `;
 
-const Spinner = styled.div`
+// const Spinner = styled.div`
 
-    --d:22px;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  color: #25b09b;
-  box-shadow: 
-    calc(1*var(--d))      calc(0*var(--d))     0 0,
-    calc(0.707*var(--d))  calc(0.707*var(--d)) 0 1px,
-    calc(0*var(--d))      calc(1*var(--d))     0 2px,
-    calc(-0.707*var(--d)) calc(0.707*var(--d)) 0 3px,
-    calc(-1*var(--d))     calc(0*var(--d))     0 4px,
-    calc(-0.707*var(--d)) calc(-0.707*var(--d))0 5px,
-    calc(0*var(--d))      calc(-1*var(--d))    0 6px;
-  animation: l27 1s infinite steps(8);
+//     --d:22px;
+//   width: 4px;
+//   height: 4px;
+//   border-radius: 50%;
+//   color: #25b09b;
+//   box-shadow: 
+//     calc(1*var(--d))      calc(0*var(--d))     0 0,
+//     calc(0.707*var(--d))  calc(0.707*var(--d)) 0 1px,
+//     calc(0*var(--d))      calc(1*var(--d))     0 2px,
+//     calc(-0.707*var(--d)) calc(0.707*var(--d)) 0 3px,
+//     calc(-1*var(--d))     calc(0*var(--d))     0 4px,
+//     calc(-0.707*var(--d)) calc(-0.707*var(--d))0 5px,
+//     calc(0*var(--d))      calc(-1*var(--d))    0 6px;
+//   animation: l27 1s infinite steps(8);
 
-@keyframes l27 {
-  100% {transform: rotate(1turn)}
-}
-`;
+// @keyframes l27 {
+//   100% {transform: rotate(1turn)}
+// }
+// `;
 const Topic = styled.div`
     color:  ${({ theme})=> theme.text_primary};
     font-size: 24px;

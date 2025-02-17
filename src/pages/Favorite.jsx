@@ -34,6 +34,7 @@ const FavoriteContainer = styled.div`
         justify-content: center;
         display: grid;
         grid-template-columns: 1fr;
+        justify-items:center;
 
     }
 `;
