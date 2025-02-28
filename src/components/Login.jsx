@@ -409,7 +409,7 @@ function Login({ onLogin, onAdminLogin, darkMode }) {
               onChange={handleChange}
               className="input"
 
-            />
+            /> <br />
 
 
             <label htmlFor="password" className="label" style={{ color: darkMode ? "#15c6ed" : "#a20afa" }}>Password </label>
@@ -423,7 +423,7 @@ function Login({ onLogin, onAdminLogin, darkMode }) {
               className="input"
 
 
-            />
+            /> <br />
 
 
             {/* <label htmlFor="email" className="label">Email: </label>

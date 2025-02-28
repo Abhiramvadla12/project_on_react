@@ -157,7 +157,7 @@ const PodcastCard = ({apiData,type,isFavorite,onFavorite,isLogined}) => {
       }
       const categories = {
         mostpopular: ["religion","bussiness", "science", "education","health"],
-        all: ["bussiness", "crime", "education", "history", "comedy", "culture", "science","health","development"],
+        all: ["bussiness", "crime", "education", "history", "comedy", "culture", "science","health","development","religion"],
     };
     const catArr = categories[type] || [type];
     // console.log("checking if it array or not",isFavorite)

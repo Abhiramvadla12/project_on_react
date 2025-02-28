@@ -95,7 +95,7 @@ const Favorite = ({isFavorite,onFavorite,isLogined}) => {
   // console.log(error)
   const filteredFav = data?.filter((item) => isFavorite.includes(item.id)) || [];
 
-  // console.log("favFiltered data",filteredFav);
+  console.log("favFiltered data",filteredFav);
   // if (loading) {
   //   return (
   //     <Loader>

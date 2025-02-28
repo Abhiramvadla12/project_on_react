@@ -477,7 +477,7 @@ const PodcastDetails = ({ darkMode }) => {
               onClick={() => handleEpisodeChange(index)}
               isActive={index === currentEpisodeIndex}
             >
-              <img src={podcast.image} alt="Episode Cover" style={{ height: "150px", width: "150px", borderRadius: "10px" }} />
+              <img src={podcast.image} alt="Episode Cover" style={{ height: "auto", width: "150px", borderRadius: "10px" }} />
               <Information>
                 <h4>{item.title}</h4>
                 <h6 style={{ textAlign: "justify" }}>{item.description}</h6>

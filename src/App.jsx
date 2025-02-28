@@ -123,7 +123,7 @@ function App() {
         );
   
         if (filterData.length > 0) {
-          // console.log("Filtered favorites:", filterData[0].fav_ids);
+          console.log("Filtered favorites:", filterData[0].fav_ids);
           setFavorite(filterData[0].fav_ids);
         } else {
           setFavorite([]); // Reset favorites if no data is found
@@ -173,7 +173,7 @@ function App() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            name: `${ userDetails.displayName ?  userDetails?.displayName : userDetails.username   }'s fav`,
+            name: `${ userDetails.displayName ?  userDetails?.displayName : userDetails.username   } 's fav`,
             fav_ids: updatedFavorites,
           }),
         })
