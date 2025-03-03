@@ -36,6 +36,10 @@ const FavoritesContainer = styled.div`
         &:hover{
               box-shadow: 2px 2px 10px ${({ theme }) => theme.hover_background};
         }
+         @media (max-width: 550px) {
+                margin: 0px;
+        
+        }
 `;
 const BackgroundImg = styled.img`
    
@@ -151,7 +155,14 @@ const Favorites = styled.div`
         grid-template-columns: 1fr;
         
     }
-       
+     @media (max-width: 375px) {
+      justify-content: start;
+        
+    } 
+     @media (max-width: 320px) {
+      margin: 0px;
+        
+    }
 `;
 const Loader = styled.div`
   display: flex;
@@ -188,6 +199,7 @@ const ProfilePhoto = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 10px; /* Space between image and button */
+ 
 `;
 const Profile = ({ isFavorite, onFavorite, isLogined }) => {
   const [data, setData] = useState(null); // State to store fetched data

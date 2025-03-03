@@ -23,8 +23,8 @@ const NavBardiv = styled.div`
         padding: 16px;
     }
     @media (max-width: 320px) {
-       gap:10px;
-       justify-content: center;
+       gap:30px;
+       justify-content: start;
         
     }
 `;

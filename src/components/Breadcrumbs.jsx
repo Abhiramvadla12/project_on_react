@@ -7,6 +7,11 @@ const BreadcrumbContainer = styled.nav`
   align-items: center;
   padding: 10px;
   background-color: ${({ theme }) => theme.bgLight};
+  margin-left: 5em;
+   @media (max-width: 550px) {
+       margin-left:1em;
+        
+    }
 `;
 
 const BreadcrumbItem = styled.span`
@@ -30,7 +35,7 @@ const BreadcrumbItem = styled.span`
 
 const Breadcrumb = ({ routes }) => {
   return (
-    <BreadcrumbContainer  style={{marginLeft:"5em"}}>
+    <BreadcrumbContainer  >
       {routes.map((route, index) => (
         <BreadcrumbItem key={index}>
           {route.link ? <Link to={route.link} style={{color:"#15c6ed"}}>{route.name}</Link> : route.name}
